@@ -26,7 +26,7 @@ window.BOARD_REPORTS = [
 
 /* Words shown at the top of the archive page. */
 window.BOARD_ARCHIVE = {
-  title: "Quarterly Board Review",
+  title: "Board Reports",
   publication: "NOT RISING Magazine",
-  intro: "A public quarterly report of NOT RISING Magazine's impact on its mission to amplify independent voices drowned out by the algorithm. Board Reports are open-source because this publication answers to humans, not capital."
+  intro: "Hi, Human. In a world where money talks loudest, we're on a mission to make humanity louder. Board Reports track our performance against that mission. All reports are open-source because this publication reports to the people, not capital."
 };
