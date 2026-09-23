@@ -20,7 +20,7 @@ window.BOARD_DATA = {
      1. STAMP — bump these two every time you refresh the page
      --------------------------------------------------------------------- */
   meta: {
-    reportTitle: "Board Snapshot · YTD 2026",   // shown in the browser tab
+    reportTitle: "Board Report",   // shown in the browser tab
     quarterLabel: "Q3 2026",                     // also used by the archive page
     asOf: "2026-09-23",   // must equal the LAST date in "series" below (the page checks this)
     version: "v1.2",      // v1.1 -> v1.2 ... whatever you like
