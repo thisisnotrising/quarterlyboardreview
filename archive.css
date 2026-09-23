@@ -11,7 +11,7 @@ body { color:#FFF; font-family:'Barlow',sans-serif; font-weight:300; max-width:9
 .label { font-family:'Space Mono',monospace; font-size:13px; letter-spacing:.2em; color:#666; padding:32px var(--gutter) 14px; }
 
 a.card { display:block; text-decoration:none; color:inherit; border:1px solid #222; background:#0b0b0b; padding:22px 24px; }
-a.card:hover { border-color:#8FA86A; }
+a.card:hover { border-color:#888; }
 .wrap { padding:0 var(--gutter); }
 .latest a.card { padding:30px 28px; border-color:#333; }
 .card-name { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:34px; line-height:1; }
@@ -21,7 +21,7 @@ a.card:hover { border-color:#8FA86A; }
 .card-meta b { color:#fff; font-weight:700; }
 .status { display:inline-block; border:1px solid #333; background:#141414; padding:2px 9px; font-size:12px; letter-spacing:.1em; color:#9a9a92; }
 .status.open { color:#8FA86A; border-color:#3c4a2b; }
-.open-cta { padding-top:18px; font-family:'Space Mono',monospace; font-size:13px; letter-spacing:.12em; color:#8FA86A; }
+.open-cta { padding-top:18px; font-family:'Space Mono',monospace; font-size:13px; letter-spacing:.12em; color:#fff; font-weight:700; }
 
 .list a.card + a.card { margin-top:0 !important; border-top:none; }
 .list .card { display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap; }
@@ -35,6 +35,6 @@ a.card:hover { border-color:#8FA86A; }
 .about img { width:min(46%, 400px); height:auto; flex-shrink:0; display:block; }
 .about-text p { font-size:clamp(17px, 1vw + 12px, 22px); line-height:1.6; color:#bdbdb5; }
 .about-links { padding-top:20px; font-family:'Space Mono',monospace; font-size:13px; letter-spacing:.08em; }
-.about-links a { color:#8FA86A; text-decoration:none; }
-.about-links a:hover { color:#fff; }
+.about-links a { color:#fff; font-weight:700; text-decoration:underline; text-underline-offset:4px; }
+.about-links a:hover { color:#bdbdb5; }
 @media (max-width:620px) { .about { flex-direction:column; align-items:stretch; } .about img { width:100%; } }
