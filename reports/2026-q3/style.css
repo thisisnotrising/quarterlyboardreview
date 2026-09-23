@@ -23,7 +23,7 @@ details.group > summary .divider-label::after { content:' ▸'; color:#555; }
 details.group[open] > summary .divider-label::after { content:' ▾'; }
 .collapse-end { text-align:left; padding:8px 0 24px; }
 .collapse-end button { font-family:'Space Mono',monospace; font-size:13px; letter-spacing:0.1em; color:#7a7a72; background:none; border:1px solid #333; padding:6px 16px; cursor:pointer; }
-.collapse-end button:hover { color:#FFF; border-color:#8FA86A; }
+.collapse-end button:hover { color:#FFF; border-color:#888; }
 .divider-label { font-family:'Space Mono',monospace; font-size:16px; letter-spacing:0.18em; color:#9a9a92; }
 
 .kpi-strip { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); border-bottom:1px solid #222; }
@@ -51,7 +51,7 @@ details.group > summary .divider-label::after { content:' ▸'; color:#555; }
 details.group[open] > summary .divider-label::after { content:' ▾'; }
 .collapse-end { text-align:center; padding:8px 0 24px; }
 .collapse-end button { font-family:'Space Mono',monospace; font-size:13px; letter-spacing:0.1em; color:#7a7a72; background:none; border:1px solid #333; padding:6px 16px; cursor:pointer; }
-.collapse-end button:hover { color:#FFF; border-color:#8FA86A; }
+.collapse-end button:hover { color:#FFF; border-color:#888; }
 .divider-label { color:#666; }
 
 .chan-table tr.sub td { font-size:16px; }
@@ -148,12 +148,12 @@ i[data-bind] { font-style: normal; }
 .backbar a:hover{color:#bdbdb5;}
 
 /* ---------- numbered section bars (the dropdowns) ---------- */
-.divider { padding:26px var(--gutter); background:#0d0d0d; border-top:1px solid #222; border-bottom:1px solid #222; border-left:4px solid #8FA86A; }
+.divider { padding:26px var(--gutter); background:#0d0d0d; border-top:1px solid #222; border-bottom:1px solid #222; border-left:4px solid #555; }
 details.group > summary:hover .divider, details.community > summary:hover .divider { background:#141414; }
 .divider-label { display:flex; align-items:baseline; gap:18px; width:100%; color:#fff; }
-.divider-label .sec-num { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(40px, 5vw + 10px, 64px); line-height:1; color:#8FA86A; letter-spacing:-.01em; }
+.divider-label .sec-num { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(40px, 5vw + 10px, 64px); line-height:1; color:#bdbdb5; letter-spacing:-.01em; }
 .divider-label .sec-name { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(26px, 3.4vw + 8px, 42px); line-height:1.05; text-transform:uppercase; letter-spacing:.01em; color:#fff; }
-details.group > summary .divider-label::after, details.community > summary .divider-label::after { content:'▸'; margin-left:auto; font-size:26px; color:#8FA86A; align-self:center; }
+details.group > summary .divider-label::after, details.community > summary .divider-label::after { content:'▸'; margin-left:auto; font-size:26px; color:#9a9a92; align-self:center; }
 details.group[open] > summary .divider-label::after, details.community[open] > summary .divider-label::after { content:'▾'; }
 
 /* ---------- "In this report" contents ---------- */
@@ -162,7 +162,7 @@ details.group[open] > summary .divider-label::after, details.community[open] > s
 .toc ol { list-style:none; }
 .toc li a { display:flex; align-items:baseline; gap:16px; padding:9px 0; border-bottom:1px solid #1a1a1a; text-decoration:none; color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:clamp(20px, 1.6vw + 12px, 28px); text-transform:uppercase; letter-spacing:.02em; }
 .toc li a:hover { color:#bdbdb5; }
-.toc-num { font-family:'Space Mono',monospace; font-weight:700; font-size:14px; color:#8FA86A; letter-spacing:.06em; min-width:26px; }
+.toc-num { font-family:'Space Mono',monospace; font-weight:700; font-size:14px; color:#9a9a92; letter-spacing:.06em; min-width:26px; }
 
 /* ---------- community dropdown ---------- */
 details.community { padding-top:24px; }   /* padding, not margin: margins are zeroed globally */
