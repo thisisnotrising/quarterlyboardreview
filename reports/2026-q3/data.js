@@ -206,12 +206,12 @@ window.BOARD_DATA = {
     heroHeadline: "NOT RISING's growth engine runs on <em>trust</em>, and it's working.",
     methodology: "Based on Hi, Human's 1-year growth data, analyzing growth levers to compile a repeatable and open-source community-building playbook for future <a href=\"https://claude.ai/artifact/8WVxXTnM9Q69n8gaMogvfb\" target=\"_blank\" rel=\"noopener\">Desk Chiefs</a>.",
 
-    ytdHeadliner: "Daily restacks are NOT RISING's most effective growth lever — by a large margin.",
+    ytdHeadliner: "Daily restacks are NOT RISING's biggest growth driver, by a large margin.",
     trajectoryLede: "Hi, Human's subscriber count, with the restack engine launch marked.",
     sinceLaunchLede: "Where our {{sinceLaunch.total}} gross new subscribers have come from, cumulative since January.",
     sinceLaunchCallout: "<strong>Notes and the profile page together account for {{sinceLaunch.restackSharePct}}% of Hi, Human's subscribers since launch</strong> — {{sinceLaunch.restackSubs}} of {{sinceLaunch.total}}. Everything else combined, including the app, recommendations and outside links, makes up the remainder.",
 
-    quarterlyHeadliner: "Zero ad spend, by design — every channel that converts to subscribers is free to run.",
+    quarterlyHeadliner: "Amplifying others drives growth and costs $0. We don't need capital to earn trust.",
     conversionLede: "This quarter's {{current.newSubs}} new subscribers, by channel. Conversion = subscribers ÷ visitors. Share = portion of the quarter's new subscribers.",
     conversionCallout: "<strong>Reading and restacking — Notes plus the profile page — drove {{current.readingRestack.subs}} of the quarter's subscribers, {{current.readingRestack.sharePct}}% of the total.</strong> It's also the most efficient channel: the Substack network converts visitors at {{current.network.conv}}%, off-platform traffic at {{current.offPlatform.convRound}}%.",
     conversionMethodology: "\"Substack network\" is the only bucket Substack lets us see traffic for in aggregate — it can't be split further into Notes vs. recommendations at the visitor level, only at the point someone subscribes. The individual Note examples below get closer to isolating restacks specifically. Shares total slightly over 100% — Substack credits a few subscribers to two sources.",
