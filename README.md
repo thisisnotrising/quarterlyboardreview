@@ -83,4 +83,4 @@ The trajectory chart's height grows automatically once you pass 1,000 subscriber
 - Growth Sources is the official record for attribution; the Overview chart supplies total counts only.
 - Percentages are always calculated here, never copied from Substack.
 - Nothing unverifiable goes on the page. If a number can't be verified, leave it out and say so.
-- The unexplained gap is never presented as churn.
+- The unexplained gap is too consistent to behave like churn. Monitoring until we know more.
