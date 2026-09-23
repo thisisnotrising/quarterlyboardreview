@@ -10,8 +10,8 @@ body { background:#000 !important; color:#FFF !important; font-family:'Barlow',s
 .hero-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(40px, 6vw + 16px, 92px); line-height:0.98; letter-spacing:-0.01em; max-width:720px; }
 .hero-title.hero-main { font-size:clamp(48px, 7vw + 20px, 108px); }
 .hero-title em { font-style:normal; color:#FFF; }
-.method a { color:#9a9a92; border-bottom:1px solid #444; text-decoration:none; }
-.method a:hover { color:#c8c8c0; border-bottom-color:#8FA86A; }
+.method a { color:#fff; font-weight:700; text-decoration:underline; text-underline-offset:3px; }
+.method a:hover { color:#bdbdb5; }
 .hero-sub { font-family:'Barlow',sans-serif; font-weight:300; font-size:20px; color:#999; margin-top:18px; max-width:600px; line-height:1.6; }
 
 .divider { padding:20px var(--gutter); background:#0a0a0a; border-bottom:1px solid #222; }
@@ -63,7 +63,8 @@ details.group[open] > summary .divider-label::after { content:' ▾'; }
 .callout-headliner { border-left:4px solid #999; padding:26px 30px; margin:0; background:#141414; }
 .callout-headliner h4 { font-family:'Space Mono',monospace; font-size:14px; letter-spacing:0.12em; color:#9a9a92; margin:0 0 10px; text-transform:uppercase; }
 .callout-headliner p { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(22px, 1.6vw + 16px, 30px); line-height:1.15; color:#FFF; margin:0; }
-.stat-block-body a:hover { color:#FFF; border-bottom-color:#8FA86A; }
+.stat-block-body a { color:#FFF; font-weight:700; text-decoration:underline; text-underline-offset:3px; }
+.stat-block-body a:hover { color:#bdbdb5; }
 .stat-block-body { color:#444; }
 .limit-note { font-family:'Barlow',sans-serif; font-size:16px; color:#888; font-style:italic; max-width:640px; margin-top:16px; margin-bottom:8px; line-height:1.6; border-left:2px solid #333; padding-left:14px; }
 
@@ -143,8 +144,8 @@ i[data-bind] { font-style: normal; }
 
 /* back-link to the archive (padding, not margin: this stylesheet zeroes margins globally) */
 .backbar{padding:18px var(--gutter) 0;}
-.backbar a{font:700 12px 'Space Mono',monospace;letter-spacing:.12em;color:#9a9a92;text-decoration:none;}
-.backbar a:hover{color:#fff;}
+.backbar a{font:700 12px 'Space Mono',monospace;letter-spacing:.12em;color:#fff;text-decoration:underline;text-underline-offset:4px;}
+.backbar a:hover{color:#bdbdb5;}
 
 /* ---------- numbered section bars (the dropdowns) ---------- */
 .divider { padding:26px var(--gutter); background:#0d0d0d; border-top:1px solid #222; border-bottom:1px solid #222; border-left:4px solid #8FA86A; }
@@ -160,7 +161,7 @@ details.group[open] > summary .divider-label::after, details.community[open] > s
 .toc-title { font-family:'Space Mono',monospace; font-size:14px; letter-spacing:.16em; color:#9a9a92; text-transform:uppercase; padding-bottom:12px; }
 .toc ol { list-style:none; }
 .toc li a { display:flex; align-items:baseline; gap:16px; padding:9px 0; border-bottom:1px solid #1a1a1a; text-decoration:none; color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:clamp(20px, 1.6vw + 12px, 28px); text-transform:uppercase; letter-spacing:.02em; }
-.toc li a:hover { color:#8FA86A; }
+.toc li a:hover { color:#bdbdb5; }
 .toc-num { font-family:'Space Mono',monospace; font-weight:700; font-size:14px; color:#8FA86A; letter-spacing:.06em; min-width:26px; }
 
 /* ---------- community dropdown ---------- */
@@ -168,3 +169,7 @@ details.community { padding-top:24px; }   /* padding, not margin: margins are ze
 details.community > summary { list-style:none; cursor:pointer; }
 details.community > summary::-webkit-details-marker { display:none; }
 .community-quotes { padding-top:24px; }
+
+/* ---------- links: white, bold, underlined. Green/yellow/red are reserved for indicator stats, never links or commentary ---------- */
+.section a, .callout-panel a, .callout-headliner a, .section-lede a { color:#fff; font-weight:700; text-decoration:underline; text-underline-offset:3px; }
+.section a:hover, .callout-panel a:hover, .callout-headliner a:hover, .section-lede a:hover { color:#bdbdb5; }
