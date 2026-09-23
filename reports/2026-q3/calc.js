@@ -204,8 +204,8 @@
       shBaseline: comma(D.stackhunterBoost.baseline), shAfter: comma(D.stackhunterBoost.afterWeek1),
       shGain: D.stackhunterBoost.afterWeek1 - D.stackhunterBoost.baseline,
       shPct: "+" + dp((D.stackhunterBoost.afterWeek1 - D.stackhunterBoost.baseline) / D.stackhunterBoost.baseline * 100, 1) + "%",
-      sh3Gain: D.stackhunterBoost.subsNow - D.stackhunterBoost.baseline,                                  // 350 - 292 = 58
-      sh3Pct: "+" + dp((D.stackhunterBoost.subsNow - D.stackhunterBoost.baseline) / D.stackhunterBoost.baseline * 100, 1) + "%",   // 58 / 292 = 19.9%
+      sh3Gain: D.stackhunterBoost.subsNow - D.stackhunterBoost.baseline,                                  // 352 - 292 = 60
+      sh3Pct: "+" + dp((D.stackhunterBoost.subsNow - D.stackhunterBoost.baseline) / D.stackhunterBoost.baseline * 100, 1) + "%",   // 60 / 292 = 20.5%
       shCtl: "+" + dp((D.stackhunterBoost.control.end - D.stackhunterBoost.control.start) / D.stackhunterBoost.control.start * 100, 1) + "%",   // comparison writer, same-length week: 7 / 345 = 2.0%
       control: D.featureLift.controlMultiple, reach: D.featureLift.reach, stackhunters: D.featureLift.stackhunters
     };
