@@ -13,7 +13,7 @@ archive.css       styling for the archive homepage
 images/           homepage images: the Human Curators banner and the About photo
 reports/
   2026-q3/        one complete, frozen report
-    index.html    the report page
+    q32026boardreport.html    the report page (named q + quarter + year + boardreport)
     data.js       every number and sentence for this report  <- the only file you edit
     calc.js       formulas
     render.js     draws the page and charts
@@ -24,21 +24,21 @@ reports/
 
 **Every report is self-contained.** Each folder has its own copy of the code, data and images, so an old report never changes when you build a new one, and each one opens on its own.
 
-Inside a report the flow is always: `data.js` (numbers) → `calc.js` (formulas) → `render.js` (draws) → `index.html` (the page).
+Inside a report the flow is always: `data.js` (numbers) → `calc.js` (formulas) → `render.js` (draws) → the report page, e.g. `q32026boardreport.html`.
 
 ## Starting a new quarter (e.g. 2026 Q4)
 
-1. **Copy the folder.** Copy `reports/2026-q3` and name the copy `reports/2026-q4` (folder names: year, dash, lowercase quarter).
+1. **Copy the folder.** Copy `reports/2026-q3` and name the copy `reports/2026-q4` (folder names: year, dash, lowercase quarter). Inside the copy, rename the report page from `q32026boardreport.html` to `q42026boardreport.html` (q + quarter number + year + `boardreport.html`), so every report link reads the same way.
 2. **Edit `reports/2026-q4/data.js`:**
    - `meta`: change `quarterLabel` to `"Q4 2026"`, set `asOf` to today, bump `version`.
    - `closedQuarters`: add the quarter that just ended (key, season, new subscribers, active days) using its final numbers from the Q3 report.
    - `current`: describe the new quarter (`key: "Q4"`, `season`, `start`, `end`, `startSubsDate`, `inactive` days off, and this quarter's Sources numbers).
    - `series`: add new dated subscriber totals; the last date must equal `meta.asOf`. Make sure `startSubsDate` (the day before the quarter starts) has an entry.
    - `recent90`, `sinceLaunch`, `notes`, `recommenders`, `capacity.nextMilestone`, and the sentences in `copy` and `quotes`: refresh as needed.
-3. **Add one entry to `reports.js`** (copy the existing block; change `id`, `label`, `season`, `asOf`, `subscribers`, `status`). The archive sorts newest-first by itself.
-4. **Check it.** Open `reports/2026-q4/index.html?debug=1`. Every line should start with ✓. A ⚠ means something doesn't add up; fix it before sharing.
+3. **Add one entry to `reports.js`** (copy the existing block; change `id`, `file`, `label`, `season`, `asOf`, `subscribers`, `status`). The archive sorts newest-first by itself.
+4. **Check it.** Open `reports/2026-q4/q42026boardreport.html?debug=1`. Every line should start with ✓. A ⚠ means something doesn't add up; fix it before sharing.
 5. **Close out the old one.** In `reports.js`, change the finished quarter's `status` from `"In progress"` to `"Final"`. Leave its folder alone.
-6. **Section numbers and "In this report".** The five numbered sections and the contents list are written directly in the report's `index.html`, so a copied report keeps them automatically.
+6. **Section numbers and "In this report".** The five numbered sections and the contents list are written directly in the report page (`q42026boardreport.html`), so a copied report keeps them automatically.
 7. Commit to GitHub. The site updates in a minute or two.
 
 The trajectory chart's height grows automatically once you pass 1,000 subscribers.
