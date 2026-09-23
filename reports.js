@@ -6,6 +6,8 @@
 
    Each report:
      id         the folder name inside /reports/ (must match exactly)
+     file       the report page inside that folder. Naming rule: q + quarter number + year + boardreport.html,
+                e.g. "q32026boardreport.html", "q42026boardreport.html", "q12027boardreport.html"
      label      the big name on the card, e.g. "2026 · Q4"
      season     the small line under it
      asOf       the date the report's numbers are current to (YYYY-MM-DD)
@@ -16,6 +18,7 @@
 window.BOARD_REPORTS = [
   {
     id: "2026-q3",
+    file: "q32026boardreport.html",
     label: "2026 · Q3",
     season: "SPROUT · JUL – SEP",
     asOf: "2026-09-23",
@@ -28,5 +31,5 @@ window.BOARD_REPORTS = [
 window.BOARD_ARCHIVE = {
   title: "Board Reports",
   publication: "NOT RISING Magazine",
-  intro: "Hi, Human. In a world where money talks loudest, we're on a mission to make humanity louder. Board Reports track our performance against that mission. All reports are open-source because this publication reports to the people, not capital."
+  intro: "Hi, Human. In a world where money talks loudest, we're on a mission to make humanity louder. Board Reports track our performance against that mission. All reports are open-source because this publication answers to humans, not capital."
 };
