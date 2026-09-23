@@ -131,7 +131,7 @@
       g += `<text x="${L - 10}" y="${Y(v) + 5}" fill="#666" font-family="Space Mono,monospace" font-size="12" text-anchor="end">${lab}</text>`;
     });
     g += `<line x1="${L}" y1="${Y(expansion)}" x2="${W - Rt}" y2="${Y(expansion)}" stroke="#C79B4A" stroke-width="1.5" stroke-dasharray="5,4"/>`;
-    g += `<text x="${W - Rt}" y="${Y(expansion) - 10}" fill="#C79B4A" font-family="Space Mono,monospace" font-size="12" text-anchor="end">EXPAND THE NETWORK HERE</text>`;
+    g += `<text x="${W - Rt}" y="${Y(expansion) - 10}" fill="#9a9a92" font-family="Space Mono,monospace" font-size="12" text-anchor="end">EXPAND THE NETWORK HERE</text>`;
     let d = "";
     for (let t = t0; t <= t1; t += 8) d += (d ? "L" : "M") + X(t).toFixed(1) + "," + Y(Nt(t)).toFixed(1);
     g += `<path d="${d}" fill="none" stroke="#8FA86A" stroke-width="3"/>`;
