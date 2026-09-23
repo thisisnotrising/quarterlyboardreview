@@ -4,6 +4,7 @@
 html, body { background:#000 !important; }
 body { color:#FFF; font-family:'Barlow',sans-serif; font-weight:300; max-width:920px; margin:0 auto !important; padding:0 0 60px; min-height:100vh; }
 
+.headline { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(34px, 6vw + 8px, 76px); line-height:1; letter-spacing:.01em; padding:40px var(--gutter) 24px; }
 .banner { display:block; width:100%; height:auto; border-bottom:1px solid #222; }
 .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }   /* hidden visually, still read by screen readers and search */
 
