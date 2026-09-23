@@ -58,7 +58,7 @@
     else warn("meta.asOf (" + asOf + ") is not the last date in series (" + latest[0] + ")");
 
     M.meta = {
-      eyebrow: "NOT RISING · BOARD SNAPSHOT · DATA AS OF " + longDate(toDate(asOf)).toUpperCase(),
+      eyebrow: "NOT RISING · " + D.current.key + " BOARD REPORT · DATA AS OF " + longDate(toDate(asOf)).toUpperCase(),
       stamp: "Last updated " + longDate(toDate(asOf)) + " · " + D.meta.version,
       monthYear: toDate(asOf).toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" }),
       motto: D.meta.motto, site: D.meta.site
