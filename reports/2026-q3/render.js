@@ -85,7 +85,7 @@
   /* ---------- 4a. TRAJECTORY CHART ---------- */
   (function () {
     const T_ = M.trajectory, series = T_.series;
-    const W = 880, H = 880, L = 52, Rt = 16, T = 18, B = 34, pw = W - L - Rt, ph = H - T - B;
+    const W = 880, H = 375, L = 52, Rt = 16, T = 18, B = 34, pw = W - L - Rt, ph = H - T - B;
     const t0 = new Date(series[0][0]).getTime(), t1 = new Date(series[series.length - 1][0]).getTime();
     const yMax = T_.yMax, yMin = 0;              // yMax comes from calc.js and grows with the subscriber count
     const X = ts => L + (ts - t0) / (t1 - t0) * pw;             // date  -> horizontal position
@@ -120,7 +120,7 @@
   /* ---------- 4b. S-CURVE CHART (logistic growth: N(t) = K / (1 + e^(-r t))) ---------- */
   (function () {
     const { K, r0: r, N, tNow, expansionPct } = M.capacity;
-    const W = 880, H = 880, L = 64, Rt = 20, T = 22, B = 42, pw = W - L - Rt, ph = H - T - B;
+    const W = 880, H = 375, L = 64, Rt = 20, T = 22, B = 42, pw = W - L - Rt, ph = H - T - B;
     const Nt = t => K / (1 + Math.exp(-r * t));
     const t0 = -600, t1 = 600;
     const X = t => L + (t - t0) / (t1 - t0) * pw, Y = n => T + ph - n / K * ph;
@@ -138,8 +138,9 @@
     const xN = X(tNow), yN = Y(N);
     g += `<line x1="${xN}" y1="${T}" x2="${xN}" y2="${T + ph}" stroke="#3a3a3a" stroke-dasharray="3,4"/>`;
     g += `<circle cx="${xN}" cy="${yN}" r="7" fill="#FFF"/>`;
-    g += `<text x="${xN + 14}" y="${yN - 6}" fill="#FFF" font-family="Barlow Condensed,sans-serif" font-weight="900" font-size="24">${N} today</text>`;
-    g += `<text x="${xN + 14}" y="${yN + 16}" fill="#9a9a92" font-family="Space Mono,monospace" font-size="12">${expansionPct}% of the way to expansion</text>`;
+    const yLab = T + ph * 0.35;      // the label sits high up the dashed line, in the empty area above the curve (in the wide, short chart the curve would run through it if it sat beside the dot)
+    g += `<text x="${xN + 14}" y="${yLab}" fill="#FFF" font-family="Barlow Condensed,sans-serif" font-weight="900" font-size="24">${N} today</text>`;
+    g += `<text x="${xN + 14}" y="${yLab + 22}" fill="#9a9a92" font-family="Space Mono,monospace" font-size="12">${expansionPct}% of the way to expansion</text>`;
     g += `<text x="${L}" y="${H - 12}" fill="#666" font-family="Space Mono,monospace" font-size="12">TIME →</text>`;
     document.getElementById("scurve").innerHTML = g;
   })();
