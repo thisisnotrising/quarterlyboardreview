@@ -239,8 +239,8 @@ window.BOARD_DATA = {
 
     missionLede: "What happens to a writer's subscriber count after we put them on the cover of NOT RISING.",
     missionControlBody: "A featured writer grew roughly ten times faster than a same-size writer we didn't feature, over the identical window.",
-    stackhunterBoostBody: "In their first week of Stackhunting, one Stackhunter went from {{impact.shBaseline}} to {{impact.shAfter}} subscribers: {{impact.shGain}} new subscribers, including their first paid subscriber. Self-reported by the Stackhunter.",
-    stackhunterBoostBody2: "Three months in, they have gained {{impact.sh3Gain}} subscribers, {{impact.sh3Pct}} on the same starting count.",
+    stackhunterBoostBody: "A Stackhunter self-reported gaining {{impact.shGain}} new subscribers and their first paid one within week 1 of Stackhunting.",
+    stackhunterBoostBody2: "Three months in, they've gained {{impact.sh3Pct}}.",
     missionReachBody: "Combined subscribers our curators can amplify a writer into — the discovery range we offer the people we feature. Five curators and three editorial directors.",
 
     healthLede: "The Logistic S-Curve Model is an evidence-based framework for predicting growth inside a bounded population. We use it to trigger two decisions: if the system needs tending, and when to expand it.",
