@@ -4,12 +4,10 @@
 html, body { background:#000 !important; }
 body { color:#FFF; font-family:'Barlow',sans-serif; font-weight:300; max-width:920px; margin:0 auto !important; padding:0 0 60px; min-height:100vh; }
 
-.top { padding:56px var(--gutter) 40px; border-bottom:1px solid #222; }
-.eyebrow { font-family:'Space Mono',monospace; font-size:15px; letter-spacing:.2em; color:#666; padding-bottom:24px; }
-h1 { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(44px, 7vw + 16px, 96px); line-height:.98; letter-spacing:-.01em; }
-.intro { font-size:19px; color:#999; line-height:1.6; max-width:640px; padding-top:22px; }
+.banner { display:block; width:100%; height:auto; border-bottom:1px solid #222; }
+.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }   /* hidden visually, still read by screen readers and search */
 
-.label { font-family:'Space Mono',monospace; font-size:13px; letter-spacing:.2em; color:#666; padding:36px var(--gutter) 14px; }
+.label { font-family:'Space Mono',monospace; font-size:13px; letter-spacing:.2em; color:#666; padding:32px var(--gutter) 14px; }
 
 a.card { display:block; text-decoration:none; color:inherit; border:1px solid #222; background:#0b0b0b; padding:22px 24px; }
 a.card:hover { border-color:#8FA86A; }
@@ -30,3 +28,12 @@ a.card:hover { border-color:#8FA86A; }
 
 .foot { padding:44px var(--gutter) 0; font-family:'Space Mono',monospace; font-size:12px; color:#555; line-height:1.8; }
 .foot a { color:#777; }
+
+/* About block: photo beside the description */
+.about { display:flex; gap:clamp(20px, 4vw, 40px); align-items:center; padding:56px var(--gutter) 0; }
+.about img { width:min(46%, 400px); height:auto; flex-shrink:0; display:block; }
+.about-text p { font-size:clamp(17px, 1vw + 12px, 22px); line-height:1.6; color:#bdbdb5; }
+.about-links { padding-top:20px; font-family:'Space Mono',monospace; font-size:13px; letter-spacing:.08em; }
+.about-links a { color:#8FA86A; text-decoration:none; }
+.about-links a:hover { color:#fff; }
+@media (max-width:620px) { .about { flex-direction:column; align-items:stretch; } .about img { width:100%; } }

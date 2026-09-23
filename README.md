@@ -8,8 +8,9 @@ The site is plain HTML, CSS and JavaScript. No build step, no installs. Double-c
 
 ```
 index.html        archive homepage (the front door; you never edit it)
-reports.js        THE LIST of reports. Add one entry here per new quarter.
+reports.js        THE LIST of reports (+ the About sentence). Add one entry here per new quarter.
 archive.css       styling for the archive homepage
+images/           homepage images: the Human Curators banner and the About photo
 reports/
   2026-q3/        one complete, frozen report
     index.html    the report page
@@ -17,7 +18,7 @@ reports/
     calc.js       formulas
     render.js     draws the page and charts
     style.css     look and feel
-    images/       banner + byline photo
+    images/       this report's banner
   2026-q4/        (added later: a copy of the folder above)
 ```
 
@@ -37,7 +38,8 @@ Inside a report the flow is always: `data.js` (numbers) → `calc.js` (formulas)
 3. **Add one entry to `reports.js`** (copy the existing block; change `id`, `label`, `season`, `asOf`, `subscribers`, `status`). The archive sorts newest-first by itself.
 4. **Check it.** Open `reports/2026-q4/index.html?debug=1`. Every line should start with ✓. A ⚠ means something doesn't add up; fix it before sharing.
 5. **Close out the old one.** In `reports.js`, change the finished quarter's `status` from `"In progress"` to `"Final"`. Leave its folder alone.
-6. Commit to GitHub. The site updates in a minute or two.
+6. **Section numbers and "In this report".** The five numbered sections and the contents list are written directly in the report's `index.html`, so a copied report keeps them automatically.
+7. Commit to GitHub. The site updates in a minute or two.
 
 The trajectory chart's height grows automatically once you pass 1,000 subscribers.
 
@@ -73,7 +75,7 @@ The trajectory chart's height grows automatically once you pass 1,000 subscriber
 
 ## Putting it online (GitHub Pages)
 
-1. Upload everything in this folder to the top level of the repository, keeping the `reports/` folder structure (`index.html`, `reports.js`, `archive.css`, `README.md`, and the `reports` folder).
+1. Open the unzipped folder, select everything **inside** it (`index.html`, `reports.js`, `archive.css`, `README.md`, `images`, `reports`), and drag those items onto GitHub's upload page. Do not drag the outer folder itself.
 2. Repository → **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `main`, folder `/ (root)` → Save.**
 3. After a minute or two the site is live at `https://thisisnotrising.github.io/quarterlyboardreview/`. A report lives at `.../reports/2026-q3/`.
 4. To refresh later: open a report's `data.js` on GitHub, click the pencil (Edit), change the numbers, click **Commit changes**.

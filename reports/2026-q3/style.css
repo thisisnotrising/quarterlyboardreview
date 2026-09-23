@@ -12,10 +12,6 @@ body { background:#000 !important; color:#FFF !important; font-family:'Barlow',s
 .hero-title em { font-style:normal; color:#FFF; }
 .method a { color:#9a9a92; border-bottom:1px solid #444; text-decoration:none; }
 .method a:hover { color:#c8c8c0; border-bottom-color:#8FA86A; }
-.byline { display:flex; align-items:center; gap:14px; margin-top:20px; padding-top:18px; border-top:1px solid #222; }
-.byline img { width:52px; height:52px; border-radius:50%; object-fit:cover; flex-shrink:0; border:1px solid #333; }
-.byline-name { font-family:'Barlow',sans-serif; font-size:16px; color:#FFF; font-weight:600; }
-.byline-role { font-family:'Space Mono',monospace; font-size:13px; color:#777; letter-spacing:.04em; margin-top:3px; text-transform:uppercase; }
 .hero-sub { font-family:'Barlow',sans-serif; font-weight:300; font-size:20px; color:#999; margin-top:18px; max-width:600px; line-height:1.6; }
 
 .divider { padding:20px var(--gutter); background:#0a0a0a; border-bottom:1px solid #222; }
@@ -149,3 +145,26 @@ i[data-bind] { font-style: normal; }
 .backbar{padding:18px var(--gutter) 0;}
 .backbar a{font:700 12px 'Space Mono',monospace;letter-spacing:.12em;color:#9a9a92;text-decoration:none;}
 .backbar a:hover{color:#fff;}
+
+/* ---------- numbered section bars (the dropdowns) ---------- */
+.divider { padding:26px var(--gutter); background:#0d0d0d; border-top:1px solid #222; border-bottom:1px solid #222; border-left:4px solid #8FA86A; }
+details.group > summary:hover .divider, details.community > summary:hover .divider { background:#141414; }
+.divider-label { display:flex; align-items:baseline; gap:18px; width:100%; color:#fff; }
+.divider-label .sec-num { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(40px, 5vw + 10px, 64px); line-height:1; color:#8FA86A; letter-spacing:-.01em; }
+.divider-label .sec-name { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(26px, 3.4vw + 8px, 42px); line-height:1.05; text-transform:uppercase; letter-spacing:.01em; color:#fff; }
+details.group > summary .divider-label::after, details.community > summary .divider-label::after { content:'▸'; margin-left:auto; font-size:26px; color:#8FA86A; align-self:center; }
+details.group[open] > summary .divider-label::after, details.community[open] > summary .divider-label::after { content:'▾'; }
+
+/* ---------- "In this report" contents ---------- */
+.toc { margin-top:28px; padding-top:22px; border-top:1px solid #222; }
+.toc-title { font-family:'Space Mono',monospace; font-size:14px; letter-spacing:.16em; color:#9a9a92; text-transform:uppercase; padding-bottom:12px; }
+.toc ol { list-style:none; }
+.toc li a { display:flex; align-items:baseline; gap:16px; padding:9px 0; border-bottom:1px solid #1a1a1a; text-decoration:none; color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:clamp(20px, 1.6vw + 12px, 28px); text-transform:uppercase; letter-spacing:.02em; }
+.toc li a:hover { color:#8FA86A; }
+.toc-num { font-family:'Space Mono',monospace; font-weight:700; font-size:14px; color:#8FA86A; letter-spacing:.06em; min-width:26px; }
+
+/* ---------- community dropdown ---------- */
+details.community { padding-top:24px; }   /* padding, not margin: margins are zeroed globally */
+details.community > summary { list-style:none; cursor:pointer; }
+details.community > summary::-webkit-details-marker { display:none; }
+.community-quotes { padding-top:24px; }

@@ -144,6 +144,19 @@
     document.getElementById("scurve").innerHTML = g;
   })();
 
+  /* ---------- 4c. "In this report" links: open the section you click, then scroll to it ---------- */
+  function openSection(id) {
+    const el = document.getElementById(id);
+    if (!el || el.tagName !== "DETAILS") return false;
+    el.open = true;
+    el.scrollIntoView({ block: "start" });
+    return true;
+  }
+  document.querySelectorAll(".toc a").forEach(a => a.addEventListener("click", e => {
+    if (openSection(a.getAttribute("href").slice(1))) { e.preventDefault(); history.replaceState(null, "", a.getAttribute("href")); }
+  }));
+  if (location.hash) openSection(location.hash.slice(1));      // a link like ...#grp-health opens that section on arrival
+
   /* ---------- 5. self-checks: shown in the console, and on the page with ?debug=1 ---------- */
   M.checks.forEach(c => (c.level === "warn" ? console.warn : console.log)("[board check] " + c.msg));
   if (/[?&]debug=1/.test(location.search)) {
