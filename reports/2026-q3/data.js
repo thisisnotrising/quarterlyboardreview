@@ -172,8 +172,8 @@ window.BOARD_DATA = {
     baseline: 292,          // their subscribers when Stackhunting began
     afterWeek1: 307,        // their subscribers after week 1
     paidSubsWeek1: 1,       // their first paid subscriber came in week 1
-    subsNow: 350,           // their subscribers now (about 3 months in); gain = 350 - 292
-    /* Comparison: a same-size writer who is NOT Stackhunting (from the Feature Lift Tracker: 345 -> 352 over a 7-day window) */
+    subsNow: 352,           // their subscribers now (about 3 months in); gain = 352 - 292 = 60
+    /* Comparison: +2.0% in a week, the known benchmark for a comparable writer (a publication this size) who is NOT Stackhunting (Feature Lift Tracker: 345 -> 352) */
     control: { start: 345, end: 352 }
   },
 
