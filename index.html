@@ -17,7 +17,7 @@
 <body>
 
 <!-- Banner first, then straight to the latest report. -->
-<h1 class="headline">NOT RISING &middot; BOARD REPORTS</h1>
+<h1 class="headline" id="headline"><span class="ln">NOT RISING<span class="dot"> &middot;</span></span> <span class="ln">BOARD REPORTS</span></h1>
 <img class="banner" src="images/human-curators-banner.jpg" alt="Meet the Human Curators">
 
 <div class="label">LATEST REPORT</div>
@@ -40,6 +40,21 @@
 /* Reads window.BOARD_REPORTS (from reports.js), sorts newest first, and writes the cards. */
 (function () {
   "use strict";
+  /* Headline auto-fit: measure the text at 100px, then scale it so the widest line exactly fills the width.
+     On a desktop it is one line ("NOT RISING · BOARD REPORTS"); on a phone (CSS in archive.css) it stacks into two lines. */
+  function fitHeadline() {
+    const h = document.getElementById("headline"), lines = [...h.querySelectorAll(".ln")];
+    const cs = getComputedStyle(h), avail = h.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    h.style.fontSize = "100px";
+    const r = document.createRange(), stacked = getComputedStyle(lines[0]).display === "block";
+    const width = stacked ? Math.max(...lines.map(l => { r.selectNodeContents(l); return r.getBoundingClientRect().width; }))
+                          : (r.selectNodeContents(h), r.getBoundingClientRect().width);
+    h.style.fontSize = Math.min(110, Math.floor((100 * avail / width) * 0.995 * 2) / 2) + "px";
+  }
+  fitHeadline();
+  window.addEventListener("resize", fitHeadline);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitHeadline);   // re-fit once Barlow Condensed has loaded
+
   const A = window.BOARD_ARCHIVE, list = (window.BOARD_REPORTS || []).slice();
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const fmtDate = iso => new Date(iso + "T00:00:00Z").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
