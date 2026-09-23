@@ -200,6 +200,12 @@
       liftMax: "+" + dp(Math.max(...lifts), 1) + "%",      // best single lift
       liftMedian: "+" + dp(median(lifts), 1) + "%",        // middle lift across counted writers
       writersCounted: lifts.length,
+      /* Stackhunter growth boost (self-reported): week-1 gain / starting count.  (307 - 292) / 292 = 15 / 292 = 5.1% */
+      shBaseline: comma(D.stackhunterBoost.baseline), shAfter: comma(D.stackhunterBoost.afterWeek1),
+      shGain: D.stackhunterBoost.afterWeek1 - D.stackhunterBoost.baseline,
+      shPct: "+" + dp((D.stackhunterBoost.afterWeek1 - D.stackhunterBoost.baseline) / D.stackhunterBoost.baseline * 100, 1) + "%",
+      sh3Gain: D.stackhunterBoost.gain3Months,
+      sh3Pct: "+" + dp(D.stackhunterBoost.gain3Months / D.stackhunterBoost.baseline * 100, 1) + "%",     // 60 / 292 = 20.5%
       control: D.featureLift.controlMultiple, reach: D.featureLift.reach, stackhunters: D.featureLift.stackhunters
     };
 
