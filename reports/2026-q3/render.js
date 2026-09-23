@@ -1,5 +1,5 @@
 /* ==========================================================================
-   render.js  —  pours the calculated numbers (M) and your words (D.copy) into index.html
+   render.js  —  pours the calculated numbers (M) and your words (D.copy) into the report page (q32026boardreport.html)
    and draws the two charts. You normally never edit this file.
 
    Four jobs, in order:
