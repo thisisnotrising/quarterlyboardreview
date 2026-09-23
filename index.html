@@ -17,8 +17,8 @@
 <body>
 
 <!-- Banner first, then straight to the latest report. -->
+<h1 class="headline">NOT RISING &middot; QUARTERLY BOARD REVIEWS</h1>
 <img class="banner" src="images/human-curators-banner.jpg" alt="Meet the Human Curators">
-<h1 class="sr-only" id="title"></h1>
 
 <div class="label">LATEST REPORT</div>
 <div class="wrap latest" id="latest"></div>
@@ -35,8 +35,6 @@
   </div>
 </div>
 
-<div class="foot">Each report is a frozen, self-contained snapshot: its own numbers, its own code, its own images. Older reports never change when a new one is added.</div>
-
 <script src="reports.js"></script>
 <script>
 /* Reads window.BOARD_REPORTS (from reports.js), sorts newest first, and writes the cards. */
@@ -47,7 +45,6 @@
   const fmtDate = iso => new Date(iso + "T00:00:00Z").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
   const comma = n => Number(n).toLocaleString("en-US");
 
-  document.getElementById("title").textContent = A.title;
   document.getElementById("intro").textContent = A.intro;
 
   list.sort((a, b) => (a.asOf < b.asOf ? 1 : a.asOf > b.asOf ? -1 : 0));      // newest first
