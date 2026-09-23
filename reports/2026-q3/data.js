@@ -165,6 +165,16 @@ window.BOARD_DATA = {
     stackhunters: "8"
   },
 
+  /* WHERE: reported to us directly by one Stackhunter (self-reported, not from Substack Analytics).
+     Their own subscriber count on their first day of Stackhunting, and at the end of week 1.
+     The page works out the gain and the % boost from these two numbers. */
+  stackhunterBoost: {
+    baseline: 292,          // their subscribers when Stackhunting began
+    afterWeek1: 307,        // their subscribers after week 1
+    paidSubsWeek1: 1,       // their first paid subscriber came in week 1
+    gain3Months: 60         // total subscribers gained over their first 3 months of Stackhunting
+  },
+
   /* ---------------------------------------------------------------------
      9. SYSTEM HEALTH & CAPACITY — the S-curve model
      --------------------------------------------------------------------- */
@@ -229,6 +239,8 @@ window.BOARD_DATA = {
 
     missionLede: "What happens to a writer's subscriber count after we put them on the cover of NOT RISING.",
     missionControlBody: "A featured writer grew roughly ten times faster than a same-size writer we didn't feature, over the identical window.",
+    stackhunterBoostBody: "In their first week of Stackhunting, one Stackhunter went from {{impact.shBaseline}} to {{impact.shAfter}} subscribers: {{impact.shGain}} new subscribers, including their first paid subscriber. Self-reported by the Stackhunter.",
+    stackhunterBoostBody2: "Three months in, they have gained {{impact.sh3Gain}} subscribers, {{impact.sh3Pct}} on the same starting count.",
     missionReachBody: "Combined subscribers our curators can amplify a writer into — the discovery range we offer the people we feature. Five curators and three editorial directors.",
 
     healthLede: "The Logistic S-Curve Model is an evidence-based framework for predicting growth inside a bounded population. We use it to trigger two decisions: if the system needs tending, and when to expand it.",
