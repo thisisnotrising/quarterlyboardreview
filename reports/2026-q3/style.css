@@ -36,6 +36,7 @@ details.group[open] > summary .divider-label::after { content:' ▾'; }
 
 .section { padding:44px var(--gutter); border-bottom:1px solid #222; }
 .section-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(24px, 1.6vw + 18px, 31px); margin-bottom:6px; }
+.impact-group-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(20px, 1.2vw + 15px, 25px); color:#fff; padding:36px 0 10px; border-bottom:1px solid #222; margin-bottom:0; }   /* the three sub-headings inside Impact on Mission */
 .section-lede { font-family:'Barlow',sans-serif; font-size:18px; color:#888; max-width:620px; margin-bottom:28px; line-height:1.6; }
 
 .method { margin-top:16px; max-width:640px; border-left:2px solid #333; padding-left:14px; }
