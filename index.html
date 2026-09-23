@@ -63,7 +63,7 @@
   document.getElementById("intro").textContent = A.intro;
 
   list.sort((a, b) => (a.asOf < b.asOf ? 1 : a.asOf > b.asOf ? -1 : 0));      // newest first
-  const href = r => "reports/" + encodeURIComponent(r.id) + "/index.html";
+  const href = r => "reports/" + encodeURIComponent(r.id) + "/" + encodeURIComponent(r.file);   // e.g. reports/2026-q3/q32026boardreport.html
   const meta = r => '<div class="card-meta"><span class="status' + (r.status === "Final" ? "" : " open") + '">' + esc(r.status).toUpperCase() + "</span>" +
                     "<span>AS OF <b>" + fmtDate(r.asOf) + "</b></span><span><b>" + comma(r.subscribers) + "</b> SUBSCRIBERS</span></div>";
 
