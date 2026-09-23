@@ -165,10 +165,10 @@ details.group[open] > summary .divider-label::after, details.community[open] > s
 .toc-num { font-family:'Space Mono',monospace; font-weight:700; font-size:14px; color:#9a9a92; letter-spacing:.06em; min-width:26px; }
 
 /* ---------- community dropdown ---------- */
-details.community { padding-top:24px; }   /* padding, not margin: margins are zeroed globally */
+details.community { border:none; }   /* full width, exactly like details.group, so 05 lines up with 01-04 */
 details.community > summary { list-style:none; cursor:pointer; }
 details.community > summary::-webkit-details-marker { display:none; }
-.community-quotes { padding-top:24px; }
+.community-quotes { padding:24px var(--gutter) 0; }
 
 /* ---------- links: white, bold, underlined. Green/yellow/red are reserved for indicator stats, never links or commentary ---------- */
 .section a, .callout-panel a, .callout-headliner a, .section-lede a { color:#fff; font-weight:700; text-decoration:underline; text-underline-offset:3px; }
