@@ -2,11 +2,12 @@
    render.js  —  pours the calculated numbers (M) and your words (D.copy) into the report page (q32026boardreport.html)
    and draws the two charts. You normally never edit this file.
 
-   Four jobs, in order:
+   Five jobs, in order:
      1. fill every  data-bind="..."   with a calculated value
      2. fill every  data-copy="..."   with a sentence from data.js (swapping {{tokens}} for numbers)
      3. build the tables from lists of rows
-     4. draw the two SVG charts (trajectory, S-curve)
+     4. draw the two SVG charts (trajectory, S-curve) using the colours in style.css
+     5. wire up the buttons (open/close sections) and run the self-checks
    ========================================================================== */
 
 (function () {
@@ -23,6 +24,11 @@
     if (v === undefined) { M.checks.push({ level: "warn", msg: "sentence uses {{" + path + "}} but calc.js has no such value" }); return "⚠"; }
     return v;
   });
+
+  /* Chart colours come from style.css (the --ink, --ink-3 ... list), so there is ONE place to change them. */
+  const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const C = { ink: css("--ink"), ink2: css("--ink-2"), ink3: css("--ink-3"), line: css("--line"), panel: css("--panel") };
+  const HEAD = "Barlow Condensed, Arial Narrow, sans-serif", MONO = "Space Mono, Courier New, monospace";
 
   document.title = "NOT RISING · " + D.meta.reportTitle + " · " + D.meta.quarterLabel;   // browser tab title
 
@@ -57,7 +63,7 @@
   const tables = {
     sinceLaunch: () => M.sinceLaunch.rows.map((r, i) =>
       '<tr' + (r.best ? ' class="best"' : "") + "><td>" + r.name + "</td>" + td(r.views) + td(r.users) + td(r.subs) +
-      '<td class="num">' + (r.best ? '<span class="rate hi">' + r.share + "</span>" : r.share) + "</td></tr>").join(""),
+      '<td class="num">' + (r.best ? '<span class="rate">' + r.share + "</span>" : r.share) + "</td></tr>").join(""),
 
     quarters: () => M.quarters.map(q =>
       '<div class="qcell' + (q.open ? " open" : "") + '"><div class="qname">' + q.key + '</div><div class="qseason">' + q.season + (q.open ? " ●" : "") + "</div>" +
@@ -92,27 +98,27 @@
     const Y = v => T + ph - (v - yMin) / (yMax - yMin) * ph;    // count -> vertical position
     let svg = "";
     T_.yTicks.forEach(v => {
-      svg += `<line x1="${L}" y1="${Y(v)}" x2="${W - Rt}" y2="${Y(v)}" stroke="#1e1e1e" stroke-width="1"/>`;
-      svg += `<text x="${L - 10}" y="${Y(v) + 4}" fill="#666" font-family="Space Mono,monospace" font-size="15" text-anchor="end">${v}</text>`;
+      svg += `<line x1="${L}" y1="${Y(v)}" x2="${W - Rt}" y2="${Y(v)}" stroke="${C.line}" stroke-width="1"/>`;
+      svg += `<text x="${L - 10}" y="${Y(v) + 5}" fill="${C.ink3}" font-family="${MONO}" font-size="16" text-anchor="end">${v.toLocaleString("en-US")}</text>`;
     });
     const xLaunch = X(new Date(T_.launchDate).getTime());
-    svg += `<rect x="${L}" y="${T}" width="${xLaunch - L}" height="${ph}" fill="rgba(255,255,255,0.03)"/>`;
-    svg += `<text x="${L + 8}" y="${T + 14}" fill="#888" font-family="Space Mono,monospace" font-size="14">BEFORE LAUNCH</text>`;
-    svg += `<line x1="${xLaunch}" y1="${T}" x2="${xLaunch}" y2="${T + ph}" stroke="#555" stroke-width="1.5" stroke-dasharray="4,3"/>`;
-    svg += `<text x="${xLaunch + 6}" y="${T + 14}" fill="#9a9a92" font-family="Space Mono,monospace" font-size="14">ENGINE LAUNCH · JAN 2026</text>`;
+    svg += `<rect x="${L}" y="${T}" width="${xLaunch - L}" height="${ph}" fill="${C.panel}"/>`;
+    svg += `<text x="${L + 8}" y="${T + 18}" fill="${C.ink3}" font-family="${MONO}" font-size="14">BEFORE LAUNCH</text>`;
+    svg += `<line x1="${xLaunch}" y1="${T}" x2="${xLaunch}" y2="${T + ph}" stroke="${C.ink3}" stroke-width="1.5" stroke-dasharray="4,3"/>`;
+    svg += `<text x="${xLaunch + 8}" y="${T + 18}" fill="${C.ink2}" font-family="${MONO}" font-size="14">ENGINE LAUNCH · JAN 2026</text>`;
     const pts = series.map(([d, v]) => [X(new Date(d).getTime()), Y(v)]);
     const line = pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" ");
-    svg += `<path d="${line} L${pts[pts.length - 1][0]},${T + ph} L${pts[0][0]},${T + ph} Z" fill="rgba(143,168,106,0.13)"/>`;
-    svg += `<path d="${line}" fill="none" stroke="#8FA86A" stroke-width="2.5"/>`;
+    svg += `<path d="${line} L${pts[pts.length - 1][0]},${T + ph} L${pts[0][0]},${T + ph} Z" fill="rgba(17,17,17,0.07)"/>`;
+    svg += `<path d="${line}" fill="none" stroke="${C.ink}" stroke-width="2.5" stroke-linejoin="round"/>`;
     [[series.findIndex(p => p[0] === T_.baselineDate), String(T_.baseline)], [series.length - 1, String(T_.latest)]].forEach(([i, label]) => {
       const [x, y] = pts[i];
-      svg += `<circle cx="${x}" cy="${y}" r="4.5" fill="#8FA86A"/>`;
-      svg += `<text x="${x - 8}" y="${y - 10}" fill="#FFF" font-family="Barlow Condensed,sans-serif" font-weight="900" font-size="22" text-anchor="end">${label}</text>`;
+      svg += `<circle cx="${x}" cy="${y}" r="5" fill="${C.ink}"/>`;
+      svg += `<text x="${x - 10}" y="${y - 10}" fill="${C.ink}" font-family="${HEAD}" font-weight="700" font-size="22" text-anchor="end">${label}</text>`;
     });
     /* month labels along the bottom: the ones listed in data.js, plus the latest date (labelled automatically) */
     T_.xLabels.concat([[T_.latestDate, M.meta.monthYear, "end"]]).forEach(([d, label, anchor]) => {
       const x = X(new Date(d).getTime());
-      svg += `<text x="${x}" y="${H - 12}" fill="#666" font-family="Space Mono,monospace" font-size="15" text-anchor="${anchor}">${label}</text>`;
+      svg += `<text x="${x}" y="${H - 12}" fill="${C.ink3}" font-family="${MONO}" font-size="16" text-anchor="${anchor}">${label}</text>`;
     });
     document.getElementById("traj").innerHTML = svg;
   })();
@@ -127,21 +133,21 @@
     const expansion = D.capacity.expansionPoint;
     let g = "";
     [[0, "0"], [expansion, expansion.toLocaleString("en-US")], [K / 2, (K / 2).toLocaleString("en-US")], [K, K.toLocaleString("en-US")]].forEach(([v, lab]) => {
-      g += `<line x1="${L}" y1="${Y(v)}" x2="${W - Rt}" y2="${Y(v)}" stroke="#1e1e1e"/>`;
-      g += `<text x="${L - 10}" y="${Y(v) + 5}" fill="#666" font-family="Space Mono,monospace" font-size="12" text-anchor="end">${lab}</text>`;
+      g += `<line x1="${L}" y1="${Y(v)}" x2="${W - Rt}" y2="${Y(v)}" stroke="${C.line}"/>`;
+      g += `<text x="${L - 10}" y="${Y(v) + 5}" fill="${C.ink3}" font-family="${MONO}" font-size="15" text-anchor="end">${lab}</text>`;
     });
-    g += `<line x1="${L}" y1="${Y(expansion)}" x2="${W - Rt}" y2="${Y(expansion)}" stroke="#C79B4A" stroke-width="1.5" stroke-dasharray="5,4"/>`;
-    g += `<text x="${W - Rt}" y="${Y(expansion) - 10}" fill="#9a9a92" font-family="Space Mono,monospace" font-size="12" text-anchor="end">EXPAND THE NETWORK HERE</text>`;
+    g += `<line x1="${L}" y1="${Y(expansion)}" x2="${W - Rt}" y2="${Y(expansion)}" stroke="${C.ink3}" stroke-width="1.5" stroke-dasharray="5,4"/>`;
+    g += `<text x="${W - Rt}" y="${Y(expansion) - 10}" fill="${C.ink2}" font-family="${MONO}" font-size="14" text-anchor="end">EXPAND THE NETWORK HERE</text>`;
     let d = "";
     for (let t = t0; t <= t1; t += 8) d += (d ? "L" : "M") + X(t).toFixed(1) + "," + Y(Nt(t)).toFixed(1);
-    g += `<path d="${d}" fill="none" stroke="#8FA86A" stroke-width="3"/>`;
+    g += `<path d="${d}" fill="none" stroke="${C.ink}" stroke-width="3" stroke-linejoin="round"/>`;
     const xN = X(tNow), yN = Y(N);
-    g += `<line x1="${xN}" y1="${T}" x2="${xN}" y2="${T + ph}" stroke="#3a3a3a" stroke-dasharray="3,4"/>`;
-    g += `<circle cx="${xN}" cy="${yN}" r="7" fill="#FFF"/>`;
+    g += `<line x1="${xN}" y1="${T}" x2="${xN}" y2="${T + ph}" stroke="${C.ink3}" stroke-dasharray="3,4"/>`;
+    g += `<circle cx="${xN}" cy="${yN}" r="7" fill="${C.ink}" stroke="#fff" stroke-width="2"/>`;
     const yLab = T + ph * 0.35;      // the label sits high up the dashed line, in the empty area above the curve (in the wide, short chart the curve would run through it if it sat beside the dot)
-    g += `<text x="${xN + 14}" y="${yLab}" fill="#FFF" font-family="Barlow Condensed,sans-serif" font-weight="900" font-size="24">${N} today</text>`;
-    g += `<text x="${xN + 14}" y="${yLab + 22}" fill="#9a9a92" font-family="Space Mono,monospace" font-size="12">${expansionPct}% of the way to expansion</text>`;
-    g += `<text x="${L}" y="${H - 12}" fill="#666" font-family="Space Mono,monospace" font-size="12">TIME →</text>`;
+    g += `<text x="${xN + 14}" y="${yLab}" fill="${C.ink}" font-family="${HEAD}" font-weight="700" font-size="26">${N} today</text>`;
+    g += `<text x="${xN + 14}" y="${yLab + 24}" fill="${C.ink2}" font-family="${MONO}" font-size="14">${expansionPct}% of the way to expansion</text>`;
+    g += `<text x="${L}" y="${H - 12}" fill="${C.ink3}" font-family="${MONO}" font-size="14">TIME →</text>`;
     document.getElementById("scurve").innerHTML = g;
   })();
 
@@ -158,13 +164,20 @@
   }));
   if (location.hash) openSection(location.hash.slice(1));      // a link like ...#grp-health opens that section on arrival
 
+  /* ---------- 4d. "▴ COLLAPSE" buttons: close their section and scroll back to its top ---------- */
+  document.querySelectorAll("[data-collapse]").forEach(btn => btn.addEventListener("click", () => {
+    const group = btn.closest("details.group");
+    group.open = false;
+    group.scrollIntoView({ block: "start" });
+  }));
+
   /* ---------- 5. self-checks: shown in the console, and on the page with ?debug=1 ---------- */
   M.checks.forEach(c => (c.level === "warn" ? console.warn : console.log)("[board check] " + c.msg));
   if (/[?&]debug=1/.test(location.search)) {
     const box = document.getElementById("debug");
-    box.style.cssText = "display:block;max-width:920px;margin:24px auto;padding:16px 20px;border:1px solid #333;font:13px/1.6 'Space Mono',monospace;color:#9a9a92";
-    box.innerHTML = "<b style='color:#fff'>DATA CHECKS</b><br>" + M.checks.map(c => (c.level === "warn" ? "⚠ " : "✓ ") + c.msg).join("<br>") +
-      "<br><br><b style='color:#fff'>MONTHLY GROWTH</b><br>basis: " + M.monthly.basis + " (" + M.monthly.months + " months) · opening " + M.monthly.startSubs +
+    box.style.cssText = "display:block;max-width:920px;margin:24px auto;padding:16px 20px;border:1px solid #D8D8D4;font:13px/1.6 'Space Mono',monospace;color:#444";
+    box.innerHTML = "<b style='color:#111'>DATA CHECKS</b><br>" + M.checks.map(c => (c.level === "warn" ? "⚠ " : "✓ ") + c.msg).join("<br>") +
+      "<br><br><b style='color:#111'>MONTHLY GROWTH</b><br>basis: " + M.monthly.basis + " (" + M.monthly.months + " months) · opening " + M.monthly.startSubs +
       " · channel rows sum " + M.monthly.channelSum + "<br>net " + M.monthly.net + "% · gross " + M.monthly.gross + "% · gap " + M.monthly.gap +
       " pts · other basis (" + M.monthly.altBasis + ") would show net " + M.monthly.altNet + "%";
   }

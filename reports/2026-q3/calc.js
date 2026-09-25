@@ -9,7 +9,7 @@
    Every formula has a comment saying (a) what it means and (b) how to do it by hand.
 
    The function computeModel(D) returns "M": a big tidy object of ready-to-show text,
-   e.g.  M.kpi.total = "931".   render.js pours M into the page.
+   e.g.  M.kpi.total = "936".   render.js pours M into the page.
    ========================================================================== */
 
 (function () {
@@ -67,7 +67,9 @@
     /* ================= 1. THE FIVE KPIs ================= */
     const baseline = countOn(D.launch.baselineDate);        // 122 subscribers the day before launch
     const pre = D.launch.preLaunch;                         // 23 new subs in 43 days before launch
-    const avgPerDay = D.recent90.newSubs / D.recent90.days; // KPI 2: new subs in last 90 days / 90   (388 / 90 = 4.31)
+    const cur = D.current;                                  // the quarter this report is about
+    const elapsedDays = daysBetween(cur.start, asOf) + 1;   // calendar days from the quarter's first day through the as-of date (Jul 1 -> Sep 25 = 87)
+    const avgPerDay = cur.newSubs / elapsedDays;            // KPI 2: this quarter's new subs / calendar days so far   (374 / 87 = 4.30)
     const preRate = pre.newSubs / pre.days;                 // 23 / 43 = 0.535 per day before launch
     const expansionPct = pctOf(N, D.capacity.expansionPoint);
 
@@ -76,18 +78,16 @@
        Step 2  "Gross" ending balance = opening + every new subscriber Substack recorded this quarter,
                counted the way Sources counts them: each channel's subscribers added up (network + direct-to-app
                + direct + external). A few people are credited to two channels, so this runs a little high.
-       Step 3  "Net" ending balance   = what Substack's Overview shows today (931).
+       Step 3  "Net" ending balance   = what Substack's Overview shows today (936).
        Step 4  Turn each into a compound MONTHLY rate:   (ending / opening) ^ (1 / months) - 1
                "months" = length of the window in months (days / 30.4375, the average month).
        Step 5  Unexplained gap = gross rate minus net rate. Not called churn (Clerk's Rule): it can't yet be
                separated into real unsubscribes vs double-counting.                                          */
-    const cur = D.current;      // the quarter this report is about
     const startSubs = countOn(cur.startSubsDate);
     const net3 = cur.network;
     const networkSubs = net3.notes + net3.profilePage + net3.recommendations + net3.substackApp + net3.liveStream + net3.trackbacksOnboarding;
-    const channelSum = networkSubs + cur.directToApp.subs + cur.direct.subs + cur.external.subs;   // Sources rows added up (372)
+    const channelSum = networkSubs + cur.directToApp.subs + cur.direct.subs + cur.external.subs;   // Sources rows added up (381)
     const quarterDays = daysBetween(cur.start, cur.end) + 1;                                          // 92 days in Jul-Sep
-    const elapsedDays = daysBetween(cur.start, asOf) + 1;                                            // days from Jul 1 through today
     const MONTH = 30.4375;                                                                           // 365.25 / 12
     const months = (D.monthlyGrowthBasis === "elapsed" ? elapsedDays : quarterDays) / MONTH;
     const netMonthly   = (Math.pow(N / startSubs, 1 / months) - 1) * 100;
@@ -104,11 +104,11 @@
 
     M.kpi = {
       total: comma(N),
-      upSinceLaunchPct: Math.round(((N - baseline) / baseline) * 100),   // (931 - 122) / 122 = 663%
+      upSinceLaunchPct: Math.round(((N - baseline) / baseline) * 100),   // (936 - 122) / 122 = 667%
       avgPerDay: dp(avgPerDay, 2),
       preLaunchPerDay: dp(D.launch.preLaunch.perDayLocked || preRate, 2),
-      growthVsPre: dp(avgPerDay / preRate, 1),                            // 4.31 / 0.535 = 8.1x
-      expansionPct: Math.round(expansionPct),                             // 931 / 2500 = 37%
+      growthVsPre: dp(avgPerDay / preRate, 1),                            // 4.30 / 0.535 = 8.0x
+      expansionPct: Math.round(expansionPct),                             // 936 / 2500 = 37%
       expansionOf: comma(D.capacity.expansionPoint),
       monthlyNet: netShown, monthlyGross: grossShown, monthlyGap: gapShown
     };
@@ -124,12 +124,12 @@
 
     /* ================= 3. SINCE-LAUNCH CHANNEL TABLE ================= */
     const rows = D.sinceLaunch.rows;
-    const total = sum(rows.map(r => r.subs));               // 951 gross new subscribers since launch
+    const total = sum(rows.map(r => r.subs));               // 961 gross new subscribers since launch
     const restackSubs = sum(rows.filter(r => r.restack).map(r => r.subs));   // Notes + profile page
     M.sinceLaunch = {
       total: comma(total),
       restackSubs: comma(restackSubs),
-      restackSharePct: Math.round(pctOf(restackSubs, total)),               // 710 / 951 = 75%
+      restackSharePct: Math.round(pctOf(restackSubs, total)),               // 718 / 961 = 75%
       rows: rows.map((r, i) => ({
         name: r.name, views: nice(r.views), users: nice(r.users), subs: comma(r.subs),
         share: dp(pctOf(r.subs, total), 1) + "%", best: i === 0
@@ -150,13 +150,13 @@
 
     /* ================= 5. CURRENT-QUARTER CONVERSION TABLE ================= */
     const curN = cur.newSubs;
-    const netConv = pctOf(networkSubs, net3.visitors);                       // 304 / 1681 = 18.1%
+    const netConv = pctOf(networkSubs, net3.visitors);                       // 311 / 1714 = 18.1%
     const share = s => shareLabel(pctOf(s, curN));                              // share of the quarter's new subscribers
     const sub = (name, subs, note) => ({ name, subs: comma(subs), share: share(subs), note: note || "" });
     const recsLow = cur.network.recommendations / D.recommenders;              // 28 / 50 = 0.56
-    const offVisitors = cur.direct.visitors + cur.external.visitors;            // direct + external = 704
+    const offVisitors = cur.direct.visitors + cur.external.visitors;            // direct + external = 709
     const offSubs = cur.direct.subs + cur.external.subs;
-    const offConv = pctOf(offSubs, offVisitors);                              // 1 / 704 = 0.14%
+    const offConv = pctOf(offSubs, offVisitors);                              // 1 / 709 = 0.14%
     M.current = {
       key: cur.key,
       newSubs: comma(curN),
@@ -172,7 +172,7 @@
       directToApp: { visitors: comma(cur.directToApp.visitors), subs: comma(cur.directToApp.subs), conv: dp(pctOf(cur.directToApp.subs, cur.directToApp.visitors), 1), share: share(cur.directToApp.subs), cls: convClass(pctOf(cur.directToApp.subs, cur.directToApp.visitors)) },
       direct:      { visitors: comma(cur.direct.visitors),      subs: comma(cur.direct.subs),      conv: dp(pctOf(cur.direct.subs, cur.direct.visitors), 1),           share: share(cur.direct.subs),      cls: convClass(pctOf(cur.direct.subs, cur.direct.visitors)) },
       external:    { visitors: comma(cur.external.visitors),    subs: comma(cur.external.subs),    conv: dp(pctOf(cur.external.subs, cur.external.visitors), 1),        share: share(cur.external.subs),    cls: convClass(pctOf(cur.external.subs, cur.external.visitors)) },
-      readingRestack: { subs: comma(net3.notes + net3.profilePage), sharePct: Math.round(pctOf(net3.notes + net3.profilePage, curN)) },   // (175 + 72) / 365 = 68%
+      readingRestack: { subs: comma(net3.notes + net3.profilePage), sharePct: Math.round(pctOf(net3.notes + net3.profilePage, curN)) },   // (181 + 73) / 374 = 68%
       offPlatform: { subsPhrase: offSubs + (offSubs === 1 ? " subscriber" : " subscribers"), visitors: offVisitors, visitorsRounded: comma(Math.round(offVisitors / 100) * 100), subs: offSubs, conv: dp(offConv, 2), convRound: dp(offConv, 1) }
     };
     if (net3.subsFromSources !== undefined) {
@@ -225,9 +225,9 @@
       copyKey: { healthy: "healthBodyHealthy", below: "healthBodyBelow", above: "healthBodyAbove" }[verdict]
     };
 
-    /* Next Fibonacci milestone: how many days at today's 90-day pace, vs the target date */
+    /* Next Fibonacci milestone: how many days at this quarter's pace so far, vs the target date */
     const ms = cap.nextMilestone;
-    const daysToGo = Math.round((ms.subs - N) / avgPerDay);                     // (987 - 931) / 4.31 = 13 days
+    const daysToGo = Math.round((ms.subs - N) / avgPerDay);                     // (987 - 936) / 4.30 = 12 days
     const projected = addDays(asOf, daysToGo);
     const early = daysBetween(projected.toISOString().slice(0, 10), ms.targetDate);   // days ahead of target (positive = early)
     const weeks = Math.round(Math.abs(early) / 7);

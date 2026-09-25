@@ -22,8 +22,8 @@ window.BOARD_DATA = {
   meta: {
     reportTitle: "Board Report",   // shown in the browser tab
     quarterLabel: "Q3 2026",                     // also used by the archive page
-    asOf: "2026-09-23",   // must equal the LAST date in "series" below (the page checks this)
-    version: "v1.2",      // v1.1 -> v1.2 ... whatever you like
+    asOf: "2026-09-25",   // must equal the LAST date in "series" below (the page checks this)
+    version: "v1.3",      // v1.1 -> v1.2 ... whatever you like
     publication: "Hi, Human",
     site: "thisisnotrising.org",
     motto: "Human in control. Not human in the loop."
@@ -42,7 +42,7 @@ window.BOARD_DATA = {
     ["2026-04-01", 466], ["2026-04-20", 520], ["2026-05-10", 564], ["2026-05-25", 590],
     ["2026-06-20", 610], ["2026-06-30", 627], ["2026-07-14", 683], ["2026-08-03", 746],
     ["2026-08-19", 803], ["2026-08-30", 841], ["2026-09-10", 890], ["2026-09-22", 926],
-    ["2026-09-23", 931]
+    ["2026-09-23", 931], ["2026-09-25", 936]
   ],
 
   /* ---------------------------------------------------------------------
@@ -56,11 +56,10 @@ window.BOARD_DATA = {
   },
 
   /* ---------------------------------------------------------------------
-     4. LAST-90-DAYS PACE — drives "Average new subscribers / day"
-     WHERE: Substack > Analytics > Sources > "90 days" > New subscribers tab: read the TOTAL.
-     (Total = the Substack-network number divided by its percentage, or add the unique sources.)
+     4. (removed) "Average new subscribers / day" is now worked out in calc.js from
+        current.newSubs (section 6 below) divided by the calendar days from the quarter's
+        start to the as-of date. There is nothing to type in for it.
      --------------------------------------------------------------------- */
-  recent90: { newSubs: 388, days: 90 },
 
   /* ---------------------------------------------------------------------
      5. SINCE-LAUNCH CHANNEL TABLE
@@ -72,18 +71,18 @@ window.BOARD_DATA = {
      --------------------------------------------------------------------- */
   sinceLaunch: {
     rows: [
-      { name: "Notes",               views: null,   users: null,  subs: 494, restack: true },
-      { name: "substack.com",        views: null,   users: null,  subs: 216, restack: true },   // = Sources "Other" (253) minus "Substack app" (37)
-      { name: "Direct to app",       views: 7076,   users: 3221,  subs: 130 },
+      { name: "Notes",               views: null,   users: null,  subs: 501, restack: true },
+      { name: "substack.com",        views: null,   users: null,  subs: 217, restack: true },   // = Sources "Other" (254) minus "Substack app" (37)
+      { name: "Direct to app",       views: 7150,   users: 3256,  subs: 132 },
       { name: "Recommendations",     views: null,   users: null,  subs: 51 },
-      { name: "Substack app",        views: 12189,  users: 3851,  subs: 37 },
-      { name: "Direct",              views: 7399,   users: 2770,  subs: 7 },
+      { name: "Substack app",        views: 12314,  users: 3894,  subs: 37 },
+      { name: "Direct",              views: 7427,   users: 2782,  subs: 7 },
       { name: "Substack trackbacks", views: null,   users: null,  subs: 5 },
       { name: "Substack onboarding", views: null,   users: null,  subs: 3 },
       { name: "Substack live stream",views: null,   users: null,  subs: 3 },
       { name: "Substack chat",       views: null,   users: null,  subs: 2 },
       { name: "google.com",          views: 39,     users: 31,    subs: 2 },
-      { name: "instagram.com",       views: 35,     users: 32,    subs: 1 }
+      { name: "instagram.com",       views: 37,     users: 34,    subs: 1 }
     ]
   },
 
@@ -107,23 +106,23 @@ window.BOARD_DATA = {
     end: "2026-09-30",                    // quarter length (92 days) feeds the monthly-growth formula
     startSubsDate: "2026-06-30",          // count on this date (from "series") = opening balance for the quarter (627)
     inactive: [["2026-09-07", "2026-09-11"]],   // days off, subtracted from the quarter's "active days" (pace)
-    newSubs: 365,                          // WHERE: Sources > custom Jul 1 -> today > New subscribers: TOTAL
+    newSubs: 374,                          // WHERE: Sources > custom Jul 1 -> today > New subscribers: TOTAL
 
     /* Substack-network subscribers, split (Sources > New subscribers, Jul 1 -> today).
        "Other" on Substack = profile page + Substack app. Split it with Stats > Traffic > "substack app" > Free subs. */
     network: {
-      visitors: 1681,                      // Sources > Unique visitors tab > "Substack" total
-      subsFromSources: 304,                // Sources > New subscribers tab > "Substack" row. The page checks that the split below adds up to this.
-      notes: 175,
-      profilePage: 72,                     // = Sources "Other" (95) minus Traffic "substack app" (23)
+      visitors: 1714,                      // Sources > Unique visitors tab > "Substack" total
+      subsFromSources: 311,                // Sources > New subscribers tab > "Substack" row. The page checks that the split below adds up to this.
+      notes: 181,
+      profilePage: 73,                     // = Sources "Other" (96) minus Traffic "substack app" (23)
       recommendations: 28,
       substackApp: 23,
       liveStream: 3,
       trackbacksOnboarding: 3              // trackbacks (2) + onboarding (1)
     },
-    directToApp: { visitors: 1145, subs: 67 },
-    direct:      { visitors: 568,  subs: 0 },
-    external:    { visitors: 136,  subs: 1 }   // social + email + own website + search + AI combined
+    directToApp: { visitors: 1180, subs: 69 },
+    direct:      { visitors: 571,  subs: 0 },
+    external:    { visitors: 138,  subs: 1 }   // social + email + own website + search + AI combined
   },
 
   /* WHERE: Substack > Audience > Recommendations: "Substacks recommending you" */
@@ -192,9 +191,9 @@ window.BOARD_DATA = {
 
   /* ---------------------------------------------------------------------
      10. MONTHLY GROWTH — which "month" the growth is divided across
-     "quarter"  = divide by the length of the WHOLE quarter (92 days). This reproduces the
-                  13.8% / 16.6% you published on Sep 22.
-     "elapsed"  = divide by days elapsed so far (85 days). Higher number, arguably truer mid-quarter.
+     "quarter"  = divide by the length of the WHOLE quarter (92 days). The 13.8% you published on
+                  Sep 22 was this same formula at 926 subscribers; it rises as the count grows.
+     "elapsed"  = divide by days elapsed so far (87 days). Higher number, arguably truer mid-quarter.
      --------------------------------------------------------------------- */
   monthlyGrowthBasis: "quarter",
 
@@ -234,7 +233,7 @@ window.BOARD_DATA = {
     notesCalloutTitle: "Fast Four Fridays convert the most",
     notesCallout: [
       "The four Fast Four Friday notes take every one of Q3's top four restack counts. Aug 21 and Aug 28 converted best, at 1.15% and 1.14%.",
-      "<strong>Likes don't predict conversion; restacks do.</strong> \"Life is hard as fuck\" drew 184 likes, the most of any note, and converted worst at 0.34%.",
+      "<strong>Likes don't predict conversion; restacks do.</strong> \"Life is hard as fuck\" drew 184 likes, the most of any note, and converted worst among the notes that converted anyone, at 0.34%.",
       "Every note at 9+ restacks converted someone; the only note that converted no one was also the lowest-restack."
     ],
     notesMethodology: "Engagement rate = likes + replies + restacks, divided by impressions. Table sorted by restack count, most first.",

@@ -13,10 +13,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#000000">
-<title>NOT RISING · Board Report</title>   <!-- render.js replaces this with the title from data.js -->
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Barlow:ital,wght@0,300;0,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#FFFFFF">
+<title>NOT RISING · Board Report</title><!-- render.js replaces this with the title from data.js -->
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -83,7 +82,7 @@
 <div class="section">
   <div class="section-title">Current Trajectory</div>
   <div class="section-lede" data-copy="trajectoryLede"></div>
-  <div class="chart-wrap" style="aspect-ratio:880/375; height:auto"><svg id="traj" viewBox="0 0 880 375" style="width:100%;height:100%"></svg></div>
+  <div class="chart-scroll"><div class="chart-wrap"><svg id="traj" viewBox="0 0 880 375"></svg></div></div>
 </div>
 
 <div class="section">
@@ -99,7 +98,7 @@
   </div>
 </div>
 
-<div class="collapse-end"><button onclick="this.closest('details.group').open=false;this.closest('details.group').scrollIntoView({block:'start'})">▴ COLLAPSE</button></div>
+<div class="collapse-end"><button type="button" data-collapse>▴ COLLAPSE</button></div>
 </details>
 
 <!-- ============================ 2. QUARTERLY BREAKDOWN ============================ -->
@@ -129,7 +128,7 @@
 
   <details class="method"><summary>Methodology</summary><div data-copy="conversionMethodology"></div></details>
 
-  <div class="two-col" style="margin-top:24px">
+  <div class="two-col gap-top">
     <div class="stat-block">
       <div class="stat-block-label">SUBSTACK CHANNELS · VISITOR-TO-SUBSCRIBER RATE</div>
       <div class="stat-block-num good"><i data-bind="current.network.conv"></i>%</div>
@@ -158,51 +157,51 @@
   <details class="method"><summary>Methodology</summary><div data-copy="notesMethodology"></div></details>
 </div>
 
-<div class="collapse-end"><button onclick="this.closest('details.group').open=false;this.closest('details.group').scrollIntoView({block:'start'})">▴ COLLAPSE</button></div>
+<div class="collapse-end"><button type="button" data-collapse>▴ COLLAPSE</button></div>
 </details>
 
 <!-- ============================ 3. IMPACT ON MISSION ============================ -->
 <details class="group" id="grp-mission"><summary><div class="divider"><div class="divider-label"><span class="sec-num">03</span><span class="sec-name">Impact on mission</span></div></div></summary>
 <div class="section">
   <div class="section-title">Impact on Mission</div>
-  <div class="impact-group-title" style="padding-top:18px">Impact on writers featured on the cover of NOT RISING</div>
-  <div class="section-lede" style="padding:14px 0 18px" data-copy="missionLede"></div>
+  <div class="impact-group-title">Impact on writers featured on the cover of NOT RISING</div>
+  <div class="section-lede" data-copy="missionLede"></div>
   <div class="two-col">
     <div class="stat-block">
       <div class="stat-block-label">MEDIAN SUBSCRIBER GROWTH BOOST</div>
-      <div class="stat-block-num good"><i data-bind="impact.liftMedian"></i></div>
+      <div class="stat-block-num plain"><i data-bind="impact.liftMedian"></i></div>
       <div class="stat-block-body">Median boost across featured writers, with the best single lift at <i data-bind="impact.liftMax"></i>.</div>
     </div>
     <div class="stat-block">
       <div class="stat-block-label">VS. CONTROL GROUP · GROWTH RATE</div>
-      <div class="stat-block-num good"><i data-bind="impact.control"></i></div>
+      <div class="stat-block-num plain"><i data-bind="impact.control"></i></div>
       <div class="stat-block-body" data-copy="missionControlBody"></div>
     </div>
   </div>
   <div class="impact-group-title">Impact on writers featured in Stackhunter Restacks</div>
-  <div class="stat-block" style="margin-top:24px">
+  <div class="stat-block">
     <div class="stat-block-label">DECENTRALIZED EDITORIAL NETWORK REACH · ACROSS <i data-bind="impact.stackhunters"></i> STACKHUNTERS</div>
-    <div class="stat-block-num good"><i data-bind="impact.reach"></i></div>
+    <div class="stat-block-num plain"><i data-bind="impact.reach"></i></div>
     <div class="stat-block-body" data-copy="missionReachBody"></div>
   </div>
   <div class="impact-group-title">Impact on Stackhunters</div>
-  <div class="stat-block" style="margin-top:24px">
+  <div class="stat-block">
     <div class="stat-block-label">STACKHUNTER GROWTH BOOST · WEEK 1 OF STACKHUNTING</div>
-    <div class="stat-block-num good"><i data-bind="impact.shPct"></i></div>
+    <div class="stat-block-num plain"><i data-bind="impact.shPct"></i></div>
     <div class="stat-block-body" data-copy="stackhunterBoostBody"></div>
-    <div class="stat-block-body" style="padding-top:10px" data-copy="stackhunterBoostBody2"></div>
+    <div class="stat-block-body" data-copy="stackhunterBoostBody2"></div>
   </div>
 </div>
 
-<div class="collapse-end"><button onclick="this.closest('details.group').open=false;this.closest('details.group').scrollIntoView({block:'start'})">▴ COLLAPSE</button></div>
+<div class="collapse-end"><button type="button" data-collapse>▴ COLLAPSE</button></div>
 </details>
 
 <!-- ============================ 4. SYSTEM HEALTH & CAPACITY ============================ -->
 <details class="group" id="grp-health"><summary><div class="divider"><div class="divider-label"><span class="sec-num">04</span><span class="sec-name">System health &amp; capacity</span></div></div></summary>
 <div class="section">
   <div class="section-title">System Health &amp; Capacity</div>
-  <div class="chart-wrap" style="aspect-ratio:880/375; height:auto"><svg id="scurve" viewBox="0 0 880 375" style="width:100%;height:100%"></svg></div>
-  <div class="section-lede" style="margin-top:20px; margin-bottom:28px" data-copy="healthLede"></div>
+  <div class="chart-scroll"><div class="chart-wrap"><svg id="scurve" viewBox="0 0 880 375"></svg></div></div>
+  <div class="section-lede after-chart" data-copy="healthLede"></div>
   <div class="two-col">
     <div class="stat-block">
       <div class="stat-block-label">SYSTEM HEALTH</div>
@@ -215,28 +214,28 @@
       <div class="stat-block-body" data-copy="milestoneBody"></div>
     </div>
   </div>
-  <div class="two-col" style="margin-top:24px">
+  <div class="two-col gap-top">
     <div class="stat-block">
       <div class="stat-block-label">PROGRESS TO EXPANSION POINT</div>
-      <div class="stat-block-num good"><i data-bind="capacity.expansionPct"></i>%</div>
+      <div class="stat-block-num plain"><i data-bind="capacity.expansionPct"></i>%</div>
       <div class="stat-block-body"><i data-bind="capacity.subs"></i> of <i data-bind="capacity.expansionOf"></i> subscribers · <i data-bind="capacity.monthsRange"></i> away at current pace.</div>
     </div>
     <div class="stat-block">
       <div class="stat-block-label">TIME BEFORE PHASE 2</div>
-      <div class="stat-block-num good" data-bind="capacity.monthsRange"></div>
+      <div class="stat-block-num plain" data-bind="capacity.monthsRange"></div>
       <div class="stat-block-body" data-copy="phase2Body"></div>
     </div>
   </div>
 </div>
 
-<div class="collapse-end"><button onclick="this.closest('details.group').open=false;this.closest('details.group').scrollIntoView({block:'start'})">▴ COLLAPSE</button></div>
+<div class="collapse-end"><button type="button" data-collapse>▴ COLLAPSE</button></div>
 </details>
 
 <!-- ============================ COMMUNITY + FOOTER ============================ -->
 <details class="group" id="grp-community">
   <summary><div class="divider"><div class="divider-label"><span class="sec-num">05</span><span class="sec-name" data-copy="quotesSummary"></span></div></div></summary>
   <div class="community-quotes" data-quotes></div>
-  <div class="collapse-end"><button onclick="this.closest('details.group').open=false;this.closest('details.group').scrollIntoView({block:'start'})">▴ COLLAPSE</button></div>
+  <div class="collapse-end"><button type="button" data-collapse>▴ COLLAPSE</button></div>
 </details>
 
 <div class="section">

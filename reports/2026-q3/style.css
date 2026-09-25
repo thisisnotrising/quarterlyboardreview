@@ -1,173 +1,225 @@
-:root { --gutter: clamp(20px, 4vw, 40px); }
-* { margin:0 !important; padding:0; box-sizing:border-box; }
-html { background:#000 !important; min-height:100%; }
-body { background:#000 !important; color:#FFF !important; font-family:'Barlow',sans-serif; font-weight:300; max-width:920px; margin:0 auto !important; padding:0 0 60px; min-height:100vh; }
-.hero, .section, .divider, .footer, details.group, .kpi-strip, .kpi { background:#000; }
+/* ==========================================================================
+   style.css  —  the LOOK of the quarterly report (white page, black/gray text).
+   --------------------------------------------------------------------------
+   HOW TO READ THIS FILE (for a first-time coder)
+   - A rule looks like:   .kpi-num { font-size: 40px; color: var(--ink); }
+     ".kpi-num" is WHICH part of the page; the lines inside { } are HOW it looks.
+   - "var(--ink)" means "use the colour named --ink from the list just below".
+     Change a colour in ONE place (the list) and the whole page follows.
+   - "/* ... */" is a comment: a note to humans, ignored by the browser.
+   - The landing page (index.html) has its own file, archive.css, and stays black.
 
-.hero { padding:56px var(--gutter) 40px; border-bottom:1px solid #222; }
-.hero-eyebrow { font-family:'Space Mono',monospace; font-size:15px; letter-spacing:0.2em; color:#666; padding-bottom:clamp(16px, 3vw, 28px); }
-.hero-banner { display:block; width:100%; height:auto; border:1px solid #222; margin-bottom:clamp(20px, 3vw, 32px); }
-.hero-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(40px, 6vw + 16px, 92px); line-height:0.98; letter-spacing:-0.01em; max-width:720px; }
-.hero-title.hero-main { font-size:clamp(48px, 7vw + 20px, 108px); }
-.hero-title em { font-style:normal; color:#FFF; }
-.method a { color:#fff; font-weight:700; text-decoration:underline; text-underline-offset:3px; }
-.method a:hover { color:#bdbdb5; }
-.hero-sub { font-family:'Barlow',sans-serif; font-weight:300; font-size:20px; color:#999; margin-top:18px; max-width:600px; line-height:1.6; }
+   Sections:  1 fonts · 2 colours & sizes · 3 page frame · 4 header · 5 section bars
+              6 numbers & tables · 7 callouts · 8 charts · 9 quotes · 10 footer · 11 phones
+   ========================================================================== */
 
-.divider { padding:20px var(--gutter); background:#0a0a0a; border-bottom:1px solid #222; }
-details.group { border:none; }
-details.group > summary { list-style:none; cursor:pointer; }
-details.group > summary::-webkit-details-marker { display:none; }
-details.group > summary .divider { display:flex; align-items:center; justify-content:space-between; }
-details.group > summary .divider-label::after { content:' ▸'; color:#555; }
-details.group[open] > summary .divider-label::after { content:' ▾'; }
-.collapse-end { text-align:left; padding:8px 0 24px; }
-.collapse-end button { font-family:'Space Mono',monospace; font-size:13px; letter-spacing:0.1em; color:#7a7a72; background:none; border:1px solid #333; padding:6px 16px; cursor:pointer; }
-.collapse-end button:hover { color:#FFF; border-color:#888; }
-.divider-label { font-family:'Space Mono',monospace; font-size:16px; letter-spacing:0.18em; color:#9a9a92; }
 
-.kpi-strip { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); border-bottom:1px solid #222; }
-.kpi { padding:26px 18px; border-right:1px solid #222; border-bottom:1px solid #222; }
-.kpi:last-child { border-right:none; }
-.kpi-label { font-family:'Space Mono',monospace; font-size:14px; letter-spacing:0.12em; color:#777; margin-bottom:12px; }
-.kpi-num { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(30px, 2.5vw + 18px, 43px); line-height:0.9; color:#8FA86A; }
-.kpi-num span { font-size:21px; color:#888; font-weight:400; margin-left:3px; }
-.kpi-note { font-family:'Barlow',sans-serif; font-size:16px; color:#777; margin-top:8px; line-height:1.5; }
+/* ---------- 1. FONTS ----------
+   The font files live in the "fonts" folder next to this file, so the report looks the same
+   everywhere (no Google download, works offline). Each line names one weight of one font.
+   Only these weights exist, so nothing is ever "faked" by the browser (faked bold/italic is what looks blurry).
+     Barlow Condensed  600, 700, 700-italic  → headings and big numbers
+     Barlow            400, 400-italic, 600  → paragraphs
+     Space Mono        400, 700              → small labels and table numbers        */
+@font-face { font-family:'Barlow Condensed'; font-weight:600; font-style:normal; font-display:swap; src:url("fonts/barlow-condensed-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family:'Barlow Condensed'; font-weight:700; font-style:normal; font-display:swap; src:url("fonts/barlow-condensed-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family:'Barlow Condensed'; font-weight:700; font-style:italic; font-display:swap; src:url("fonts/barlow-condensed-latin-700-italic.woff2") format("woff2"); }
+@font-face { font-family:'Barlow'; font-weight:400; font-style:normal; font-display:swap; src:url("fonts/barlow-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family:'Barlow'; font-weight:400; font-style:italic; font-display:swap; src:url("fonts/barlow-latin-400-italic.woff2") format("woff2"); }
+@font-face { font-family:'Barlow'; font-weight:600; font-style:normal; font-display:swap; src:url("fonts/barlow-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family:'Space Mono'; font-weight:400; font-style:normal; font-display:swap; src:url("fonts/space-mono-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family:'Space Mono'; font-weight:700; font-style:normal; font-display:swap; src:url("fonts/space-mono-latin-700-normal.woff2") format("woff2"); }
 
-.section { padding:44px var(--gutter); border-bottom:1px solid #222; }
-.section-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(24px, 1.6vw + 18px, 31px); margin-bottom:6px; }
-.impact-group-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(20px, 1.2vw + 15px, 25px); color:#fff; padding:36px 0 10px; border-bottom:1px solid #222; margin-bottom:0; }   /* the three sub-headings inside Impact on Mission */
-.section-lede { font-family:'Barlow',sans-serif; font-size:18px; color:#888; max-width:620px; margin-bottom:28px; line-height:1.6; }
 
-.method { margin-top:16px; max-width:640px; border-left:2px solid #333; padding-left:14px; }
-.method summary { font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.1em; color:#7a7a72; cursor:pointer; list-style:none; }
-.method summary::-webkit-details-marker { display:none; }
-.method summary::before { content:'▸ '; color:#666; }
-.method[open] summary::before { content:'▾ '; }
-.method > div { font-family:'Barlow',sans-serif; font-size:14px; color:#888; font-style:italic; line-height:1.6; margin-top:10px; }
-details.group > summary { list-style:none; cursor:pointer; }
-details.group > summary::-webkit-details-marker { display:none; }
-details.group > summary .divider { display:flex; align-items:center; justify-content:space-between; }
-details.group > summary .divider-label::after { content:' ▸'; color:#555; }
-details.group[open] > summary .divider-label::after { content:' ▾'; }
-.collapse-end { text-align:center; padding:8px 0 24px; }
-.collapse-end button { font-family:'Space Mono',monospace; font-size:13px; letter-spacing:0.1em; color:#7a7a72; background:none; border:1px solid #333; padding:6px 16px; cursor:pointer; }
-.collapse-end button:hover { color:#FFF; border-color:#888; }
-.divider-label { color:#666; }
+/* ---------- 2. COLOURS & SIZES (change them here, once) ----------
+   Text is black or gray. Green / amber / red appear ONLY on indicator stats
+   (conversion rates, system health, milestone status), never on links or commentary.
+   Every text colour below passes the WCAG AA contrast test (4.5:1 or better) on white.       */
+:root {
+  --bg:      #FFFFFF;   /* page background */
+  --panel:   #F4F4F2;   /* light gray boxes (callouts, section bars) */
+  --ink:     #111111;   /* main text and big numbers: near-black */
+  --ink-2:   #444444;   /* secondary text (paragraphs under headings) */
+  --ink-3:   #5F5F5F;   /* small labels */
+  --line:    #D8D8D4;   /* thin divider lines */
+  --line-2:  #111111;   /* strong lines (left edges of callouts) */
 
-.chan-table tr.sub td { font-size:16px; }
-.callout-panel { border-left:3px solid #999; padding:18px 22px; margin:20px 0 8px; background:#141414; }
-.callout-panel h4 { font-family:'Space Mono',monospace; font-size:13px; letter-spacing:0.1em; color:#9a9a92; margin:0 0 8px; text-transform:uppercase; }
-.callout-panel p { font-family:'Barlow',sans-serif; font-size:17px; line-height:1.55; color:#c8c8c0; margin:0; }
-.callout-panel p + p { margin-top:10px; }
-.callout-panel p strong { color:#FFF; font-weight:600; }
-.callout-headliner { border-left:4px solid #999; padding:26px 30px; margin:0; background:#141414; }
-.callout-headliner h4 { font-family:'Space Mono',monospace; font-size:14px; letter-spacing:0.12em; color:#9a9a92; margin:0 0 10px; text-transform:uppercase; }
-.callout-headliner p { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(22px, 1.6vw + 16px, 30px); line-height:1.15; color:#FFF; margin:0; }
-.stat-block-body a { color:#FFF; font-weight:700; text-decoration:underline; text-underline-offset:3px; }
-.stat-block-body a:hover { color:#bdbdb5; }
-.stat-block-body { color:#444; }
-.limit-note { font-family:'Barlow',sans-serif; font-size:16px; color:#888; font-style:italic; max-width:640px; margin-top:16px; margin-bottom:8px; line-height:1.6; border-left:2px solid #333; padding-left:14px; }
+  --good:    #17703A;   /* green indicator */
+  --warn:    #9A5A00;   /* amber indicator */
+  --bad:     #B3261E;   /* red indicator */
 
-.table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; margin-bottom:8px; }
-.table-scroll .chan-table { min-width:640px; margin-bottom:0; }
-.chan-table { width:100%; border-collapse:collapse; margin-bottom:8px; }
-.chan-table th { font-family:'Space Mono',monospace; font-size:14px; letter-spacing:0.1em; color:#777; text-align:left; padding:10px 14px; border-bottom:1px solid #333; }
-.chan-table th.num, .chan-table td.num { text-align:right; }
-.chan-table td { font-family:'Barlow',sans-serif; font-size:18px; color:#ccc; padding:11px 14px; border-bottom:1px solid #161616; }
-.chan-table td.num { font-family:'Space Mono',monospace; }
-.chan-table tr.best td { color:#FFF; }
-.chan-table tr.sub td:first-child { padding-left:30px; color:#999; }
-
-.chan-table .rate { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:21px; }
-.chan-table .rate.hi { color:#8FA86A; }
-.chan-table .rate.mid { color:#C79B4A; }
-.chan-table .rate.red { color:#B85A5A; }
-
-.chan-table .rate.lo { color:#555; }
-.chan-table .subnote { font-family:'Barlow',sans-serif; font-size:15px; color:#666; display:block; margin-top:2px; font-style:italic; }
-
-.qtable { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1px; background:#222; margin-bottom:8px; }
-.qcell { background:#000; padding:20px; }
-.qcell.open { background:#0a0f0a; }
-.qname { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(22px, 1vw + 18px, 27px); }
-.qseason { font-family:'Space Mono',monospace; font-size:14px; color:#9a9a92; margin-top:2px; margin-bottom:16px; }
-.qrow { display:flex; justify-content:space-between; font-family:'Barlow',sans-serif; font-size:17px; color:#999; padding:5px 0; border-top:1px solid #1a1a1a; }
-.qrow:first-of-type { border-top:none; }
-.qrow b { color:#FFF; font-weight:400; font-family:'Space Mono',monospace; }
-
-.chart-wrap { height:140px; margin:8px 0 8px; }
-
-.two-col { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:32px; }
-.stat-block { padding:22px; border:1px solid #222; }
-.stat-block-label { font-family:'Space Mono',monospace; font-size:14px; letter-spacing:0.1em; color:#777; margin-bottom:10px; }
-.stat-block-num { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(28px, 1.8vw + 20px, 39px); line-height:1; margin-bottom:8px; }
-.stat-block-num.good { color:#8FA86A; }
-.stat-block-num.amber { color:#C79B4A; }
-.stat-block-body { font-family:'Barlow',sans-serif; font-size:17px; color:#999; line-height:1.6; }
-.stat-block-body b { color:#ccc; font-weight:400; }
-
-.note-cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1px; background:#222; margin-top:8px; }
-.quote-text { font-family:'Barlow',sans-serif; font-style:italic; font-size:18px; line-height:1.5; color:#ddd; margin-bottom:14px; }
-.quote-attr { font-family:'Space Mono',monospace; font-size:14px; color:#9a9a92; letter-spacing:.02em; }
-.rave-row { padding:20px 0; border-bottom:1px solid #1a1a1a; }
-.rave-row:last-child { border-bottom:none; }
-.rave { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-style:italic; font-size:clamp(22px, 1.6vw + 16px, 32px); line-height:1.22; color:#FFF; margin-bottom:8px; }
-.rave-sm { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-style:italic; font-size:clamp(17px, 0.9vw + 13px, 21px); line-height:1.3; color:#ddd; margin-bottom:8px; }
-.rave-lg { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-style:italic; font-size:clamp(28px, 2.4vw + 18px, 44px); line-height:1.15; color:#FFF; margin-bottom:10px; }
-.rave-row.center { text-align:center; }
-.rave-attr { font-family:'Space Mono',monospace; font-size:14px; color:#9a9a92; letter-spacing:.04em; text-transform:uppercase; }
-.scope-tag { display:inline-block; font-family:'Space Mono',monospace; font-size:14px; letter-spacing:0.1em; color:#9a9a92; border:1px solid #333; background:#141414; padding:3px 9px; margin-left:10px; vertical-align:middle; }
-.eff-row { display:flex; align-items:center; gap:16px; padding:12px 0; border-bottom:1px solid #1a1a1a; }
-.eff-row:last-child { border-bottom:none; }
-.eff-dot { width:12px; height:12px; border-radius:50%; flex-shrink:0; }
-.eff-dot.g { background:#5A9B5A; }
-.eff-dot.y { background:#C79B4A; }
-.eff-dot.r { background:#B85A5A; }
-.eff-name { font-family:'Barlow',sans-serif; font-size:18px; color:#ddd; width:180px; flex-shrink:0; }
-.eff-result { font-family:'Space Mono',monospace; font-size:16px; color:#888; }
-.note-card { background:#000; padding:20px; }
-.note-name { font-family:'Barlow',sans-serif; font-size:17px; color:#999; margin-bottom:14px; }
-.note-metrics { display:flex; gap:24px; }
-.note-metric-label { font-family:'Space Mono',monospace; font-size:13px; color:#666; letter-spacing:0.08em; }
-.note-metric-num { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:29px; margin-top:4px; }
-.note-conv { margin-top:14px; padding-top:14px; border-top:1px solid #1a1a1a; font-family:'Space Mono',monospace; font-size:16px; color:#8FA86A; }
-
-.footer { padding:32px var(--gutter); font-family:'Space Mono',monospace; font-size:14px; color:#444; letter-spacing:0.08em; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
-
-@media(max-width:640px){
-  .kpi{border-right:none;}
-  .chan-table{font-size:16px;}
+  --gutter:  clamp(20px, 4vw, 40px);       /* left/right padding of the page */
+  --f-head:  'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --f-body:  'Barlow', Arial, sans-serif;
+  --f-mono:  'Space Mono', 'Courier New', monospace;
 }
 
-/* Added for the data-driven build: the <i data-bind> tags that carry numbers should look like plain text */
-i[data-bind] { font-style: normal; }
 
-/* back-link to the archive (padding, not margin: this stylesheet zeroes margins globally) */
-.backbar{padding:18px var(--gutter) 0;}
-.backbar a{font:700 12px 'Space Mono',monospace;letter-spacing:.12em;color:#fff;text-decoration:underline;text-underline-offset:4px;}
-.backbar a:hover{color:#bdbdb5;}
+/* ---------- 3. PAGE FRAME ---------- */
+* { margin:0; padding:0; box-sizing:border-box; }      /* start from zero; spacing is set on purpose below */
+html { background:var(--bg); }
+body {
+  background:var(--bg); color:var(--ink);
+  font-family:var(--f-body); font-weight:400; font-size:18px; line-height:1.55;
+  max-width:920px; margin:0 auto; padding-bottom:60px;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility;   /* crisp letter edges */
+}
+i[data-bind] { font-style:normal; }                     /* numbers inserted by render.js look like plain text */
 
-/* ---------- numbered section bars (the dropdowns) ---------- */
-.divider { padding:26px var(--gutter); background:#0d0d0d; border-top:1px solid #222; border-bottom:1px solid #222; border-left:4px solid #555; }
-details.group > summary:hover .divider { background:#141414; }
-.divider-label { display:flex; align-items:baseline; gap:18px; width:100%; color:#fff; }
-.divider-label .sec-num { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(40px, 5vw + 10px, 64px); line-height:1; color:#bdbdb5; letter-spacing:-.01em; }
-.divider-label .sec-name { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(26px, 3.4vw + 8px, 42px); line-height:1.05; text-transform:uppercase; letter-spacing:.01em; color:#fff; }
-details.group > summary .divider-label::after { content:'▸'; margin-left:auto; font-size:26px; color:#9a9a92; align-self:center; }
+/* Links: black, bold, underlined (never green/amber/red) */
+a { color:var(--ink); font-weight:600; text-decoration:underline; text-underline-offset:3px; }
+a:hover { color:var(--ink-3); }
+
+.backbar { padding:18px var(--gutter) 0; }
+.backbar a { font:700 13px var(--f-mono); letter-spacing:.12em; text-underline-offset:4px; }
+
+
+/* ---------- 4. HEADER ---------- */
+.hero { padding:36px var(--gutter) 36px; border-bottom:1px solid var(--line); }
+.hero-eyebrow { font-family:var(--f-mono); font-size:13px; letter-spacing:.14em; color:var(--ink-3); padding-bottom:20px; }
+.hero-banner { display:block; width:100%; height:auto; border:1px solid var(--line); margin-bottom:28px; }
+.hero-title { font-family:var(--f-head); font-weight:700; font-size:clamp(32px, 3.6vw + 14px, 52px); line-height:1.05; max-width:760px; color:var(--ink); }
+.hero-title.hero-main { font-size:clamp(40px, 5vw + 14px, 68px); line-height:1.02; }
+.hero-title em { font-style:normal; text-decoration:underline; text-decoration-thickness:3px; text-underline-offset:6px; }   /* emphasis = underline, not colour */
+
+.method { margin-top:18px; max-width:640px; border-left:2px solid var(--line-2); padding-left:14px; }
+.method summary { font-family:var(--f-mono); font-size:13px; letter-spacing:.08em; color:var(--ink-3); cursor:pointer; list-style:none; }
+.method summary::-webkit-details-marker { display:none; }
+.method summary::before { content:'▸ '; }
+.method[open] summary::before { content:'▾ '; }
+.method > div { font-size:16px; color:var(--ink-2); line-height:1.6; margin-top:10px; }
+
+/* "In this report" contents list */
+.toc { margin-top:28px; padding-top:22px; border-top:1px solid var(--line); }
+.toc-title { font-family:var(--f-mono); font-size:13px; letter-spacing:.14em; color:var(--ink-3); text-transform:uppercase; padding-bottom:10px; }
+.toc ol { list-style:none; }
+.toc li a { display:flex; align-items:baseline; gap:16px; padding:10px 0; border-bottom:1px solid var(--line); text-decoration:none; color:var(--ink);
+            font-family:var(--f-head); font-weight:600; font-size:clamp(20px, 1.2vw + 14px, 26px); text-transform:uppercase; letter-spacing:.02em; }
+.toc li a:hover { color:var(--ink-3); }
+.toc-num { font-family:var(--f-mono); font-weight:700; font-size:13px; color:var(--ink-3); letter-spacing:.06em; min-width:26px; }
+
+
+/* ---------- 5. SECTION BARS (the numbered dropdowns) ---------- */
+details.group > summary { list-style:none; cursor:pointer; }
+details.group > summary::-webkit-details-marker { display:none; }
+.divider { padding:22px var(--gutter); background:var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line); border-left:5px solid var(--ink); }
+details.group > summary:hover .divider { background:#EBEBE8; }
+.divider-label { display:flex; align-items:baseline; gap:16px; width:100%; color:var(--ink); }
+.divider-label .sec-num  { font-family:var(--f-head); font-weight:700; font-size:clamp(28px, 2.4vw + 14px, 40px); line-height:1; color:var(--ink-3); }
+.divider-label .sec-name { font-family:var(--f-head); font-weight:700; font-size:clamp(22px, 2vw + 12px, 32px); line-height:1.05; text-transform:uppercase; letter-spacing:.02em; }
+details.group > summary .divider-label::after { content:'▸'; margin-left:auto; font-size:22px; color:var(--ink-3); align-self:center; }
 details.group[open] > summary .divider-label::after { content:'▾'; }
 
-/* ---------- "In this report" contents ---------- */
-.toc { margin-top:28px; padding-top:22px; border-top:1px solid #222; }
-.toc-title { font-family:'Space Mono',monospace; font-size:14px; letter-spacing:.16em; color:#9a9a92; text-transform:uppercase; padding-bottom:12px; }
-.toc ol { list-style:none; }
-.toc li a { display:flex; align-items:baseline; gap:16px; padding:9px 0; border-bottom:1px solid #1a1a1a; text-decoration:none; color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:clamp(20px, 1.6vw + 12px, 28px); text-transform:uppercase; letter-spacing:.02em; }
-.toc li a:hover { color:#bdbdb5; }
-.toc-num { font-family:'Space Mono',monospace; font-weight:700; font-size:14px; color:#9a9a92; letter-spacing:.06em; min-width:26px; }
+.collapse-end { text-align:center; padding:12px 0 28px; }
+.collapse-end button { font-family:var(--f-mono); font-size:13px; letter-spacing:.1em; color:var(--ink-2); background:none; border:1px solid var(--ink-3); padding:7px 16px; cursor:pointer; }
+.collapse-end button:hover { color:var(--bg); background:var(--ink); border-color:var(--ink); }
 
-/* ---------- panel 05 uses the very same details.group panel as 01-04; only its quotes need side padding ---------- */
+.section { padding:40px var(--gutter); border-bottom:1px solid var(--line); }
+.section-title { font-family:var(--f-head); font-weight:700; font-size:clamp(24px, 1.4vw + 16px, 32px); line-height:1.1; margin-bottom:8px; }
+.section-lede { font-size:18px; color:var(--ink-2); max-width:640px; margin-bottom:26px; line-height:1.6; }
+.section-lede.after-chart { margin-top:22px; margin-bottom:28px; }
+.scope-tag { display:inline-block; font-family:var(--f-mono); font-size:12px; font-weight:400; letter-spacing:.1em; color:var(--ink-2); border:1px solid var(--ink-3); padding:2px 9px; margin-left:10px; vertical-align:middle; }
+
+.impact-group-title { font-family:var(--f-head); font-weight:700; font-size:clamp(20px, 1vw + 14px, 26px); padding:36px 0 10px; border-bottom:1px solid var(--line); }
+.section-title + .impact-group-title { padding-top:16px; }
+.impact-group-title + .section-lede { padding:14px 0 0; margin-bottom:22px; }
+
+
+/* ---------- 6. NUMBERS & TABLES ---------- */
+/* The five headline numbers (KPIs) */
+.kpi-strip { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); border-bottom:1px solid var(--line); }
+.kpi { padding:24px 18px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); }
+.kpi:last-child { border-right:none; }
+.kpi-label { font-family:var(--f-mono); font-size:13px; letter-spacing:.08em; color:var(--ink-3); margin-bottom:10px; line-height:1.4; }
+.kpi-num { font-family:var(--f-head); font-weight:700; font-size:clamp(32px, 1.6vw + 22px, 42px); line-height:1; color:var(--ink); }
+.kpi-num span { font-size:20px; font-weight:600; color:var(--ink-3); margin-left:3px; }
+.kpi-note { font-size:16px; color:var(--ink-2); margin-top:8px; line-height:1.45; }
+
+/* Tables */
+.table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; margin-bottom:8px; }
+.table-scroll .chan-table { min-width:640px; }
+.chan-table { width:100%; border-collapse:collapse; }
+.chan-table th { font-family:var(--f-mono); font-size:13px; font-weight:400; letter-spacing:.08em; color:var(--ink-3); text-align:left; padding:10px 14px; border-bottom:2px solid var(--ink); text-transform:uppercase; }
+.chan-table td { font-size:18px; color:var(--ink-2); padding:11px 14px; border-bottom:1px solid var(--line); }
+.chan-table th.num, .chan-table td.num { text-align:right; }
+.chan-table td.num { font-family:var(--f-mono); font-size:16px; color:var(--ink); }
+.chan-table tr.best td { color:var(--ink); font-weight:600; }
+.chan-table tr.best td.num { font-weight:700; }
+.chan-table tr.sub td { font-size:17px; }
+.chan-table tr.sub td:first-child { padding-left:30px; color:var(--ink-2); }
+.chan-table .subnote { display:block; font-size:15px; color:var(--ink-3); margin-top:2px; font-style:italic; }
+
+/* Conversion rates: THE indicator colours (>=10% green, 0.65%–10% amber for notes, none = red, small = gray) */
+.chan-table .rate { font-family:var(--f-head); font-weight:700; font-size:22px; color:var(--ink); }   /* plain = no verdict */
+.chan-table .rate.hi  { color:var(--good); }
+.chan-table .rate.mid { color:var(--warn); }
+.chan-table .rate.red { color:var(--bad); }
+.chan-table .rate.lo  { color:var(--ink-3); }
+
+/* Quarter cards */
+/* breathing room: the heading above the quarter cards must never touch them */
+.section-title + .qtable { margin-top:20px; }
+.qtable { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1px; background:var(--line); border:1px solid var(--line); }
+.qcell { background:var(--bg); padding:22px 24px; }
+.qcell.open { background:var(--panel); }
+.qname { font-family:var(--f-head); font-weight:700; font-size:clamp(24px, 1vw + 18px, 30px); line-height:1.1; }
+.qseason { font-family:var(--f-mono); font-size:13px; color:var(--ink-3); margin:4px 0 14px; }
+.qrow { display:flex; justify-content:space-between; align-items:baseline; font-size:17px; color:var(--ink-2); padding:6px 0; border-top:1px solid var(--line); }
+.qrow:first-of-type { border-top:none; }
+.qrow b { color:var(--ink); font-weight:700; font-family:var(--f-mono); font-size:16px; }
+
+/* Stat blocks (a label, a big number, a sentence) */
+.two-col { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:24px; }
+.two-col.gap-top { margin-top:24px; }
+.impact-group-title + .stat-block { margin-top:20px; }
+.stat-block { padding:22px; border:1px solid var(--line); }
+.stat-block-label { font-family:var(--f-mono); font-size:13px; letter-spacing:.06em; color:var(--ink-3); margin-bottom:10px; line-height:1.4; }
+.stat-block-num { font-family:var(--f-head); font-weight:700; font-size:clamp(30px, 1.4vw + 22px, 40px); line-height:1.05; margin-bottom:8px; color:var(--ink); }
+.stat-block-num.good  { color:var(--good); }   /* set by the page ONLY where the number is a status indicator */
+.stat-block-num.amber { color:var(--warn); }
+.stat-block-num.plain { color:var(--ink); }
+.stat-block-body { font-size:17px; color:var(--ink-2); line-height:1.6; }
+.stat-block-body + .stat-block-body { padding-top:10px; }
+
+
+/* ---------- 7. CALLOUTS ---------- */
+.callout-headliner { border-left:5px solid var(--line-2); padding:24px 28px; background:var(--panel); }
+.callout-headliner p { font-family:var(--f-head); font-weight:700; font-size:clamp(22px, 1.2vw + 16px, 30px); line-height:1.2; color:var(--ink); }
+.callout-panel { border-left:3px solid var(--line-2); padding:18px 22px; margin:20px 0 8px; background:var(--panel); }
+.callout-panel h4 { font-family:var(--f-mono); font-size:13px; letter-spacing:.08em; color:var(--ink-3); margin-bottom:8px; text-transform:uppercase; font-weight:700; }
+.callout-panel p { font-size:17px; line-height:1.55; color:var(--ink-2); }
+.callout-panel p + p { margin-top:10px; }
+.callout-panel p strong { color:var(--ink); font-weight:600; }
+
+
+/* ---------- 8. CHARTS ----------
+   The charts are drawn as SVG by render.js. On a narrow phone they stop shrinking at 600px
+   wide and scroll sideways instead, so the numbers on them stay readable.                    */
+.chart-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.section-title + .chart-scroll { margin-top:14px; }
+.chart-wrap { min-width:600px; aspect-ratio:880 / 375; }
+.chart-wrap svg { display:block; width:100%; height:100%; }
+
+
+/* ---------- 9. COMMUNITY QUOTES ---------- */
 .community-quotes { padding:24px var(--gutter) 0; }
+.rave-row { padding:22px 0; border-bottom:1px solid var(--line); }
+.rave-row:last-child { border-bottom:none; }
+.rave-row.center { text-align:center; }
+.rave, .rave-sm, .rave-lg { font-family:var(--f-head); font-weight:700; font-style:italic; color:var(--ink); margin-bottom:8px; }
+.rave-sm { font-size:clamp(20px, 0.8vw + 15px, 24px); line-height:1.3; color:var(--ink-2); }
+.rave    { font-size:clamp(22px, 1.2vw + 16px, 30px); line-height:1.25; }
+.rave-lg { font-size:clamp(26px, 1.6vw + 18px, 38px); line-height:1.2; }
+.rave-attr { font-family:var(--f-mono); font-size:13px; color:var(--ink-3); letter-spacing:.04em; text-transform:uppercase; }
 
-/* ---------- links: white, bold, underlined. Green/yellow/red are reserved for indicator stats, never links or commentary ---------- */
-.section a, .callout-panel a, .callout-headliner a, .section-lede a { color:#fff; font-weight:700; text-decoration:underline; text-underline-offset:3px; }
-.section a:hover, .callout-panel a:hover, .callout-headliner a:hover, .section-lede a:hover { color:#bdbdb5; }
+
+/* ---------- 10. FOOTER ---------- */
+.footer { padding:32px var(--gutter) 0; font-family:var(--f-mono); font-size:13px; color:var(--ink-3); letter-spacing:.06em; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+
+
+/* ---------- 11. PHONES ---------- */
+@media (max-width:640px) {
+  body { font-size:17px; }
+  .kpi { border-right:none; }
+  .chan-table td { font-size:16px; }
+}
