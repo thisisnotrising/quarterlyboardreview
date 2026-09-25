@@ -17,7 +17,8 @@ reports/
     data.js       every number and sentence for this report  <- the only file you edit
     calc.js       formulas
     render.js     draws the page and charts
-    style.css     look and feel
+    style.css     look and feel (white page, black/gray text; colours are listed once at the top)
+    fonts/        the three typefaces (Barlow Condensed, Barlow, Space Mono), so the page never depends on Google
     images/       this report's banner
   2026-q4/        (added later: a copy of the folder above)
 ```
@@ -25,6 +26,13 @@ reports/
 **Every report is self-contained.** Each folder has its own copy of the code, data and images, so an old report never changes when you build a new one, and each one opens on its own.
 
 Inside a report the flow is always: `data.js` (numbers) → `calc.js` (formulas) → `render.js` (draws) → the report page, e.g. `q32026boardreport.html`.
+
+## Look and feel
+
+- **Landing page** (`index.html` + `archive.css`): black background, white text.
+- **Quarterly reports** (`reports/*/style.css`): white background, near-black text, gray for small labels. Change any colour in the `:root { ... }` list at the top of `style.css`; the charts read their colours from that same list.
+- **Green / amber / red are indicators only** (conversion rates, System Health, milestone status). Never links, headings or commentary. Links are black, bold, underlined.
+- Headings use Barlow Condensed at weight 700 (not heavier) and only font weights that exist in `fonts/`, which keeps big numbers sharp instead of blurry.
 
 ## Starting a new quarter (e.g. 2026 Q4)
 
@@ -34,7 +42,7 @@ Inside a report the flow is always: `data.js` (numbers) → `calc.js` (formulas)
    - `closedQuarters`: add the quarter that just ended (key, season, new subscribers, active days) using its final numbers from the Q3 report.
    - `current`: describe the new quarter (`key: "Q4"`, `season`, `start`, `end`, `startSubsDate`, `inactive` days off, and this quarter's Sources numbers).
    - `series`: add new dated subscriber totals; the last date must equal `meta.asOf`. Make sure `startSubsDate` (the day before the quarter starts) has an entry.
-   - `recent90`, `sinceLaunch`, `notes`, `recommenders`, `capacity.nextMilestone`, and the sentences in `copy` and `quotes`: refresh as needed.
+   - `sinceLaunch`, `notes`, `recommenders`, `capacity.nextMilestone`, and the sentences in `copy` and `quotes`: refresh as needed.
 3. **Add one entry to `reports.js`** (copy the existing block; change `id`, `file`, `label`, `season`, `asOf`, `subscribers`, `status`). The archive sorts newest-first by itself.
 4. **Check it.** Open `reports/2026-q4/q42026boardreport.html?debug=1`. Every line should start with ✓. A ⚠ means something doesn't add up; fix it before sharing.
 5. **Close out the old one.** In `reports.js`, change the finished quarter's `status` from `"In progress"` to `"Final"`. Leave its folder alone.
@@ -48,7 +56,6 @@ The trajectory chart's height grows automatically once you pass 1,000 subscriber
 | `data.js` field | Substack screen |
 |---|---|
 | `series` (add lines) | Home → "Total subscribers" chart. Total counts on given dates only. |
-| `recent90.newSubs` | Analytics → Sources → 90 days → New subscribers: the total. |
 | `sinceLaunch.rows[].subs` | Analytics → Sources → custom range (launch date → today) → New subscribers. |
 | `sinceLaunch.rows[].views / users` | Stats → Traffic, same date range. |
 | `current.newSubs` | Analytics → Sources → custom range (quarter start → today) → New subscribers: the total. |
@@ -60,7 +67,7 @@ The trajectory chart's height grows automatically once you pass 1,000 subscriber
 
 ## How the derived numbers are defined
 
-- **Average new subscribers / day** = new subscribers in the last 90 days ÷ 90.
+- **Average new subscribers / day** = this quarter's new subscribers (`current.newSubs`, Jul 1 to the as-of date) ÷ calendar days in that window (Jul 1 → Sep 25 = 87). It is *not* Substack's rolling 90-day view.
 - **Growth vs pre-launch** = that daily average ÷ the pre-launch daily average (23 new in 43 days).
 - **Progress to expansion point** = total subscribers ÷ 2,500.
 - **Monthly growth** = *gross* monthly growth minus the *unexplained gap*.
@@ -69,7 +76,7 @@ The trajectory chart's height grows automatically once you pass 1,000 subscriber
   - Gap = gross minus net. It is **not** called churn: it can't yet be separated into unsubscribes vs double-counting.
   - `monthlyGrowthBasis` in `data.js` chooses whether "months" means the whole quarter or only the days elapsed so far.
 - **Fertility (System Health)** = measured daily compound rate since the Branch stage began (Jun 20) ÷ the self-adjusting benchmark `0.65% × (1 − subscribers/10,000)`. Healthy while inside ±0.30 of 1.00.
-- **Next milestone** = days to reach it at the 90-day pace, compared with the target date.
+- **Next milestone** = days to reach it at the quarter-to-date pace, compared with the target date.
 - **Time before Phase 2** = months to reach 2,500 at the benchmark pace (fast end) and at the measured pace (slow end), each rounded down.
 - **Note engagement** = (likes + replies + restacks) ÷ impressions. **Note conversion** = new subscribers ÷ impressions.
 

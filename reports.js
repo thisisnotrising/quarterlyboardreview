@@ -21,8 +21,8 @@ window.BOARD_REPORTS = [
     file: "q32026boardreport.html",
     label: "2026 · Q3",
     season: "SPROUT · JUL – SEP",
-    asOf: "2026-09-23",
-    subscribers: 931,
+    asOf: "2026-09-25",
+    subscribers: 936,
     status: "In progress"
   }
 ];
