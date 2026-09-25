@@ -58,24 +58,24 @@
     <div class="kpi-note">up <i data-bind="kpi.upSinceLaunchPct"></i>% since launch, Jan 25, 2026</div>
   </div>
   <div class="kpi">
-    <div class="kpi-label">AVERAGE NEW SUBSCRIBERS PER ACTIVE DAY</div>
+    <div class="kpi-label">AVERAGE NEW SUBSCRIBERS</div>
     <div class="kpi-num" data-band="kpi.paceCls"><i data-bind="kpi.avgPerDay"></i><span>/day</span></div>
-    <div class="kpi-note"><i data-bind="kpi.paceVar"></i> vs. <i data-bind="kpi.prevKey"></i> pace of <i data-bind="kpi.prevPace"></i>/day · <i data-bind="kpi.activeDays"></i> active days so far</div>
+    <div class="kpi-note"><i data-bind="kpi.paceVar"></i> vs. <i data-bind="kpi.prevKey"></i> pace of <i data-bind="kpi.prevPace"></i>/day</div>
   </div>
   <div class="kpi">
-    <div class="kpi-label">GROWTH VS. SMALL-NEWSLETTER BENCHMARK</div>
-    <div class="kpi-num" data-band="kpi.benchCls"><i data-bind="kpi.benchRatio"></i><span>×</span></div>
-    <div class="kpi-note"><i data-bind="current.key"></i> net <i data-bind="kpi.q3Net"></i>%/mo vs. a <i data-bind="kpi.benchLow"></i>&ndash;<i data-bind="kpi.benchHigh"></i>%/mo rule of thumb for ~1K-subscriber newsletters (top of range; <a href="https://www.clickminded.com/newsletter-statistics/">source</a>, a practitioner heuristic, not a study)</div>
+    <div class="kpi-label">NET MONTHLY GROWTH RATE</div>
+    <div class="kpi-num" data-band="kpi.benchCls">+<i data-bind="kpi.q3Net"></i><span>%/mo</span></div>
+    <div class="kpi-note">+<i data-bind="kpi.benchRatio"></i>&times; vs. comparable newsletter benchmark (<a href="https://www.clickminded.com/newsletter-statistics/">rule of thumb</a>)<br><i data-bind="kpi.monthlyGross"></i>% gross, less <i data-bind="kpi.monthlyGap"></i>% churn</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">NET MONTHLY GROWTH RATE YTD</div>
+    <div class="kpi-num">+<i data-bind="kpi.ytdNet"></i><span>%/mo</span></div>
+    <div class="kpi-note">since <i data-bind="kpi.ytdFrom"></i></div>
   </div>
   <div class="kpi">
     <div class="kpi-label">PROGRESS TO EXPANSION POINT</div>
     <div class="kpi-num"><i data-bind="kpi.expansionPct"></i><span>%</span></div>
     <div class="kpi-note"><i data-bind="kpi.total"></i> of <i data-bind="kpi.expansionOf"></i> subscribers — where a Stackhunter Desk would be added</div>
-  </div>
-  <div class="kpi">
-    <div class="kpi-label">NET MONTHLY GROWTH RATE YTD</div>
-    <div class="kpi-num">+<i data-bind="kpi.ytdNet"></i><span>%/mo</span></div>
-    <div class="kpi-note">compounded from <i data-bind="kpi.ytdOpening"></i> subscribers on <i data-bind="kpi.ytdFrom"></i> · <i data-bind="current.key"></i> alone: +<i data-bind="kpi.monthlyNet"></i>%/mo net (<i data-bind="kpi.monthlyGross"></i>% gross, less a <i data-bind="kpi.monthlyGap"></i>% unexplained gap)</div>
   </div>
 </div>
 
