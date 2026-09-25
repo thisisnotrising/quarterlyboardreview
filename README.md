@@ -67,8 +67,10 @@ The trajectory chart's height grows automatically once you pass 1,000 subscriber
 
 ## How the derived numbers are defined
 
-- **Average new subscribers / day** = this quarter's new subscribers (`current.newSubs`, Jul 1 to the as-of date) ÷ calendar days in that window (Jul 1 → Sep 25 = 87). It is *not* Substack's rolling 90-day view.
-- **Growth vs pre-launch** = that daily average ÷ the pre-launch daily average (23 new in 43 days).
+- **Average new subscribers per ACTIVE day** = this quarter's new subscribers ÷ active days (calendar days Jul 1 → Sep 25 = 87, minus days off listed in `current.inactive` = 82). Benchmark = the previous quarter's same figure (Q2: 339 ÷ 75). Not Substack's rolling 90-day view. Dates in the milestone projection use the calendar pace (374 ÷ 87) because days off still pass.
+- **Growth vs small-newsletter benchmark** = this quarter's net monthly growth ÷ 5% (top of the 1–5%/month rule of thumb in `externalBenchmark`, ClickMinded). It is a practitioner heuristic, not a study; edit the range in `data.js`.
+- **Net monthly growth rate YTD** = (subscribers today ÷ subscribers on `ytd.startDate`)^(1 ÷ months) − 1, months = days ÷ 30.4375. Starts Jan 10 (112), the first exact 2026 count.
+- **Colours (percent variance)** = (rate ÷ its table's overall rate − 1) × 100. Green ≥ −30%, yellow ≥ −60%, red worse (`conversionBands` in `data.js`). Applies to the channel table, notes table, the two conversion stat-blocks and the pace KPI.
 - **Progress to expansion point** = total subscribers ÷ 2,500.
 - **Monthly growth** = *gross* monthly growth minus the *unexplained gap*.
   - Gross = the quarter's opening balance plus every new subscriber Sources recorded (channel rows added up), grown at a compound monthly rate.

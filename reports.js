@@ -22,7 +22,7 @@ window.BOARD_REPORTS = [
     label: "2026 · Q3",
     season: "SPROUT · JUL – SEP",
     asOf: "2026-09-25",
-    subscribers: 936,
+    subscribers: 939,
     status: "In progress"
   }
 ];
