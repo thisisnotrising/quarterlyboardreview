@@ -42,7 +42,7 @@ window.BOARD_DATA = {
     ["2026-04-01", 466], ["2026-04-20", 520], ["2026-05-10", 564], ["2026-05-25", 590],
     ["2026-06-20", 610], ["2026-06-30", 627], ["2026-07-14", 683], ["2026-08-03", 746],
     ["2026-08-19", 803], ["2026-08-30", 841], ["2026-09-10", 890], ["2026-09-22", 926],
-    ["2026-09-23", 931], ["2026-09-25", 936]
+    ["2026-09-23", 931], ["2026-09-25", 939]
   ],
 
   /* ---------------------------------------------------------------------
@@ -51,8 +51,22 @@ window.BOARD_DATA = {
   launch: {
     date: "2026-01-25",            // "engine launch" (Nebula) — the dashed line on the chart
     baselineDate: "2026-01-24",    // last day BEFORE launch; its count in "series" is the baseline (122)
-    // Dec 12 -> Jan 24: 99 -> 122, i.e. 23 new in 43 days. perDayLocked is the figure printed on the page (locked baseline).
-    preLaunch: { newSubs: 23, days: 43, perDayLocked: 0.54 }
+    /* (the old pre-launch pace was removed: the page now compares growth with an external benchmark instead, see externalBenchmark below) */
+  },
+
+  /* Year-to-date growth starts at the first EXACT 2026 count in "series" (Jan 10 = 112). We never invent a Jan 1 count. */
+  ytd: { startDate: "2026-01-10" },
+
+  /* PERCENT-VARIANCE COLOURS: a rate is green if it is within 30% below its table's overall rate,
+     yellow if 30-60% below, red if worse. Change the two numbers here to change every table at once. */
+  conversionBands: { green: 30, yellow: 60 },
+
+  /* EXTERNAL BENCHMARK for newsletters around 1,000 subscribers. Read this honestly: it is a practitioner rule of thumb
+     (1-5% net growth per month), NOT a peer-reviewed study or a Substack-published statistic. We compare against the TOP (5%). */
+  externalBenchmark: {
+    monthlyGrowthLowPct: 1, monthlyGrowthHighPct: 5,
+    source: "ClickMinded, Newsletter Statistics (2026)", url: "https://www.clickminded.com/newsletter-statistics/",
+    note: "Practitioner heuristic for small newsletters, not a primary study. Treat as a rough yardstick."
   },
 
   /* ---------------------------------------------------------------------
@@ -111,7 +125,7 @@ window.BOARD_DATA = {
     /* Substack-network subscribers, split (Sources > New subscribers, Jul 1 -> today).
        "Other" on Substack = profile page + Substack app. Split it with Stats > Traffic > "substack app" > Free subs. */
     network: {
-      visitors: 1714,                      // Sources > Unique visitors tab > "Substack" total
+      visitors: 1717,                      // Sources > Unique visitors tab > "Substack" total
       subsFromSources: 311,                // Sources > New subscribers tab > "Substack" row. The page checks that the split below adds up to this.
       notes: 181,
       profilePage: 73,                     // = Sources "Other" (96) minus Traffic "substack app" (23)

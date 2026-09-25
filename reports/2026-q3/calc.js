@@ -35,8 +35,21 @@
   /* Share label: "0%", "0.3%" (under 0.5 gets a decimal so it isn't shown as 0%), "48%" */
   const shareLabel = x => (x === 0 ? "0%" : x < 0.5 ? dp(x, 1) + "%" : Math.round(x) + "%");
 
-  /* Conversion colour: >= 10% green ("hi"), >= 1% plain, below that grey ("lo"). */
-  const convClass = c => (c >= 10 ? "rate hi" : c >= 1 ? "rate" : "rate lo");
+  /* ---- PERCENT-VARIANCE COLOURS (one rule for every table) ----
+     variance = how far a rate sits from its table's benchmark, as a percent:  (rate / benchmark - 1) x 100
+     Example: benchmark 0.57%, a note at 0.34%  ->  (0.34 / 0.57 - 1) x 100 = -40%.
+     green  = variance is at or above  -G%   (G comes from data.js -> conversionBands.green, default 30)
+     yellow = variance is at or above  -Y%   (data.js -> conversionBands.yellow, default 60)
+     red    = worse than that.
+     The function returns the CSS class for table cells (rate ...) and for big numbers (num) plus the variance itself. */
+  const makeBand = bands => (value, benchmark) => {
+    const variance = (value / benchmark - 1) * 100;
+    const level = variance >= -bands.green ? "green" : variance >= -bands.yellow ? "yellow" : "red";
+    return { variance, level,
+             rate: { green: "rate hi", yellow: "rate mid", red: "rate red" }[level],      // table cells
+             num:  { green: "good",    yellow: "amber",    red: "bad" }[level] };        // big numbers
+  };
+  const signedPct = (x, places) => (x >= 0 ? "+" : "−") + dp(Math.abs(x), places) + "%";
 
   function computeModel(D) {
     const M = {};
@@ -66,11 +79,27 @@
 
     /* ================= 1. THE FIVE KPIs ================= */
     const baseline = countOn(D.launch.baselineDate);        // 122 subscribers the day before launch
-    const pre = D.launch.preLaunch;                         // 23 new subs in 43 days before launch
     const cur = D.current;                                  // the quarter this report is about
+    const band = makeBand(D.conversionBands || { green: 30, yellow: 60 });
     const elapsedDays = daysBetween(cur.start, asOf) + 1;   // calendar days from the quarter's first day through the as-of date (Jul 1 -> Sep 25 = 87)
-    const avgPerDay = cur.newSubs / elapsedDays;            // KPI 2: this quarter's new subs / calendar days so far   (374 / 87 = 4.30)
-    const preRate = pre.newSubs / pre.days;                 // 23 / 43 = 0.535 per day before launch
+
+    /* ACTIVE DAYS = calendar days so far minus the days off listed in data.js (current.inactive). Jul 1 -> Sep 25 = 87, minus 5 = 82. */
+    const inactiveDays = sum((cur.inactive || []).map(([a, b]) => {
+      const from = a < cur.start ? cur.start : a, to = b > asOf ? asOf : b;
+      return to >= from ? daysBetween(from, to) + 1 : 0;
+    }));
+    const curActiveDays = elapsedDays - inactiveDays;
+
+    /* ---- KPI 2: AVERAGE NEW SUBSCRIBERS PER ACTIVE DAY, against last quarter's pace ----
+       this quarter = new subs / active days so far          (374 / 82 = 4.56)
+       benchmark    = previous closed quarter, same formula  (Q2: 339 / 75 = 4.52)
+       variance     = (4.56 / 4.52 - 1) x 100 = +0.9%  -> coloured by the same green/yellow/red rule as the conversion tables */
+    const avgPerDay = cur.newSubs / curActiveDays;
+    const prevQ = D.closedQuarters[D.closedQuarters.length - 1];
+    const prevPace = prevQ.newSubs / prevQ.activeDays;
+    const paceBand = band(avgPerDay, prevPace);
+    /* For projecting a calendar date (the milestone below) we use the calendar pace, because days off still pass on the calendar. */
+    const calendarPace = cur.newSubs / elapsedDays;         // 374 / 87 = 4.30
     const expansionPct = pctOf(N, D.capacity.expansionPoint);
 
     /* ---- KPI 5: MONTHLY GROWTH (net) = gross growth minus the "unexplained gap" ----
@@ -90,9 +119,24 @@
     const quarterDays = daysBetween(cur.start, cur.end) + 1;                                          // 92 days in Jul-Sep
     const MONTH = 30.4375;                                                                           // 365.25 / 12
     const months = (D.monthlyGrowthBasis === "elapsed" ? elapsedDays : quarterDays) / MONTH;
+
+    /* ---- NET MONTHLY GROWTH, YEAR TO DATE ----
+       Opening = the first subscriber count of 2026 in "series" (Jan 10 = 112; there is no exact Jan 1 count, and we never invent one).
+       Compound monthly rate = (today / opening) ^ (1 / months) - 1, months = days between / 30.4375.       (939 / 112)^(1 / 8.48) - 1 = 28.x% */
+    const ytdStartDate = D.ytd.startDate;
+    const ytdStart = countOn(ytdStartDate);
+    const ytdMonths = daysBetween(ytdStartDate, asOf) / MONTH;
+    const ytdNet = (Math.pow(N / ytdStart, 1 / ytdMonths) - 1) * 100;
     const netMonthly   = (Math.pow(N / startSubs, 1 / months) - 1) * 100;
     const grossMonthly = (Math.pow((startSubs + channelSum) / startSubs, 1 / months) - 1) * 100;
     const netShown = dp(netMonthly, 1), grossShown = dp(grossMonthly, 1);
+
+    /* ---- KPI 3: GROWTH VS. EXTERNAL BENCHMARK ----
+       This quarter's net monthly growth (627 -> today: the stage closest to "about 1K subscribers") divided by the TOP of the
+       external range (5% a month).   14.3 / 5 = 2.9x.  Coloured by the variance rule (2.9x is far above 1.0x = green). */
+    const XB = D.externalBenchmark;
+    const benchRatio = netMonthly / XB.monthlyGrowthHighPct;
+    const benchBand = band(benchRatio, 1);
     const gapShown = dp(Number(grossShown) - Number(netShown), 1);    // subtract the ROUNDED numbers so the printed line always adds up
     M.monthly = {
       basis: D.monthlyGrowthBasis, months: dp(months, 3), startSubs, channelSum,
@@ -104,14 +148,18 @@
 
     M.kpi = {
       total: comma(N),
-      upSinceLaunchPct: Math.round(((N - baseline) / baseline) * 100),   // (936 - 122) / 122 = 667%
-      avgPerDay: dp(avgPerDay, 2),
-      preLaunchPerDay: dp(D.launch.preLaunch.perDayLocked || preRate, 2),
-      growthVsPre: dp(avgPerDay / preRate, 1),                            // 4.30 / 0.535 = 8.0x
-      expansionPct: Math.round(expansionPct),                             // 936 / 2500 = 37%
+      upSinceLaunchPct: Math.round(((N - baseline) / baseline) * 100),   // (939 - 122) / 122 = 670%
+      avgPerDay: dp(avgPerDay, 2), activeDays: curActiveDays, paceCls: paceBand.num,
+      prevKey: prevQ.key, prevPace: dp(prevPace, 2), paceVar: signedPct(paceBand.variance, 1),
+      benchRatio: dp(benchRatio, 1), benchCls: benchBand.num,
+      benchLow: XB.monthlyGrowthLowPct, benchHigh: XB.monthlyGrowthHighPct, q3Net: netShown,
+      expansionPct: Math.round(expansionPct),                             // 939 / 2500 = 38%
       expansionOf: comma(D.capacity.expansionPoint),
+      ytdNet: dp(ytdNet, 1), ytdFrom: longDate(toDate(ytdStartDate)).replace(", 2026", ""), ytdOpening: ytdStart,
       monthlyNet: netShown, monthlyGross: grossShown, monthlyGap: gapShown
     };
+    M.chanBench = null;   // filled in section 5
+    M.bands = { green: (D.conversionBands || { green: 30 }).green, yellow: (D.conversionBands || { yellow: 60 }).yellow };
 
     /* ================= 2. TRAJECTORY (chart inputs) ================= */
     /* Chart height: round the biggest count up to a tidy step so the line never runs off the top.
@@ -137,11 +185,6 @@
     };
 
     /* ================= 4. QUARTER CARDS ================= */
-    const inactiveDays = sum((cur.inactive || []).map(([a, b]) => {
-      const from = a < cur.start ? cur.start : a, to = b > asOf ? asOf : b;
-      return to >= from ? daysBetween(from, to) + 1 : 0;
-    }));
-    const curActiveDays = elapsedDays - inactiveDays;
     const closed = D.closedQuarters.map(q => ({ key: q.key, season: q.season, open: false, newSubs: comma(q.newSubs), pace: dp(q.newSubs / q.activeDays, 2) }));
     M.quarters = closed.concat([{ key: cur.key, season: cur.season, open: true, newSubs: comma(cur.newSubs), pace: dp(cur.newSubs / curActiveDays, 2) }]);
     const quarterSum = sum(D.closedQuarters.map(q => q.newSubs)) + cur.newSubs;
@@ -157,10 +200,16 @@
     const offVisitors = cur.direct.visitors + cur.external.visitors;            // direct + external = 709
     const offSubs = cur.direct.subs + cur.external.subs;
     const offConv = pctOf(offSubs, offVisitors);                              // 1 / 709 = 0.14%
+    /* Benchmark for the channel table = the table's OVERALL rate: all rows' subscribers / all rows' visitors.  (311+69+0+1) / (1714+1180+571+138) */
+    const chanSubs = networkSubs + cur.directToApp.subs + cur.direct.subs + cur.external.subs;
+    const chanVisitors = net3.visitors + cur.directToApp.visitors + cur.direct.visitors + cur.external.visitors;
+    const chanBench = pctOf(chanSubs, chanVisitors);
+    M.chanBench = dp(chanBench, 1) + "%";
+    const chanBand = (subs, visitors) => band(pctOf(subs, visitors), chanBench);
     M.current = {
       key: cur.key,
       newSubs: comma(curN),
-      network: { visitors: comma(net3.visitors), subs: comma(networkSubs), conv: dp(netConv, 1), convRound: Math.round(netConv), share: share(networkSubs), convClass: convClass(netConv) },
+      network: { visitors: comma(net3.visitors), subs: comma(networkSubs), conv: dp(netConv, 1), convRound: Math.round(netConv), share: share(networkSubs), convClass: chanBand(networkSubs, net3.visitors).rate, numCls: chanBand(networkSubs, net3.visitors).num },
       subRows: [
         sub("Notes", net3.notes),
         sub("Profile page", net3.profilePage),
@@ -169,11 +218,11 @@
         sub("Substack live stream", net3.liveStream),
         sub("Trackbacks & onboarding", net3.trackbacksOnboarding)
       ],
-      directToApp: { visitors: comma(cur.directToApp.visitors), subs: comma(cur.directToApp.subs), conv: dp(pctOf(cur.directToApp.subs, cur.directToApp.visitors), 1), share: share(cur.directToApp.subs), cls: convClass(pctOf(cur.directToApp.subs, cur.directToApp.visitors)) },
-      direct:      { visitors: comma(cur.direct.visitors),      subs: comma(cur.direct.subs),      conv: dp(pctOf(cur.direct.subs, cur.direct.visitors), 1),           share: share(cur.direct.subs),      cls: convClass(pctOf(cur.direct.subs, cur.direct.visitors)) },
-      external:    { visitors: comma(cur.external.visitors),    subs: comma(cur.external.subs),    conv: dp(pctOf(cur.external.subs, cur.external.visitors), 1),        share: share(cur.external.subs),    cls: convClass(pctOf(cur.external.subs, cur.external.visitors)) },
+      directToApp: { visitors: comma(cur.directToApp.visitors), subs: comma(cur.directToApp.subs), conv: dp(pctOf(cur.directToApp.subs, cur.directToApp.visitors), 1), share: share(cur.directToApp.subs), cls: chanBand(cur.directToApp.subs, cur.directToApp.visitors).rate },
+      direct:      { visitors: comma(cur.direct.visitors),      subs: comma(cur.direct.subs),      conv: dp(pctOf(cur.direct.subs, cur.direct.visitors), 1),           share: share(cur.direct.subs),      cls: chanBand(cur.direct.subs, cur.direct.visitors).rate },
+      external:    { visitors: comma(cur.external.visitors),    subs: comma(cur.external.subs),    conv: dp(pctOf(cur.external.subs, cur.external.visitors), 1),        share: share(cur.external.subs),    cls: chanBand(cur.external.subs, cur.external.visitors).rate },
       readingRestack: { subs: comma(net3.notes + net3.profilePage), sharePct: Math.round(pctOf(net3.notes + net3.profilePage, curN)) },   // (181 + 73) / 374 = 68%
-      offPlatform: { subsPhrase: offSubs + (offSubs === 1 ? " subscriber" : " subscribers"), visitors: offVisitors, visitorsRounded: comma(Math.round(offVisitors / 100) * 100), subs: offSubs, conv: dp(offConv, 2), convRound: dp(offConv, 1) }
+      offPlatform: { numCls: chanBand(offSubs, offVisitors).num, subsPhrase: offSubs + (offSubs === 1 ? " subscriber" : " subscribers"), visitors: offVisitors, visitorsRounded: comma(Math.round(offVisitors / 100) * 100), subs: offSubs, conv: dp(offConv, 2), convRound: dp(offConv, 1) }
     };
     if (net3.subsFromSources !== undefined) {
       if (net3.subsFromSources === networkSubs) ok(cur.key + " network split adds up to Substack's network total (" + networkSubs + ")");
@@ -182,6 +231,9 @@
     if (curN > channelSum) warn("cur.newSubs (" + curN + ") is larger than the sum of channel rows (" + channelSum + ")");
 
     /* ================= 6. NOTES TABLE ================= */
+    /* Benchmark for the notes table = all notes together: total new subs / total impressions. */
+    const notesBench = pctOf(sum(D.notes.map(n => n.subs)), sum(D.notes.map(n => n.impressions)));
+    M.notesBench = dp(notesBench, 2) + "%";
     M.notes = [...D.notes].sort((a, b) => b.restacks - a.restacks).map((n, i) => {
       const eng = pctOf(n.likes + n.replies + n.restacks, n.impressions);    // engagement = (likes + replies + restacks) / impressions
       const conv = pctOf(n.subs, n.impressions);                             // conversion = new subs / impressions
@@ -189,7 +241,7 @@
         name: n.name, restacks: n.restacks, likes: n.likes, impressions: comma(n.impressions),
         eng: dp(eng, 1) + "%", subs: n.subs,
         conv: conv === 0 ? "0%" : dp(conv, 2) + "%",
-        cls: conv === 0 ? "rate red" : conv >= 0.65 ? "rate hi" : "rate mid",   // green >= 0.65%, amber above 0, red = none
+        cls: band(conv, notesBench).rate,   // percent-variance rule vs. the notes table's overall rate
         best: i === 0
       };
     });
@@ -227,7 +279,7 @@
 
     /* Next Fibonacci milestone: how many days at this quarter's pace so far, vs the target date */
     const ms = cap.nextMilestone;
-    const daysToGo = Math.round((ms.subs - N) / avgPerDay);                     // (987 - 936) / 4.30 = 12 days
+    const daysToGo = Math.round((ms.subs - N) / calendarPace);                     // (987 - 939) / 4.30 = 11 days
     const projected = addDays(asOf, daysToGo);
     const early = daysBetween(projected.toISOString().slice(0, 10), ms.targetDate);   // days ahead of target (positive = early)
     const weeks = Math.round(Math.abs(early) / 7);
@@ -261,5 +313,5 @@
   }
 
   window.computeModel = computeModel;
-  window.BoardFormat = { convClass, comma };
+  window.BoardFormat = { comma };
 })();

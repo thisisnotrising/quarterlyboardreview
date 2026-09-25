@@ -27,7 +27,7 @@
 
   /* Chart colours come from style.css (the --ink, --ink-3 ... list), so there is ONE place to change them. */
   const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-  const C = { ink: css("--ink"), ink2: css("--ink-2"), ink3: css("--ink-3"), line: css("--line"), panel: css("--panel") };
+  const C = { ink: css("--ink"), ink2: css("--ink-2"), ink3: css("--ink-3"), line: css("--line"), panel: css("--panel"), good: css("--good") };
   const HEAD = "Barlow Condensed, Arial Narrow, sans-serif", MONO = "Space Mono, Courier New, monospace";
 
   document.title = "NOT RISING · " + D.meta.reportTitle + " · " + D.meta.quarterLabel;   // browser tab title
@@ -38,6 +38,11 @@
     if (v === undefined) M.checks.push({ level: "warn", msg: "page asks for " + el.dataset.bind + " but calc.js has no such value" });
     el.textContent = v === undefined ? "⚠" : v;
   });
+
+  /* ---------- 1b. colours for indicator numbers ----------
+     <div data-band="kpi.paceCls"> means: look up that value in the model (it is "good", "amber" or "bad") and add it
+     to the element's class list, so style.css paints it green, amber or red. */
+  document.querySelectorAll("[data-band]").forEach(el => el.classList.add(get(M, el.dataset.band)));
 
   /* ---------- 2. words ---------- */
   document.querySelectorAll("[data-copy]").forEach(el => {
@@ -63,7 +68,7 @@
   const tables = {
     sinceLaunch: () => M.sinceLaunch.rows.map((r, i) =>
       '<tr' + (r.best ? ' class="best"' : "") + "><td>" + r.name + "</td>" + td(r.views) + td(r.users) + td(r.subs) +
-      '<td class="num">' + (r.best ? '<span class="rate">' + r.share + "</span>" : r.share) + "</td></tr>").join(""),
+      '<td class="num">' + (r.best ? '<span class="rate hi">' + r.share + "</span>" : r.share) + "</td></tr>").join(""),
 
     quarters: () => M.quarters.map(q =>
       '<div class="qcell' + (q.open ? " open" : "") + '"><div class="qname">' + q.key + '</div><div class="qseason">' + q.season + (q.open ? " ●" : "") + "</div>" +
@@ -91,7 +96,7 @@
   /* ---------- 4a. TRAJECTORY CHART ---------- */
   (function () {
     const T_ = M.trajectory, series = T_.series;
-    const W = 880, H = 375, L = 52, Rt = 16, T = 18, B = 34, pw = W - L - Rt, ph = H - T - B;
+    const W = 880, H = 375, L = 66, Rt = 16, T = 18, B = 34, pw = W - L - Rt, ph = H - T - B;
     const t0 = new Date(series[0][0]).getTime(), t1 = new Date(series[series.length - 1][0]).getTime();
     const yMax = T_.yMax, yMin = 0;              // yMax comes from calc.js and grows with the subscriber count
     const X = ts => L + (ts - t0) / (t1 - t0) * pw;             // date  -> horizontal position
@@ -108,11 +113,11 @@
     svg += `<text x="${xLaunch + 8}" y="${T + 18}" fill="${C.ink2}" font-family="${MONO}" font-size="14">ENGINE LAUNCH · JAN 2026</text>`;
     const pts = series.map(([d, v]) => [X(new Date(d).getTime()), Y(v)]);
     const line = pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" ");
-    svg += `<path d="${line} L${pts[pts.length - 1][0]},${T + ph} L${pts[0][0]},${T + ph} Z" fill="rgba(17,17,17,0.07)"/>`;
-    svg += `<path d="${line}" fill="none" stroke="${C.ink}" stroke-width="2.5" stroke-linejoin="round"/>`;
+    svg += `<path d="${line} L${pts[pts.length - 1][0]},${T + ph} L${pts[0][0]},${T + ph} Z" fill="rgba(23,112,58,0.10)"/>`;
+    svg += `<path d="${line}" fill="none" stroke="${C.good}" stroke-width="2.5" stroke-linejoin="round"/>`;
     [[series.findIndex(p => p[0] === T_.baselineDate), String(T_.baseline)], [series.length - 1, String(T_.latest)]].forEach(([i, label]) => {
       const [x, y] = pts[i];
-      svg += `<circle cx="${x}" cy="${y}" r="5" fill="${C.ink}"/>`;
+      svg += `<circle cx="${x}" cy="${y}" r="5" fill="${C.good}"/>`;
       svg += `<text x="${x - 10}" y="${y - 10}" fill="${C.ink}" font-family="${HEAD}" font-weight="700" font-size="22" text-anchor="end">${label}</text>`;
     });
     /* month labels along the bottom: the ones listed in data.js, plus the latest date (labelled automatically) */
@@ -140,7 +145,7 @@
     g += `<text x="${W - Rt}" y="${Y(expansion) - 10}" fill="${C.ink2}" font-family="${MONO}" font-size="14" text-anchor="end">EXPAND THE NETWORK HERE</text>`;
     let d = "";
     for (let t = t0; t <= t1; t += 8) d += (d ? "L" : "M") + X(t).toFixed(1) + "," + Y(Nt(t)).toFixed(1);
-    g += `<path d="${d}" fill="none" stroke="${C.ink}" stroke-width="3" stroke-linejoin="round"/>`;
+    g += `<path d="${d}" fill="none" stroke="${C.good}" stroke-width="3" stroke-linejoin="round"/>`;
     const xN = X(tNow), yN = Y(N);
     g += `<line x1="${xN}" y1="${T}" x2="${xN}" y2="${T + ph}" stroke="${C.ink3}" stroke-dasharray="3,4"/>`;
     g += `<circle cx="${xN}" cy="${yN}" r="7" fill="${C.ink}" stroke="#fff" stroke-width="2"/>`;

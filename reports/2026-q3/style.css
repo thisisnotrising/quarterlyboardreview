@@ -32,8 +32,9 @@
 
 
 /* ---------- 2. COLOURS & SIZES (change them here, once) ----------
-   Text is black or gray. Green / amber / red appear ONLY on indicator stats
-   (conversion rates, system health, milestone status), never on links or commentary.
+   Commentary text is black or gray (the NOT RISING colours). Every indicator stat AND indicator word
+   (numbers like 936 or 18.1%, words like "Healthy") is coloured green / amber / red by its status.
+   Green/amber/red never appear on links or commentary.
    Every text colour below passes the WCAG AA contrast test (4.5:1 or better) on white.       */
 :root {
   --bg:      #FFFFFF;   /* page background */
@@ -80,7 +81,7 @@ a:hover { color:var(--ink-3); }
 .hero-banner { display:block; width:100%; height:auto; border:1px solid var(--line); margin-bottom:28px; }
 .hero-title { font-family:var(--f-head); font-weight:700; font-size:clamp(32px, 3.6vw + 14px, 52px); line-height:1.05; max-width:760px; color:var(--ink); }
 .hero-title.hero-main { font-size:clamp(40px, 5vw + 14px, 68px); line-height:1.02; }
-.hero-title em { font-style:normal; text-decoration:underline; text-decoration-thickness:3px; text-underline-offset:6px; }   /* emphasis = underline, not colour */
+.hero-title em { font-style:italic; text-decoration:none; }   /* emphasis = italic (the loaded 700-italic font). NOT underlined, because underline means "link" on this site */
 
 .method { margin-top:18px; max-width:640px; border-left:2px solid var(--line-2); padding-left:14px; }
 .method summary { font-family:var(--f-mono); font-size:13px; letter-spacing:.08em; color:var(--ink-3); cursor:pointer; list-style:none; }
@@ -131,7 +132,7 @@ details.group[open] > summary .divider-label::after { content:'▾'; }
 .kpi { padding:24px 18px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); }
 .kpi:last-child { border-right:none; }
 .kpi-label { font-family:var(--f-mono); font-size:13px; letter-spacing:.08em; color:var(--ink-3); margin-bottom:10px; line-height:1.4; }
-.kpi-num { font-family:var(--f-head); font-weight:700; font-size:clamp(32px, 1.6vw + 22px, 42px); line-height:1; color:var(--ink); }
+.kpi-num { font-family:var(--f-head); font-weight:700; font-size:clamp(32px, 1.6vw + 22px, 42px); line-height:1; color:var(--good); }   /* headline stats are indicators: green */
 .kpi-num span { font-size:20px; font-weight:600; color:var(--ink-3); margin-left:3px; }
 .kpi-note { font-size:16px; color:var(--ink-2); margin-top:8px; line-height:1.45; }
 
@@ -175,9 +176,15 @@ details.group[open] > summary .divider-label::after { content:'▾'; }
 .stat-block { padding:22px; border:1px solid var(--line); }
 .stat-block-label { font-family:var(--f-mono); font-size:13px; letter-spacing:.06em; color:var(--ink-3); margin-bottom:10px; line-height:1.4; }
 .stat-block-num { font-family:var(--f-head); font-weight:700; font-size:clamp(30px, 1.4vw + 22px, 40px); line-height:1.05; margin-bottom:8px; color:var(--ink); }
-.stat-block-num.good  { color:var(--good); }   /* set by the page ONLY where the number is a status indicator */
+.stat-block-num.good  { color:var(--good); }   /* status indicators are ALWAYS coloured: green = on track, amber = watch, red = off track */
 .stat-block-num.amber { color:var(--warn); }
-.stat-block-num.plain { color:var(--ink); }
+.stat-block-num.bad   { color:var(--bad); }
+.kpi-num.amber { color:var(--warn); }
+.kpi-num.bad   { color:var(--bad); }
+/* the one-line "how colours work" caption under a table */
+.color-key { font-family:var(--f-mono); font-size:13px; color:var(--ink-3); margin:10px 0 18px; line-height:1.6; }
+.color-key b { font-weight:700; }
+.color-key .k-good { color:var(--good); } .color-key .k-warn { color:var(--warn); } .color-key .k-bad { color:var(--bad); }
 .stat-block-body { font-size:17px; color:var(--ink-2); line-height:1.6; }
 .stat-block-body + .stat-block-body { padding-top:10px; }
 
