@@ -156,7 +156,7 @@
     document.getElementById("scurve").innerHTML = g;
   })();
 
-  /* ---------- 4c. "In this report" links: open the section you click, then scroll to it ---------- */
+  /* ---------- 4c. open a section from a link like ...#grp-health ---------- */
   function openSection(id) {
     const el = document.getElementById(id);
     if (!el || el.tagName !== "DETAILS") return false;
@@ -164,9 +164,6 @@
     el.scrollIntoView({ block: "start" });
     return true;
   }
-  document.querySelectorAll(".toc a").forEach(a => a.addEventListener("click", e => {
-    if (openSection(a.getAttribute("href").slice(1))) { e.preventDefault(); history.replaceState(null, "", a.getAttribute("href")); }
-  }));
   if (location.hash) openSection(location.hash.slice(1));      // a link like ...#grp-health opens that section on arrival
 
   /* ---------- 4d. "▴ COLLAPSE" buttons: close their section and scroll back to its top ---------- */
