@@ -185,8 +185,14 @@
     };
 
     /* ================= 4. QUARTER CARDS ================= */
-    const closed = D.closedQuarters.map(q => ({ key: q.key, season: q.season, open: false, newSubs: comma(q.newSubs), pace: dp(q.newSubs / q.activeDays, 2) }));
-    M.quarters = closed.concat([{ key: cur.key, season: cur.season, open: true, newSubs: comma(cur.newSubs), pace: dp(cur.newSubs / curActiveDays, 2) }]);
+    /* Colour of each quarter's numbers: that quarter's pace (subscribers per active day) is compared with the pace
+       across ALL quarters together, using the same green/yellow/red rule as everywhere else on the page. */
+    const allSubs = sum(D.closedQuarters.map(q => q.newSubs)) + cur.newSubs;
+    const allDays = sum(D.closedQuarters.map(q => q.activeDays)) + curActiveDays;
+    const overallPace = allSubs / allDays;
+    const quarterCls = (subs, days) => band(subs / days, overallPace).num;      // "good" | "amber" | "bad"
+    const closed = D.closedQuarters.map(q => ({ key: q.key, season: q.season, open: false, newSubs: comma(q.newSubs), pace: dp(q.newSubs / q.activeDays, 2), cls: quarterCls(q.newSubs, q.activeDays) }));
+    M.quarters = closed.concat([{ key: cur.key, season: cur.season, open: true, newSubs: comma(cur.newSubs), pace: dp(cur.newSubs / curActiveDays, 2), cls: quarterCls(cur.newSubs, curActiveDays) }]);
     const quarterSum = sum(D.closedQuarters.map(q => q.newSubs)) + cur.newSubs;
     if (Math.abs(quarterSum - total) / total <= 0.01) ok("quarter sums (" + quarterSum + ") ≈ channel-table total (" + total + ")");
     else warn("quarter sums (" + quarterSum + ") differ from channel-table total (" + total + ") by more than 1%");

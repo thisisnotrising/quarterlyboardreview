@@ -250,7 +250,7 @@ window.BOARD_DATA = {
       "<strong>Likes don't predict conversion; restacks do.</strong> \"Life is hard as fuck\" drew 184 likes, the most of any note, and converted worst among the notes that converted anyone, at 0.34%.",
       "Every note at 9+ restacks converted someone; the only note that converted no one was also the lowest-restack."
     ],
-    notesMethodology: "Engagement rate = likes + replies + restacks, divided by impressions. Table sorted by restack count, most first.",
+    notesMethodology: "Engagement rate = likes + replies + restacks, divided by impressions. Table sorted by restack count, most first.<p class='color-key'>HOW COLOURS WORK · each rate is compared with this table’s overall rate ({{notesBench}}): <b class='k-good'>green</b> = no more than {{bands.green}}% below it, <b class='k-warn'>yellow</b> = {{bands.green}}–{{bands.yellow}}% below, <b class='k-bad'>red</b> = worse.</p>",
 
     missionLede: "What happens to a writer's subscriber count after we put them on the cover of NOT RISING.",
     missionControlBody: "A featured writer grew roughly ten times faster than a same-size writer we didn't feature, over the identical window.",

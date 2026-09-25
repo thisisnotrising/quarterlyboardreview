@@ -72,7 +72,7 @@
 
     quarters: () => M.quarters.map(q =>
       '<div class="qcell' + (q.open ? " open" : "") + '"><div class="qname">' + q.key + '</div><div class="qseason">' + q.season + (q.open ? " ●" : "") + "</div>" +
-      '<div class="qrow">New subscribers<b>' + q.newSubs + '</b></div><div class="qrow">Pace<b>' + q.pace + "/day</b></div></div>").join(""),
+      '<div class="qrow">New subscribers<b class="' + q.cls + '">' + q.newSubs + '</b></div><div class="qrow">Pace<b class="' + q.cls + '">' + q.pace + "/day</b></div></div>").join(""),
 
     conversion: () => {
       const q = M.current;

@@ -161,6 +161,9 @@ details.group[open] > summary .divider-label::after { content:'▾'; }
 .qrow { display:flex; justify-content:space-between; align-items:baseline; font-size:17px; color:var(--ink-2); padding:6px 0; border-top:1px solid var(--line); }
 .qrow:first-of-type { border-top:none; }
 .qrow b { color:var(--ink); font-weight:700; font-family:var(--f-mono); font-size:16px; }
+.qrow b.good  { color:var(--good); }   /* quarter numbers are indicators: green / amber / red */
+.qrow b.amber { color:var(--warn); }
+.qrow b.bad   { color:var(--bad); }
 
 /* Stat blocks (a label, a big number, a sentence) */
 .two-col { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:24px; }
