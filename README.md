@@ -46,7 +46,7 @@ Inside a report the flow is always: `data.js` (numbers) → `calc.js` (formulas)
 3. **Add one entry to `reports.js`** (copy the existing block; change `id`, `file`, `label`, `season`, `asOf`, `subscribers`, `status`). The archive sorts newest-first by itself.
 4. **Check it.** Open `reports/2026-q4/q42026boardreport.html?debug=1`. Every line should start with ✓. A ⚠ means something doesn't add up; fix it before sharing.
 5. **Close out the old one.** In `reports.js`, change the finished quarter's `status` from `"In progress"` to `"Final"`. Leave its folder alone.
-6. **Section numbers and "In this report".** The five numbered sections and the contents list are written directly in the report page (`q42026boardreport.html`), so a copied report keeps them automatically.
+6. **Section numbers and "In this report".** The five numbered sections and the "In this report" label above them (the bars are the contents list) are written directly in the report page (`q42026boardreport.html`), so a copied report keeps them automatically.
 7. Commit to GitHub. The site updates in a minute or two.
 
 The trajectory chart's height grows automatically once you pass 1,000 subscribers.
