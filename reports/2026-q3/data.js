@@ -168,13 +168,13 @@ window.BOARD_DATA = {
       { name: "Paolo Nardi",        baseline: 58,  gain: 8,  counted: true },
       { name: "Casey Keen",         baseline: 215, gain: 12, counted: true },
       { name: "Mustard",            baseline: 426, gain: 23, counted: true },
-      { name: "Joel L",             baseline: 428, gain: 11, counted: true },
-      { name: "Constantinos",       baseline: 99,  gain: 5,  counted: true },
-      { name: "Jennifer Houle",     baseline: 630, gain: -5, counted: false, why: "grief-sabbatical confound" },
+      { name: "Joel L",             baseline: 420, gain: 19, counted: true },   // teaser baseline (Aug 26) -> 439 at the 1-week mark
+      { name: "Constantinos",       baseline: 99,  gain: 8,  counted: true },   // pre-feature baseline (99, flat through Sep 6) -> 107 on Sep 16
+      { name: "Andrew Barban",      baseline: 177, gain: 9,  counted: true },   // teaser baseline (Aug 9) -> 186 on Aug 26
+      { name: "Jennifer Houle",     baseline: 630, gain: 15, counted: true },   // gross lift in the feature window (net is now -5)
       { name: "Rebe",               baseline: null, gain: null, counted: false, why: "baseline unrecoverable" }
     ],
     controlMultiple: "~10×",         // MANUAL: featured vs same-size control (Joel L vs Des Kennedy, first 24-72h)
-     liftAverage: "+5.92%",      // MANUAL: average lift across 8 tracked features (Feature Lift Tracker): includes Andrew Barban and Jennifer Houle's gross +15, with teaser baselines for Joel L (420, +19) and Constantinos (99, +8). Not calculated from the 6 counted writers above.
     reach: "~29,000",                // MANUAL: combined subscribers of the 8 Stackhunters
     stackhunters: "8"
   },
