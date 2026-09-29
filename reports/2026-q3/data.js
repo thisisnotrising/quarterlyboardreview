@@ -174,6 +174,7 @@ window.BOARD_DATA = {
       { name: "Rebe",               baseline: null, gain: null, counted: false, why: "baseline unrecoverable" }
     ],
     controlMultiple: "~10×",         // MANUAL: featured vs same-size control (Joel L vs Des Kennedy, first 24-72h)
+     liftAverage: "+5.92%",      // MANUAL: average lift across 8 tracked features (Feature Lift Tracker): includes Andrew Barban and Jennifer Houle's gross +15, with teaser baselines for Joel L (420, +19) and Constantinos (99, +8). Not calculated from the 6 counted writers above.
     reach: "~29,000",                // MANUAL: combined subscribers of the 8 Stackhunters
     stackhunters: "8"
   },
@@ -252,9 +253,11 @@ window.BOARD_DATA = {
     ],
     notesMethodology: "Engagement rate = likes + replies + restacks, divided by impressions. Table sorted by restack count, most first.<p class='color-key'>HOW COLOURS WORK · each rate is compared with this table’s overall rate ({{notesBench}}): <b class='k-good'>green</b> = no more than {{bands.green}}% below it, <b class='k-warn'>yellow</b> = {{bands.green}}–{{bands.yellow}}% below, <b class='k-bad'>red</b> = worse.</p>",
 
-    missionLede: "What happens to a writer's subscriber count after we put them on the cover of NOT RISING.",
+    missionLede: "What happens when a writer is featured on the cover of NOT RISING Magazine.",
     missionControlBody: "A featured writer grew roughly ten times faster than a same-size writer we didn't feature, over the identical window.",
-    stackhunterBoostBody: "vs. {{impact.shCtl}} for a comparable writer who isn't stackhunting. The Stackhunter self-reported gaining {{impact.shGain}} new subscribers and their first paid one within week 1.",
+    stackhunterBoostBody: "The Stackhunter self-reported gaining {{impact.shGain}} new subscribers and their first paid one within week 1.",
+    stackhunterControlBody: "Growth for a comparable writer who isn't stackhunting, over one week.",
+    shipsLede: "When a Stackhunter lifts others up, they get lifted back.",
     stackhunterBoostBody2: "Three months in, they've gained {{impact.sh3Pct}}.",
     missionReachBody: "Combined subscribers our curators can amplify a writer into — the discovery range we offer the people we feature. Five curators and three editorial directors.",
 
