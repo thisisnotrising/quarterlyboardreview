@@ -257,6 +257,7 @@
     M.impact = {
       liftMax: "+" + dp(Math.max(...lifts), 1) + "%",      // best single lift
       liftMedian: "+" + dp(median(lifts), 1) + "%",        // middle lift across counted writers
+      liftAvg: D.featureLift.liftAverage,      // average lift, typed in by hand in data.js (featureLift.liftAverage)
       writersCounted: lifts.length,
       /* Stackhunter growth boost (self-reported): week-1 gain / starting count.  (307 - 292) / 292 = 15 / 292 = 5.1% */
       shBaseline: comma(D.stackhunterBoost.baseline), shAfter: comma(D.stackhunterBoost.afterWeek1),
@@ -265,6 +266,7 @@
       sh3Gain: D.stackhunterBoost.subsNow - D.stackhunterBoost.baseline,                                  // 352 - 292 = 60
       sh3Pct: "+" + dp((D.stackhunterBoost.subsNow - D.stackhunterBoost.baseline) / D.stackhunterBoost.baseline * 100, 1) + "%",   // 60 / 292 = 20.5%
       shCtl: "+" + dp((D.stackhunterBoost.control.end - D.stackhunterBoost.control.start) / D.stackhunterBoost.control.start * 100, 1) + "%",   // comparison writer, same-length week: 7 / 345 = 2.0%
+      shCtlCls: band((D.stackhunterBoost.control.end - D.stackhunterBoost.control.start) / D.stackhunterBoost.control.start * 100, (D.stackhunterBoost.afterWeek1 - D.stackhunterBoost.baseline) / D.stackhunterBoost.baseline * 100).num, // colour of the comparison number: the same green/yellow/red rule, measured against the Stackhunter's week-1 boost
       control: D.featureLift.controlMultiple, reach: D.featureLift.reach, stackhunters: D.featureLift.stackhunters
     };
 
