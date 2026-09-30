@@ -22,8 +22,8 @@ window.BOARD_DATA = {
   meta: {
     reportTitle: "Board Report",   // shown in the browser tab
     quarterLabel: "Q3 2026",                     // also used by the archive page
-    asOf: "2026-09-28",   // must equal the LAST date in "series" below (the page checks this)
-    version: "v1.4",      // v1.1 -> v1.2 ... whatever you like
+    asOf: "2026-09-30",   // must equal the LAST date in "series" below (the page checks this)
+    version: "v1.5",      // v1.1 -> v1.2 ... whatever you like
     publication: "Hi, Human",
     site: "thisisnotrising.org",
     motto: "Human in control. Not human in the loop."
@@ -42,7 +42,7 @@ window.BOARD_DATA = {
     ["2026-04-01", 466], ["2026-04-20", 520], ["2026-05-10", 564], ["2026-05-25", 590],
     ["2026-06-20", 610], ["2026-06-30", 627], ["2026-07-14", 683], ["2026-08-03", 746],
     ["2026-08-19", 803], ["2026-08-30", 841], ["2026-09-10", 890], ["2026-09-22", 926],
-    ["2026-09-23", 931], ["2026-09-25", 939], ["2026-09-28", 948]
+    ["2026-09-23", 931], ["2026-09-25", 939], ["2026-09-28", 948], ["2026-09-30", 949]
   ],
 
   /* ---------------------------------------------------------------------
@@ -120,23 +120,23 @@ window.BOARD_DATA = {
     end: "2026-09-30",                    // quarter length (92 days) feeds the monthly-growth formula
     startSubsDate: "2026-06-30",          // count on this date (from "series") = opening balance for the quarter (627)
     inactive: [["2026-09-07", "2026-09-11"]],   // days off, subtracted from the quarter's "active days" (pace)
-    newSubs: 390,                          // WHERE: Sources > custom Jul 1 -> today > New subscribers: TOTAL
+    newSubs: 393,                          // WHERE: Sources > custom Jul 1 -> today > New subscribers: TOTAL
 
     /* Substack-network subscribers, split (Sources > New subscribers, Jul 1 -> today).
        "Other" on Substack = profile page + Substack app. Split it with Stats > Traffic > "substack app" > Free subs. */
     network: {
-      visitors: 1795,                      // Sources > Unique visitors tab > "Substack" total
-      subsFromSources: 327,                // Sources > New subscribers tab > "Substack" row. The page checks that the split below adds up to this.
-      notes: 194,
-      profilePage: 73,                     // = Sources "Other" (96) minus Traffic "substack app" (23)
-      recommendations: 30,
+      visitors: 1823,                      // Sources > Unique visitors tab > "Substack" total
+      subsFromSources: 330,                // Sources > New subscribers tab > "Substack" row. The page checks that the split below adds up to this.
+      notes: 195,
+      profilePage: 74,                     // = Sources "Other" (97) minus Traffic "substack app" (23)
+      recommendations: 31,
       substackApp: 23,
       liveStream: 4,
       trackbacksOnboarding: 3              // trackbacks (2) + onboarding (1)
     },
-    directToApp: { visitors: 1257, subs: 69 },
-    direct:      { visitors: 591,  subs: 0 },
-    external:    { visitors: 142,  subs: 1 }   // social + email + own website + search + AI combined
+    directToApp: { visitors: 1287, subs: 69 },
+    direct:      { visitors: 603,  subs: 0 },
+    external:    { visitors: 143,  subs: 1 }   // social + email + own website + search + AI combined
   },
 
   /* WHERE: Substack > Audience > Recommendations: "Substacks recommending you" */
