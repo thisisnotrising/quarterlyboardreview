@@ -18,7 +18,7 @@
 window.BOARD_REPORTS = [
   {
     id: "2026-q3",
-    file: "index.html",
+    file: "q32026boardreport.html",
     label: "2026 · Q3",
     season: "SPROUT · JUL – SEP",
     asOf: "2026-10-01",
