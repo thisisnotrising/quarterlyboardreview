@@ -22,8 +22,8 @@ window.BOARD_DATA = {
   meta: {
     reportTitle: "Board Report",   // shown in the browser tab
     quarterLabel: "Q3 2026",                     // also used by the archive page
-    asOf: "2026-09-30",   // must equal the LAST date in "series" below (the page checks this)
-    version: "v1.5",      // v1.1 -> v1.2 ... whatever you like
+    asOf: "2026-10-01",   // must equal the LAST date in "series" below (the page checks this)
+    version: "v1.6",      // v1.1 -> v1.2 ... whatever you like
     publication: "Hi, Human",
     site: "thisisnotrising.org",
     motto: "Human in control. Not human in the loop."
@@ -42,7 +42,7 @@ window.BOARD_DATA = {
     ["2026-04-01", 466], ["2026-04-20", 520], ["2026-05-10", 564], ["2026-05-25", 590],
     ["2026-06-20", 610], ["2026-06-30", 627], ["2026-07-14", 683], ["2026-08-03", 746],
     ["2026-08-19", 803], ["2026-08-30", 841], ["2026-09-10", 890], ["2026-09-22", 926],
-    ["2026-09-23", 931], ["2026-09-25", 939], ["2026-09-28", 948], ["2026-09-30", 949]
+    ["2026-09-23", 931], ["2026-09-25", 939], ["2026-09-28", 948], ["2026-09-30", 949], ["2026-10-01", 953]
   ],
 
   /* ---------------------------------------------------------------------
@@ -85,18 +85,18 @@ window.BOARD_DATA = {
      --------------------------------------------------------------------- */
   sinceLaunch: {
     rows: [
-      { name: "Notes",               views: null,   users: null,  subs: 512, restack: true },
-      { name: "substack.com",        views: null,   users: null,  subs: 217, restack: true },   // = Sources "Other" (254) minus "Substack app" (37)
-      { name: "Direct to app",       views: 7150,   users: 3256,  subs: 132 },
-      { name: "Recommendations",     views: null,   users: null,  subs: 53 },
-      { name: "Substack app",        views: 12314,  users: 3894,  subs: 37 },
-      { name: "Direct",              views: 7427,   users: 2782,  subs: 7 },
+      { name: "Notes",               views: null,   users: null,  subs: 519, restack: true },
+      { name: "substack.com",        views: null,   users: null,  subs: 219, restack: true },   // = Sources "Other" (256) minus "Substack app" (37)
+      { name: "Direct to app",       views: 7418,   users: 3383,  subs: 132 },
+      { name: "Recommendations",     views: null,   users: null,  subs: 54 },
+      { name: "Substack app",        views: 12684,  users: 4028,  subs: 37 },
+      { name: "Direct",              views: 7581,   users: 2842,  subs: 7 },
       { name: "Substack trackbacks", views: null,   users: null,  subs: 5 },
       { name: "Substack onboarding", views: null,   users: null,  subs: 3 },
       { name: "Substack live stream",views: null,   users: null,  subs: 4 },
       { name: "Substack chat",       views: null,   users: null,  subs: 2 },
       { name: "google.com",          views: 39,     users: 31,    subs: 2 },
-      { name: "instagram.com",       views: 37,     users: 34,    subs: 1 }
+      { name: "instagram.com",       views: 39,     users: 36,    subs: 1 }
     ]
   },
 
@@ -120,28 +120,28 @@ window.BOARD_DATA = {
     end: "2026-09-30",                    // quarter length (92 days) feeds the monthly-growth formula
     startSubsDate: "2026-06-30",          // count on this date (from "series") = opening balance for the quarter (627)
     inactive: [["2026-09-07", "2026-09-11"]],   // days off, subtracted from the quarter's "active days" (pace)
-    newSubs: 393,                          // WHERE: Sources > custom Jul 1 -> today > New subscribers: TOTAL
+    newSubs: 398,                          // WHERE: Sources > custom Jul 1 -> today > New subscribers: TOTAL
 
     /* Substack-network subscribers, split (Sources > New subscribers, Jul 1 -> today).
        "Other" on Substack = profile page + Substack app. Split it with Stats > Traffic > "substack app" > Free subs. */
     network: {
-      visitors: 1823,                      // Sources > Unique visitors tab > "Substack" total
-      subsFromSources: 330,                // Sources > New subscribers tab > "Substack" row. The page checks that the split below adds up to this.
-      notes: 195,
-      profilePage: 74,                     // = Sources "Other" (97) minus Traffic "substack app" (23)
-      recommendations: 31,
+      visitors: 1837,                      // Sources > Unique visitors tab > "Substack" total
+      subsFromSources: 335,                // Sources > New subscribers tab > "Substack" row. The page checks that the split below adds up to this.
+      notes: 198,
+      profilePage: 75,                     // = Sources "Other" (98) minus Traffic "substack app" (23)
+      recommendations: 32,
       substackApp: 23,
       liveStream: 4,
       trackbacksOnboarding: 3              // trackbacks (2) + onboarding (1)
     },
-    directToApp: { visitors: 1287, subs: 69 },
-    direct:      { visitors: 603,  subs: 0 },
+    directToApp: { visitors: 1302, subs: 69 },
+    direct:      { visitors: 608,  subs: 0 },
     external:    { visitors: 143,  subs: 1 }   // social + email + own website + search + AI combined
   },
 
   /* WHERE: Substack > Audience > Recommendations: "Substacks recommending you" */
   recommenders: 51,
-  recsPerPublicationHigh: 0.82,   // MANUAL: upper end of the "0.56–0.82 subscribers each" range (source not on file)
+  recsPerPublicationHigh: 1.14,   // MANUAL: upper end of the "0.63–1.14 subscribers each" range = all-time subscribers from recommendations (58) / recommenders (51)
 
   /* ---------------------------------------------------------------------
      7. NOTES — per-Note stats (open each Note's stats page; new subs from Sources > Notes expanded)
@@ -149,8 +149,9 @@ window.BOARD_DATA = {
      --------------------------------------------------------------------- */
   notes: [
     { name: "Fast Four Friday · Aug 21",         restacks: 27, likes: 56,  replies: 20, impressions: 611,  subs: 7 },
-    { name: "Fast Four Friday · Sep 4",          restacks: 24, likes: 68,  replies: 16, impressions: 872,  subs: 6 },
-    { name: "Fast Four Friday · Sep 18",         restacks: 19, likes: 45,  replies: 10, impressions: 500,  subs: 3 },
+    { name: "Fast Four Friday · Sep 4",          restacks: 24, likes: 70,  replies: 16, impressions: 913,  subs: 6 },
+    { name: "Fast Four Friday · Sep 18",         restacks: 21, likes: 54,  replies: 10, impressions: 636,  subs: 5 },
+    { name: "Fast Four Friday · Sep 25",         restacks: 12, likes: 39,  replies: 12, impressions: 405,  subs: 5 },
     { name: "Fast Four Friday · Aug 28",         restacks: 17, likes: 49,  replies: 8,  impressions: 703,  subs: 8 },
     { name: "Anniversary note · Aug 20",         restacks: 14, likes: 103, replies: 26, impressions: 1359, subs: 6 },
     { name: "\"Life is hard as fuck\" · Sep 3",  restacks: 9,  likes: 184, replies: 27, impressions: 2646, subs: 9 },
@@ -244,10 +245,10 @@ window.BOARD_DATA = {
     spendBlockNetworkBody: "Of every 100 people who reached Hi, Human through Substack — restacks, the profile page, the app — about {{current.network.convRound}} subscribed. This is where all the effort goes, and it costs nothing but time and attention to run.",
     spendBlockOffBody: "Email, outside links, social media (LinkedIn, Facebook, Instagram) and search together sent {{current.offPlatform.visitorsRounded}} visitors and produced {{current.offPlatform.subsPhrase}}, organically. We haven't needed to spend on these channels to grow.",
 
-    notesLede: "Performance analytics of seven Notes published in {{current.key}}.",
+    notesLede: "Performance analytics of eight Notes published in {{current.key}}.",
     notesCalloutTitle: "Fast Four Fridays convert the most",
     notesCallout: [
-      "The four Fast Four Friday notes take every one of Q3's top four restack counts. Aug 21 and Aug 28 converted best, at 1.15% and 1.14%.",
+      "The five Fast Four Friday notes include all of Q3's top four restack counts. Sep 25, Aug 21 and Aug 28 converted best, at 1.23%, 1.15% and 1.14%.",
       "<strong>Likes don't predict conversion; restacks do.</strong> \"Life is hard as fuck\" drew 184 likes, the most of any note, and converted worst among the notes that converted anyone, at 0.34%.",
       "Every note at 9+ restacks converted someone; the only note that converted no one was also the lowest-restack."
     ],
