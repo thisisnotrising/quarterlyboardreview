@@ -230,27 +230,26 @@ window.BOARD_DATA = {
      (Ask before changing wording: these are your published claims.)
      --------------------------------------------------------------------- */
   copy: {
-    heroHeadline: "NOT RISING's growth engine runs on <em>trust</em>, and it's working.",
+    heroHeadline: "There's another way for voices to be heard: chosen by <em>people</em>, not by the algorithm. I tracked the numbers to see if it worked.",
     methodology: "Based on Hi, Human's 1-year growth data, analyzing growth levers to compile a repeatable and open-source community-building playbook for future <a href=\"https://claude.ai/artifact/8WVxXTnM9Q69n8gaMogvfb\" target=\"_blank\" rel=\"noopener\">Desk Chiefs</a>.",
 
-    ytdHeadliner: "Daily restacks are NOT RISING's biggest growth driver, by a large margin.",
+    ytdHeadliner: "On Substack, Notes travel further than posts. So I used Notes to amplify other voices every day.",
     trajectoryLede: "Hi, Human's subscriber count, with the restack engine launch marked.",
     sinceLaunchLede: "Where our {{sinceLaunch.total}} gross new subscribers have come from, cumulative since January.",
     sinceLaunchCallout: "<strong>Notes and the profile page together account for {{sinceLaunch.restackSharePct}}% of Hi, Human's subscribers since launch</strong> — {{sinceLaunch.restackSubs}} of {{sinceLaunch.total}}. Everything else combined, including the app, recommendations and outside links, makes up the remainder.",
 
-    quarterlyHeadliner: "Amplifying others drives growth and costs $0. We don't need capital to earn trust.",
+    quarterlyHeadliner: "Community growth can happen without paid reach or capital. It just takes time and genuine connection.",
     conversionLede: "This quarter's {{current.newSubs}} new subscribers, by channel. Conversion = subscribers ÷ visitors. Share = portion of the quarter's new subscribers.",
     conversionCallout: "<strong>Reading and restacking — Notes plus the profile page — drove {{current.readingRestack.subs}} of the quarter's subscribers, {{current.readingRestack.sharePct}}% of the total.</strong> It's also the most efficient channel: the Substack network converts visitors at {{current.network.conv}}%, off-platform traffic at {{current.offPlatform.convRound}}%.",
     conversionMethodology: "\"Substack network\" is the only bucket Substack lets us see traffic for in aggregate — it can't be split further into Notes vs. recommendations at the visitor level, only at the point someone subscribes. The individual Note examples below get closer to isolating restacks specifically. Shares total slightly over 100% — Substack credits a few subscribers to two sources.",
     spendBlockNetworkBody: "Of every 100 people who reached Hi, Human through Substack — restacks, the profile page, the app — about {{current.network.convRound}} subscribed. This is where all the effort goes, and it costs nothing but time and attention to run.",
-    spendBlockOffBody: "Email, outside links, social media (LinkedIn, Facebook, Instagram) and search together sent {{current.offPlatform.visitorsRounded}} visitors and produced {{current.offPlatform.subsPhrase}}, organically. We haven't needed to spend on these channels to grow.",
+    spendBlockOffBody: "Direct links, email, social media (LinkedIn, Facebook, Instagram) and search together sent {{current.offPlatform.visitors}} visitors and produced {{current.offPlatform.subsPhrase}}, organically. We haven't needed to spend on these channels to grow.",
 
     notesLede: "Performance analytics of eight Notes published in {{current.key}}.",
     notesCalloutTitle: "Fast Four Fridays convert the most",
     notesCallout: [
-      "The five Fast Four Friday notes include all of Q3's top four restack counts. Sep 25, Aug 21 and Aug 28 converted best, at 1.23%, 1.15% and 1.14%.",
-      "<strong>Likes don't predict conversion; restacks do.</strong> \"Life is hard as fuck\" drew 184 likes, the most of any note, and converted worst among the notes that converted anyone, at 0.34%.",
-      "Every note at 9+ restacks converted someone; the only note that converted no one was also the lowest-restack."
+      "Every Friday I compile all the people we've restacked in the past week in a Note, and I DM every single one on the list to make sure they see it. It converts the most because it builds the most relationships.",
+      "9+ restacks can make voices travel. 20+ can make them soar."
     ],
     notesMethodology: "Engagement rate = likes + replies + restacks, divided by impressions. Table sorted by restack count, most first.<p class='color-key'>HOW COLOURS WORK · each rate is compared with this table’s overall rate ({{notesBench}}): <b class='k-good'>green</b> = no more than {{bands.green}}% below it, <b class='k-warn'>yellow</b> = {{bands.green}}–{{bands.yellow}}% below, <b class='k-bad'>red</b> = worse.</p>",
 
@@ -262,6 +261,7 @@ window.BOARD_DATA = {
     stackhunterBoostBody2: "Three months in, they've gained {{impact.sh3Pct}}.",
     missionReachBody: "Combined subscribers our curators can amplify a writer into — the discovery range we offer the people we feature. Five curators and three editorial directors.",
 
+    healthHeadliner: "NOT RISING grows at nature's pace and ensures the system is healthy and not overworked.",
     healthLede: "The Logistic S-Curve Model is an evidence-based framework for predicting growth inside a bounded population. We use it to trigger two decisions: if the system needs tending, and when to expand it.",
     healthBodyHealthy: "Growth is running at {{health.rActualPct}}% a day against a {{health.benchmarkPct}}% benchmark for our size — within normal range, so the signal is to keep tending rather than expand.",
     healthBodyBelow: "Growth is running at {{health.rActualPct}}% a day against a {{health.benchmarkPct}}% benchmark for our size — below the normal range, so the signal is to tend the soil before expanding.",
