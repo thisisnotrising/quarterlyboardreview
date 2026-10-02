@@ -230,10 +230,10 @@ window.BOARD_DATA = {
      (Ask before changing wording: these are your published claims.)
      --------------------------------------------------------------------- */
   copy: {
-    heroHeadline: "There's another way for voices to be heard: chosen by <em>people</em>, not by the algorithm. I tracked the numbers to see if it worked.",
+    heroHeadline: "There's another way for voices to be heard without depending on the algorithm—and it's unapologetically human.",
     methodology: "Based on Hi, Human's 1-year growth data, analyzing growth levers to compile a repeatable and open-source community-building playbook for future <a href=\"https://claude.ai/artifact/8WVxXTnM9Q69n8gaMogvfb\" target=\"_blank\" rel=\"noopener\">Desk Chiefs</a>.",
 
-    ytdHeadliner: "On Substack, Notes travel further than posts. So I used Notes to amplify other voices every day.",
+    ytdHeadliner: "I used Notes to amplify others, and Notes became the main thing that amplified me.",
     trajectoryLede: "Hi, Human's subscriber count, with the restack engine launch marked.",
     sinceLaunchLede: "Where our {{sinceLaunch.total}} gross new subscribers have come from, cumulative since January.",
     sinceLaunchCallout: "<strong>Notes and the profile page together account for {{sinceLaunch.restackSharePct}}% of Hi, Human's subscribers since launch</strong> — {{sinceLaunch.restackSubs}} of {{sinceLaunch.total}}. Everything else combined, including the app, recommendations and outside links, makes up the remainder.",
@@ -261,7 +261,7 @@ window.BOARD_DATA = {
     stackhunterBoostBody2: "Three months in, they've gained {{impact.sh3Pct}}.",
     missionReachBody: "Combined subscribers our curators can amplify a writer into — the discovery range we offer the people we feature. Five curators and three editorial directors.",
 
-    healthHeadliner: "NOT RISING grows at nature's pace and ensures the system is healthy and not overworked.",
+    healthHeadliner: "NOT RISING is made up of humans, not machines. The long-term plan protects the system's health and capacity as we grow it.",
     healthLede: "The Logistic S-Curve Model is an evidence-based framework for predicting growth inside a bounded population. We use it to trigger two decisions: if the system needs tending, and when to expand it.",
     healthBodyHealthy: "Growth is running at {{health.rActualPct}}% a day against a {{health.benchmarkPct}}% benchmark for our size — within normal range, so the signal is to keep tending rather than expand.",
     healthBodyBelow: "Growth is running at {{health.rActualPct}}% a day against a {{health.benchmarkPct}}% benchmark for our size — below the normal range, so the signal is to tend the soil before expanding.",
