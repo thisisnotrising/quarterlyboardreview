@@ -46,22 +46,17 @@
   <div class="kpi">
     <div class="kpi-label">TOTAL SUBSCRIBERS</div>
     <div class="kpi-num"><i data-bind="kpi.total"></i></div>
-    <div class="kpi-note">up <i data-bind="kpi.upSinceLaunchPct"></i>% since launch, Jan 25, 2026</div>
+    <div class="kpi-note">Over <i data-bind="kpi.gainedSinceLaunch"></i> new subscribers in <i data-bind="kpi.monthsSinceLaunch"></i> months, from <i data-bind="kpi.launchBaseline"></i> at launch</div>
   </div>
   <div class="kpi">
     <div class="kpi-label">AVERAGE NEW SUBSCRIBERS</div>
     <div class="kpi-num" data-band="kpi.paceCls"><i data-bind="kpi.avgPerDay"></i><span>/day</span></div>
-    <div class="kpi-note"><i data-bind="kpi.paceVar"></i> vs. <i data-bind="kpi.prevKey"></i> pace of <i data-bind="kpi.prevPace"></i>/day</div>
+    <div class="kpi-note"><i data-bind="kpi.paceVsFirst"></i> vs. our first quarter (<i data-bind="kpi.firstPace"></i>/day), and still climbing</div>
   </div>
   <div class="kpi">
     <div class="kpi-label"><i data-bind="current.key"></i> MONTHLY GROWTH VS. BENCHMARK</div>
     <div class="kpi-num" data-band="kpi.benchCls"><i data-bind="kpi.q3Net"></i><span>%/mo</span></div>
-    <div class="kpi-note"><i data-bind="kpi.benchRatio"></i>&times; faster than newsletter <a href="https://www.clickminded.com/newsletter-statistics/">benchmark</a><br><i data-bind="kpi.monthlyGross"></i>% gross growth, less <i data-bind="kpi.monthlyGap"></i>% churn</div>
-  </div>
-  <div class="kpi">
-    <div class="kpi-label">YTD NET MONTHLY GROWTH</div>
-    <div class="kpi-num">+<i data-bind="kpi.ytdNet"></i><span>%/mo</span></div>
-    <div class="kpi-note">since <i data-bind="kpi.ytdFrom"></i></div>
+    <div class="kpi-note"><i data-bind="kpi.benchRatio"></i>&times; faster than newsletter <a href="https://www.clickminded.com/newsletter-statistics/">benchmark</a></div>
   </div>
 </div>
 
@@ -79,7 +74,7 @@
     <tbody data-table="sinceLaunch"></tbody>
   </table></div>
   <div class="callout-panel">
-    <h4>Restacks are the engine</h4>
+    <h4>I used Notes to amplify others, and Notes became the main thing that amplified me.</h4>
     <p data-copy="sinceLaunchCallout"></p>
   </div>
 </div>
@@ -151,7 +146,7 @@
 <details class="group" id="grp-mission"><summary><div class="divider"><div class="divider-label"><span class="sec-num">03</span><span class="sec-name">Impact on mission</span></div></div></summary>
 <div class="section">
   <div class="section-title">Impact on Mission</div>
-  <div class="impact-group-title">Rising boosts traffic. Not Rising boosts subscribers.</div>
+  <div class="impact-group-title">The Rising list boosts traffic. NOT RISING boosts subscribers.</div>
   <div class="section-lede" data-copy="missionLede"></div>
   <div class="two-col">
     <div class="stat-block">
@@ -187,6 +182,11 @@
 
 <!-- ============================ 4. SYSTEM HEALTH & CAPACITY ============================ -->
 <details class="group" id="grp-health"><summary><div class="divider"><div class="divider-label"><span class="sec-num">04</span><span class="sec-name">System health &amp; capacity</span></div></div></summary>
+
+<div class="callout-headliner">
+  <p data-copy="healthHeadliner"></p>
+</div>
+
 <div class="section">
   <div class="section-title">System Health &amp; Capacity</div>
   <div class="chart-scroll"><div class="chart-wrap"><svg id="scurve" viewBox="0 0 880 375"></svg></div></div>
