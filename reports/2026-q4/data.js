@@ -23,7 +23,7 @@ window.BOARD_DATA = {
     reportTitle: "Board Report",   // shown in the browser tab
     quarterLabel: "Q4 2026",                     // also used by the archive page
     asOf: "2026-10-09",   // must equal the LAST date in "series" below (the page checks this). Oct 9 = last COMPLETE day when pulled on Oct 10.
-    version: "v2.1",      // v2.0 = first Q4 build (new System Health rule, see section 9) · v2.1 = Q4 community quotes
+    version: "v2.2",      // v2.0 = first Q4 build (new System Health rule, see section 9) · v2.1 = Q4 community quotes · v2.2 = quote swap
     publication: "Hi, Human",
     site: "thisisnotrising.org",
     motto: "Human in control. Not human in the loop."
@@ -323,6 +323,6 @@ window.BOARD_DATA = {
     { text: "Stepping out of a vicious cycle to create a virtuous cycle instead, guided by human noticing rather than artificial algorithm.", who: "Hans Jorgensen", size: "md", center: true },
     { text: "I think we’ve handed so much over to algorithms without realizing it, and there’s something really powerful about people amplifying each other instead.", who: "Natalie Nicholson", size: "sm" },
     { text: "Some people are in it for the money, the material, the win. Some people like Kathi want to hear your story, have others hear your story—that’s rare.", who: "Gabe, Organizational Gravity", size: "lg", center: true },
-    { text: "Congrats! And long live the humans!", who: "michelle ray", size: "md" }
+    { text: "It’s time to bring soul to systems.", who: "Ms. Jana, Journey the Weave", size: "md" }
   ]
 };
