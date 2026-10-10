@@ -77,9 +77,10 @@ The trajectory chart's height grows automatically once you pass 1,000 subscriber
   - Net = the opening balance grown to today's Overview total, at the same compound monthly rate.
   - Gap = gross minus net. It is **not** called churn: it can't yet be separated into unsubscribes vs double-counting.
   - `monthlyGrowthBasis` in `data.js` chooses whether "months" means the whole quarter or only the days elapsed so far.
-- **Fertility (System Health)** = measured daily compound rate since the Branch stage began (Jun 20) ÷ the self-adjusting benchmark `0.65% × (1 − subscribers/10,000)`. Healthy while inside ±0.30 of 1.00.
-- **Next milestone** = days to reach it at the quarter-to-date pace, compared with the target date.
-- **Time before Phase 2** = months to reach 2,500 at the benchmark pace (fast end) and at the measured pace (slow end), each rounded down.
+- **System Health (from Q4 2026: stage pace)** = new subscribers per active day in the current Fibonacci stage ÷ the same figure for the previous, completed stage, coloured by the percent-variance rule above. A stage with fewer than `capacity.fragmentDays` (14) active days is shown as "Forming" and never alarmed. K = 10,000 is used only for the expansion timeline.
+  - *Until Q3 2026* it was "Fertility": measured daily compound rate since the Branch stage began ÷ the benchmark `0.65% × (1 − subscribers/10,000)`. Retired because growth rate fell 61% across stages while the crowding term moved ~7%, so the curve couldn't explain the slowdown.
+- **Next milestone** = days to reach it at the quarter-to-date pace, compared with the target date (if `targetDate` is null, the projected date is shown instead).
+- **Time before Phase 2** = months to reach 2,500 at the benchmark rate (fast end) and at the growth rate measured across the last completed stage (slow end), each rounded down.
 - **Note engagement** = (likes + replies + restacks) ÷ impressions. **Note conversion** = new subscribers ÷ impressions.
 
 ## Putting it online (GitHub Pages)

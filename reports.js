@@ -17,6 +17,15 @@
 
 window.BOARD_REPORTS = [
   {
+    id: "2026-q4",
+    file: "q42026boardreport.html",
+    label: "2026 · Q4",
+    season: "BRANCH · OCT – DEC",
+    asOf: "2026-10-09",
+    subscribers: 1033,
+    status: "In progress"
+  },
+  {
     id: "2026-q3",
     file: "q32026boardreport.html",
     label: "2026 · Q3",
