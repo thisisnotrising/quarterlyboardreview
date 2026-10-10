@@ -23,7 +23,7 @@ window.BOARD_DATA = {
     reportTitle: "Board Report",   // shown in the browser tab
     quarterLabel: "Q4 2026",                     // also used by the archive page
     asOf: "2026-10-09",   // must equal the LAST date in "series" below (the page checks this). Oct 9 = last COMPLETE day when pulled on Oct 10.
-    version: "v2.0",      // v2.0 = first Q4 build (new System Health rule, see section 9)
+    version: "v2.1",      // v2.0 = first Q4 build (new System Health rule, see section 9) · v2.1 = Q4 community quotes
     publication: "Hi, Human",
     site: "thisisnotrising.org",
     motto: "Human in control. Not human in the loop."
@@ -312,13 +312,17 @@ window.BOARD_DATA = {
     quotesSummary: "What the Community Is Saying"
   },
 
-  /* Community quotes. size: "sm" | "md" | "lg".  center: true = centered row. */
+  /* Community quotes. size: "sm" | "md" | "lg".  center: true = centered row.
+     Q4 (pulled Oct 10): word-for-word excerpts from restacks-with-comment of NOT RISING Notes and posts, Oct 1 -> Oct 10.
+     WHERE: each Note's or post's "Restacks" list (substack.com/note/c-ID/restacks). "…" marks where a longer restack was trimmed.
+     (Q3's six quotes live on in the Q3 report.) */
   quotes: [
-    { text: "Friday's reading is always more meaningful thanks to Fast Four Friday.", who: "Wealth GPS", size: "sm" },
-    { text: "Featuring other voices is what makes Substack so unique, this felt like a breath of fresh air!", who: "Kim Doyal", size: "md", center: true },
-    { text: "Knowing it was a human selection makes the recognition even more meaningful.", who: "Tahir, restless thinker", size: "lg" },
-    { text: "In a world so often shaped by algorithms, you and your group choose instead to see with human eyes, to read with human hearts, and to lift up writers whose words carry real weight and meaning.", who: "Death Whisperer", size: "sm", center: true },
-    { text: "More than thirty names on this list, and a person behind every one of them. That is a lot of reading for one week, and reading is the part nobody sees.", who: "KYO, Tokyo", size: "md" },
-    { text: "What makes a list like this worth reading is that the selection criteria are legible. You can argue with a framework. You can't argue with an algorithm's latent space.", who: "The Synthesis", size: "lg", center: true }
+    { text: "…some days it's hard not to lose hope. Your essay and the movement you've started inspired me today.", who: "Lauren Maguire", size: "lg" },
+    { text: "Friday dosage of hope", who: "Nirav Bhatt", size: "sm", center: true },
+    { text: "Writers reading writers. People noticing people. Communities choosing which voices deserve to travel farther because something in the work mattered to them.", who: "Monica A Leyva", size: "md" },
+    { text: "Stepping out of a vicious cycle to create a virtuous cycle instead, guided by human noticing rather than artificial algorithm.", who: "Hans Jorgensen", size: "md", center: true },
+    { text: "I think we’ve handed so much over to algorithms without realizing it, and there’s something really powerful about people amplifying each other instead.", who: "Natalie Nicholson", size: "sm" },
+    { text: "Some people are in it for the money, the material, the win. Some people like Kathi want to hear your story, have others hear your story—that’s rare.", who: "Gabe, Organizational Gravity", size: "lg", center: true },
+    { text: "Congrats! And long live the humans!", who: "michelle ray", size: "md" }
   ]
 };
