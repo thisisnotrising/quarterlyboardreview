@@ -1,0 +1,231 @@
+/* ==========================================================================
+   style.css  —  the LOOK of the quarterly report (white page, black/gray text).
+   --------------------------------------------------------------------------
+   HOW TO READ THIS FILE (for a first-time coder)
+   - A rule looks like:   .kpi-num { font-size: 40px; color: var(--ink); }
+     ".kpi-num" is WHICH part of the page; the lines inside { } are HOW it looks.
+   - "var(--ink)" means "use the colour named --ink from the list just below".
+     Change a colour in ONE place (the list) and the whole page follows.
+   - "/* ... */" is a comment: a note to humans, ignored by the browser.
+   - The landing page (index.html) has its own file, archive.css, and stays black.
+
+   Sections:  1 fonts · 2 colours & sizes · 3 page frame · 4 header · 5 section bars
+              6 numbers & tables · 7 callouts · 8 charts · 9 quotes · 10 footer · 11 phones
+   ========================================================================== */
+
+
+/* ---------- 1. FONTS ----------
+   The font files live in the "fonts" folder next to this file, so the report looks the same
+   everywhere (no Google download, works offline). Each line names one weight of one font.
+   Only these weights exist, so nothing is ever "faked" by the browser (faked bold/italic is what looks blurry).
+     Barlow Condensed  600, 700, 700-italic  → headings and big numbers
+     Barlow            400, 400-italic, 600  → paragraphs
+     Space Mono        400, 700              → small labels and table numbers        */
+@font-face { font-family:'Barlow Condensed'; font-weight:600; font-style:normal; font-display:swap; src:url("fonts/barlow-condensed-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family:'Barlow Condensed'; font-weight:700; font-style:normal; font-display:swap; src:url("fonts/barlow-condensed-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family:'Barlow Condensed'; font-weight:700; font-style:italic; font-display:swap; src:url("fonts/barlow-condensed-latin-700-italic.woff2") format("woff2"); }
+@font-face { font-family:'Barlow'; font-weight:400; font-style:normal; font-display:swap; src:url("fonts/barlow-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family:'Barlow'; font-weight:400; font-style:italic; font-display:swap; src:url("fonts/barlow-latin-400-italic.woff2") format("woff2"); }
+@font-face { font-family:'Barlow'; font-weight:600; font-style:normal; font-display:swap; src:url("fonts/barlow-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family:'Space Mono'; font-weight:400; font-style:normal; font-display:swap; src:url("fonts/space-mono-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family:'Space Mono'; font-weight:700; font-style:normal; font-display:swap; src:url("fonts/space-mono-latin-700-normal.woff2") format("woff2"); }
+
+
+/* ---------- 2. COLOURS & SIZES (change them here, once) ----------
+   Commentary text is black or gray (the NOT RISING colours). Every indicator stat AND indicator word
+   (numbers like 936 or 18.1%, words like "Healthy") is coloured green / amber / red by its status.
+   Green/amber/red never appear on links or commentary.
+   Every text colour below passes the WCAG AA contrast test (4.5:1 or better) on white.       */
+:root {
+  --bg:      #FFFFFF;   /* page background */
+  --panel:   #F4F4F2;   /* light gray boxes (callouts, section bars) */
+  --ink:     #111111;   /* main text and big numbers: near-black */
+  --ink-2:   #444444;   /* secondary text (paragraphs under headings) */
+  --ink-3:   #5F5F5F;   /* small labels */
+  --line:    #D8D8D4;   /* thin divider lines */
+  --line-2:  #111111;   /* strong lines (left edges of callouts) */
+
+  --good:    #17703A;   /* green indicator */
+  --warn:    #9A5A00;   /* amber indicator */
+  --bad:     #B3261E;   /* red indicator */
+
+  --gutter:  clamp(20px, 4vw, 40px);       /* left/right padding of the page */
+  --f-head:  'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --f-body:  'Barlow', Arial, sans-serif;
+  --f-mono:  'Space Mono', 'Courier New', monospace;
+}
+
+
+/* ---------- 3. PAGE FRAME ---------- */
+* { margin:0; padding:0; box-sizing:border-box; }      /* start from zero; spacing is set on purpose below */
+html { background:var(--bg); }
+body {
+  background:var(--bg); color:var(--ink);
+  font-family:var(--f-body); font-weight:400; font-size:18px; line-height:1.55;
+  max-width:920px; margin:0 auto; padding-bottom:60px;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility;   /* crisp letter edges */
+}
+i[data-bind] { font-style:normal; }                     /* numbers inserted by render.js look like plain text */
+
+/* Links: black, bold, underlined (never green/amber/red) */
+a { color:var(--ink); font-weight:600; text-decoration:underline; text-underline-offset:3px; }
+a:hover { color:var(--ink-3); }
+
+.backbar { padding:18px var(--gutter) 0; }
+.backbar a { font:700 13px var(--f-mono); letter-spacing:.12em; text-underline-offset:4px; }
+
+
+/* ---------- 4. HEADER ---------- */
+.hero { padding:36px var(--gutter) 36px; border-bottom:1px solid var(--line); }
+.hero-eyebrow { font-family:var(--f-mono); font-size:13px; letter-spacing:.14em; color:var(--ink-3); padding-bottom:20px; }
+.hero-banner { display:block; width:100%; height:auto; border:1px solid var(--line); margin-bottom:28px; }
+.hero-title { font-family:var(--f-head); font-weight:700; font-size:clamp(32px, 3.6vw + 14px, 52px); line-height:1.05; max-width:760px; color:var(--ink); }
+.hero-title.hero-main { font-size:clamp(40px, 5vw + 14px, 68px); line-height:1.02; }
+.hero-title em { font-style:italic; text-decoration:none; }   /* emphasis = italic (the loaded 700-italic font). NOT underlined, because underline means "link" on this site */
+
+.method { margin-top:18px; max-width:640px; border-left:2px solid var(--line-2); padding-left:14px; }
+.method summary { font-family:var(--f-mono); font-size:13px; letter-spacing:.08em; color:var(--ink-3); cursor:pointer; list-style:none; }
+.method summary::-webkit-details-marker { display:none; }
+.method summary::before { content:'▸ '; }
+.method[open] summary::before { content:'▾ '; }
+.method > div { font-size:16px; color:var(--ink-2); line-height:1.6; margin-top:10px; }
+
+/* "In this report:" label above the numbered section bars (the bars themselves are the contents list) */
+.toc-title { font-family:var(--f-mono); font-size:13px; letter-spacing:.14em; color:var(--ink-3); text-transform:uppercase; padding:28px var(--gutter) 10px; }
+
+/* ---------- 5. SECTION BARS (the numbered dropdowns) ---------- */
+details.group > summary { list-style:none; cursor:pointer; }
+details.group > summary::-webkit-details-marker { display:none; }
+.divider { padding:22px var(--gutter); background:var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line); border-left:5px solid var(--ink); }
+details.group > summary:hover .divider { background:#EBEBE8; }
+.divider-label { display:flex; align-items:baseline; gap:16px; width:100%; color:var(--ink); }
+.divider-label .sec-num  { font-family:var(--f-head); font-weight:700; font-size:clamp(28px, 2.4vw + 14px, 40px); line-height:1; color:var(--ink-3); }
+.divider-label .sec-name { font-family:var(--f-head); font-weight:700; font-size:clamp(22px, 2vw + 12px, 32px); line-height:1.05; text-transform:uppercase; letter-spacing:.02em; }
+details.group > summary .divider-label::after { content:'▸'; margin-left:auto; font-size:22px; color:var(--ink-3); align-self:center; }
+details.group[open] > summary .divider-label::after { content:'▾'; }
+
+.collapse-end { text-align:center; padding:12px 0 28px; }
+.collapse-end button { font-family:var(--f-mono); font-size:13px; letter-spacing:.1em; color:var(--ink-2); background:none; border:1px solid var(--ink-3); padding:7px 16px; cursor:pointer; }
+.collapse-end button:hover { color:var(--bg); background:var(--ink); border-color:var(--ink); }
+
+.section { padding:40px var(--gutter); border-bottom:1px solid var(--line); }
+.section-title { font-family:var(--f-head); font-weight:700; font-size:clamp(24px, 1.4vw + 16px, 32px); line-height:1.1; margin-bottom:8px; }
+.section-lede { font-size:18px; color:var(--ink-2); max-width:640px; margin-bottom:26px; line-height:1.6; }
+.section-lede.after-chart { margin-top:22px; margin-bottom:28px; }
+.scope-tag { display:inline-block; font-family:var(--f-mono); font-size:12px; font-weight:400; letter-spacing:.1em; color:var(--ink-2); border:1px solid var(--ink-3); padding:2px 9px; margin-left:10px; vertical-align:middle; }
+
+.impact-group-title { font-family:var(--f-head); font-weight:700; font-size:clamp(20px, 1vw + 14px, 26px); padding:36px 0 10px; border-bottom:1px solid var(--line); }
+.section-title + .impact-group-title { padding-top:16px; }
+.impact-group-title + .section-lede { padding:14px 0 0; margin-bottom:22px; }
+
+
+/* ---------- 6. NUMBERS & TABLES ---------- */
+/* The five headline numbers (KPIs) */
+.kpi-strip { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); border-bottom:1px solid var(--line); }
+.kpi { padding:24px 18px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); }
+.kpi:last-child { border-right:none; }
+.kpi-label { font-family:var(--f-mono); font-size:13px; letter-spacing:.08em; color:var(--ink-3); margin-bottom:10px; line-height:1.4; }
+.kpi-num { font-family:var(--f-head); font-weight:700; font-size:clamp(32px, 1.6vw + 22px, 42px); line-height:1; color:var(--good); }   /* headline stats are indicators: green */
+.kpi-num span { font-size:20px; font-weight:600; color:var(--ink-3); margin-left:3px; }
+.kpi-note { font-size:16px; color:var(--ink-2); margin-top:8px; line-height:1.45; }
+
+/* Tables */
+.table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; margin-bottom:8px; }
+.table-scroll .chan-table { min-width:640px; }
+.chan-table { width:100%; border-collapse:collapse; }
+.chan-table th { font-family:var(--f-mono); font-size:13px; font-weight:400; letter-spacing:.08em; color:var(--ink-3); text-align:left; padding:10px 14px; border-bottom:2px solid var(--ink); text-transform:uppercase; }
+.chan-table td { font-size:18px; color:var(--ink-2); padding:11px 14px; border-bottom:1px solid var(--line); }
+.chan-table th.num, .chan-table td.num { text-align:right; }
+.chan-table td.num { font-family:var(--f-mono); font-size:16px; color:var(--ink); }
+.chan-table tr.best td { color:var(--ink); font-weight:600; }
+.chan-table tr.best td.num { font-weight:700; }
+.chan-table tr.sub td { font-size:17px; }
+.chan-table tr.sub td:first-child { padding-left:30px; color:var(--ink-2); }
+.chan-table .subnote { display:block; font-size:15px; color:var(--ink-3); margin-top:2px; font-style:italic; }
+
+/* Conversion rates: THE indicator colours (>=10% green, 0.65%–10% amber for notes, none = red, small = gray) */
+.chan-table .rate { font-family:var(--f-head); font-weight:700; font-size:22px; color:var(--ink); }   /* plain = no verdict */
+.chan-table .rate.hi  { color:var(--good); }
+.chan-table .rate.mid { color:var(--warn); }
+.chan-table .rate.red { color:var(--bad); }
+.chan-table .rate.lo  { color:var(--ink-3); }
+
+/* Quarter cards */
+/* breathing room: the heading above the quarter cards must never touch them */
+.section-title + .qtable { margin-top:20px; }
+.qtable { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1px; background:var(--line); border:1px solid var(--line); }
+.qcell { background:var(--bg); padding:22px 24px; }
+.qcell.open { background:var(--panel); }
+.qname { font-family:var(--f-head); font-weight:700; font-size:clamp(24px, 1vw + 18px, 30px); line-height:1.1; }
+.qseason { font-family:var(--f-mono); font-size:13px; color:var(--ink-3); margin:4px 0 14px; }
+.qrow { display:flex; justify-content:space-between; align-items:baseline; font-size:17px; color:var(--ink-2); padding:6px 0; border-top:1px solid var(--line); }
+.qrow:first-of-type { border-top:none; }
+.qrow b { color:var(--ink); font-weight:700; font-family:var(--f-mono); font-size:16px; }
+.qrow b.good  { color:var(--good); }   /* quarter numbers are indicators: green / amber / red */
+.qrow b.amber { color:var(--warn); }
+.qrow b.bad   { color:var(--bad); }
+
+/* Stat blocks (a label, a big number, a sentence) */
+.two-col { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:24px; }
+.two-col.gap-top { margin-top:24px; }
+.impact-group-title + .stat-block { margin-top:20px; }
+.stat-block { padding:22px; border:1px solid var(--line); }
+.stat-block-label { font-family:var(--f-mono); font-size:13px; letter-spacing:.06em; color:var(--ink-3); margin-bottom:10px; line-height:1.4; }
+.stat-block-num { font-family:var(--f-head); font-weight:700; font-size:clamp(30px, 1.4vw + 22px, 40px); line-height:1.05; margin-bottom:8px; color:var(--ink); }
+.stat-block-num.good  { color:var(--good); }   /* status indicators are ALWAYS coloured: green = on track, amber = watch, red = off track */
+.stat-block-num.amber { color:var(--warn); }
+.stat-block-num.bad   { color:var(--bad); }
+.kpi-num.amber { color:var(--warn); }
+.kpi-num.bad   { color:var(--bad); }
+/* the one-line "how colours work" caption under a table */
+.color-key { font-family:var(--f-mono); font-size:13px; color:var(--ink-3); margin:10px 0 18px; line-height:1.6; }
+.color-key b { font-weight:700; }
+.color-key .k-good { color:var(--good); } .color-key .k-warn { color:var(--warn); } .color-key .k-bad { color:var(--bad); }
+.stat-block-body { font-size:17px; color:var(--ink-2); line-height:1.6; }
+.stat-block-body + .stat-block-body { padding-top:10px; }
+
+
+/* ---------- 7. CALLOUTS ---------- */
+.callout-headliner { border-left:5px solid var(--line-2); padding:24px 28px; background:var(--panel); }
+.callout-headliner p { font-family:var(--f-head); font-weight:700; font-size:clamp(22px, 1.2vw + 16px, 30px); line-height:1.2; color:var(--ink); }
+.callout-panel { border-left:3px solid var(--line-2); padding:18px 22px; margin:20px 0 8px; background:var(--panel); }
+.callout-panel h4 { font-family:var(--f-mono); font-size:13px; letter-spacing:.08em; color:var(--ink-3); margin-bottom:8px; text-transform:uppercase; font-weight:700; }
+.callout-panel p { font-size:17px; line-height:1.55; color:var(--ink-2); }
+.callout-panel p + p { margin-top:10px; }
+.callout-panel p strong { color:var(--ink); font-weight:600; }
+
+
+/* ---------- 8. CHARTS ----------
+   The charts are drawn as SVG by render.js. On a narrow phone they stop shrinking at 600px
+   wide and scroll sideways instead, so the numbers on them stay readable.                    */
+.chart-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.section-title + .chart-scroll { margin-top:14px; }
+.chart-wrap { min-width:600px; aspect-ratio:880 / 375; }
+.chart-wrap svg { display:block; width:100%; height:100%; }
+
+
+/* ---------- 9. COMMUNITY QUOTES ---------- */
+.community-quotes { padding:24px var(--gutter) 0; }
+.rave-row { padding:22px 0; border-bottom:1px solid var(--line); }
+.rave-row:last-child { border-bottom:none; }
+.rave-row.center { text-align:center; }
+.rave, .rave-sm, .rave-lg { font-family:var(--f-head); font-weight:700; font-style:italic; color:var(--ink); margin-bottom:8px; }
+.rave-sm { font-size:clamp(20px, 0.8vw + 15px, 24px); line-height:1.3; color:var(--ink-2); }
+.rave    { font-size:clamp(22px, 1.2vw + 16px, 30px); line-height:1.25; }
+.rave-lg { font-size:clamp(26px, 1.6vw + 18px, 38px); line-height:1.2; }
+.rave-attr { font-family:var(--f-mono); font-size:13px; color:var(--ink-3); letter-spacing:.04em; text-transform:uppercase; }
+
+
+/* ---------- 10. FOOTER ---------- */
+.footer { padding:32px var(--gutter) 0; font-family:var(--f-mono); font-size:13px; color:var(--ink-3); letter-spacing:.06em; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+
+
+/* ---------- 11. PHONES ---------- */
+@media (max-width:640px) {
+  body { font-size:17px; }
+  .kpi { border-right:none; }
+  .chan-table td { font-size:16px; }
+}
+
+/* Added Q4 2026: the line shown in a table whose numbers haven't been entered yet */
+.chan-table td.pending { color: var(--ink-3); font-style: italic; text-align: left; padding: 14px 10px; }
