@@ -281,7 +281,8 @@
       sh3Pct: "+" + dp((D.stackhunterBoost.subsNow - D.stackhunterBoost.baseline) / D.stackhunterBoost.baseline * 100, 1) + "%",   // 60 / 292 = 20.5%
       shCtl: "+" + dp((D.stackhunterBoost.control.end - D.stackhunterBoost.control.start) / D.stackhunterBoost.control.start * 100, 1) + "%",   // comparison writer, same-length week: 7 / 345 = 2.0%
       shCtlCls: "good",   // green: the comparable writer's +2.0% is still real growth
-      control: D.featureLift.controlMultiple, reach: D.featureLift.reach, stackhunters: D.featureLift.stackhunters
+      control: D.featureLift.controlMultiple, reach: D.featureLift.reach, stackhunters: D.featureLift.stackhunters,
+       ampEssays: D.amplification.essays, ampWriters: D.amplification.writers   // MANUAL, from data.js section 8b
     };
 
     /* ================= 8. SYSTEM HEALTH & CAPACITY ================= */
