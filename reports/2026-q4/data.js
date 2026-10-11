@@ -210,6 +210,20 @@ window.BOARD_DATA = {
     control: { start: 345, end: 352 }
   },
 
+   // ---------------------------------------------------------------------
+   // 8b. AMPLIFICATION VOLUME - the reach of the restack engine itself.
+   // MANUAL, and an ESTIMATE, not a count. Fast Four Friday compiles every writer
+   // restacked that week into one Note. Jan 25 -> Oct 9 = 37 Fridays; allowing for
+   // skipped weeks, ~35 notes at 30-40 names each = ~1,200 slots. Unique writers =
+   // that figure minus repeat appearances. The repeat rate has NOT been measured
+   // against the full roster, so we publish the floor (700+), not the midpoint (~800).
+   // Replace both with counted figures once the Friday notes are tallied.
+   // ---------------------------------------------------------------------
+   amplification: {
+      essays:  "1,200+",   // restacked posts across all Fast Four Friday Notes, since launch
+      writers: "700+"      // unique writers behind them, repeat appearances removed
+   },
+
   /* ---------------------------------------------------------------------
      9. SYSTEM HEALTH & CAPACITY — the S-curve model
      --------------------------------------------------------------------- */
@@ -296,6 +310,9 @@ window.BOARD_DATA = {
     shipsLede: "When a Stackhunter lifts others up, they get lifted back.",
     stackhunterBoostBody2: "Three months in, they've gained {{impact.sh3Pct}}.",
     missionReachBody: "Combined subscribers our curators can amplify a writer into — the discovery range we offer the people we feature. Five curators and three editorial directors.",
+     amplificationLede: "The reach of the restack engine itself, since launch.",
+     amplificationEssaysBody: "Essays restacked across nine months of daily Notes, compiled every Friday into one Fast Four list and sent by DM to each writer.",
+     amplificationWritersBody: "The writers behind those essays, counted once each with repeat appearances removed.",
 
     healthHeadliner: "NOT RISING is made up of humans, not machines. The long-term plan protects the system's health and capacity as we grow it.",
     /* ---- SYSTEM HEALTH WORDING (option C, Oct 2026) — approved by Kathi Oct 10 ---- */
