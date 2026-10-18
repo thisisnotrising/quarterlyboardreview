@@ -22,8 +22,8 @@ window.BOARD_DATA = {
   meta: {
     reportTitle: "Board Report",   // shown in the browser tab
     quarterLabel: "Q4 2026",                     // also used by the archive page
-    asOf: "2026-10-09",   // must equal the LAST date in "series" below (the page checks this). Oct 9 = last COMPLETE day when pulled on Oct 10.
-    version: "v2.2",      // v2.0 = first Q4 build (new System Health rule, see section 9) · v2.1 = Q4 community quotes · v2.2 = quote swap
+    asOf: "2026-10-17",   // must equal the LAST date in "series" below (the page checks this). Oct 17 = last COMPLETE day when pulled on Oct 18.
+    version: "v2.3",      // v2.0 = first Q4 build (new System Health rule, see section 9) · v2.1 = Q4 community quotes · v2.2 = quote swap · v2.3 = Oct 18 data refresh
     publication: "Hi, Human",
     site: "thisisnotrising.org",
     motto: "Human in control. Not human in the loop."
@@ -43,7 +43,9 @@ window.BOARD_DATA = {
     ["2026-06-20", 610], ["2026-06-30", 627], ["2026-07-14", 683], ["2026-08-03", 746],
     ["2026-08-19", 803], ["2026-08-30", 841], ["2026-09-10", 890], ["2026-09-22", 926],
     ["2026-09-23", 931], ["2026-09-25", 939], ["2026-09-28", 948], ["2026-09-30", 949], ["2026-10-01", 953],
-    ["2026-10-03", 973], ["2026-10-04", 978], ["2026-10-05", 989], ["2026-10-07", 1013], ["2026-10-08", 1024], ["2026-10-09", 1033]
+    ["2026-10-03", 973], ["2026-10-04", 978], ["2026-10-05", 989], ["2026-10-07", 1013], ["2026-10-08", 1024], ["2026-10-09", 1033],
+    ["2026-10-10", 1034], ["2026-10-11", 1039], ["2026-10-12", 1044], ["2026-10-13", 1048], ["2026-10-14", 1050],
+    ["2026-10-15", 1053], ["2026-10-16", 1061], ["2026-10-17", 1065]
   ],
 
   /* ---------------------------------------------------------------------
@@ -84,27 +86,27 @@ window.BOARD_DATA = {
      Put the biggest row first: it gets the highlight.
      "restack: true" marks the rows that count as "Notes + profile page" in the callout.
      --------------------------------------------------------------------- */
-  /* Pulled Oct 10, range Jan 25 -> Oct 9. Rows add up to Substack's own total (1,054).
+  /* Pulled Oct 18, range Jan 25 -> Oct 17. Rows add up to Substack's own total (1,087).
      SUBSTACK RENAMED A CHANNEL SINCE Q3: "Other" is now split into "Profile discovery" + "Other".
      Q3's "substack.com" row was Other (incl. profile) minus Substack app. Here that same bucket is two rows:
-     Profile discovery (93) and substack.com other = Other (163) minus Substack app (47) = 116.
+     Profile discovery (96) and substack.com other = Other (169) minus Substack app (49) = 120.
      All three restack rows (Notes, Profile discovery, substack.com other) = the same definition as Q3's "Notes + profile page". */
   sinceLaunch: {
     rows: [
-      { name: "Notes",                 views: null,   users: null,  subs: 542, restack: true },
-      { name: "Direct to app",         views: 7965,   users: 3645,  subs: 162 },
-      { name: "substack.com (other)",  views: null,   users: null,  subs: 116, restack: true },   // = Sources "Other" (163) minus "Substack app" (47)
-      { name: "Profile discovery",     views: null,   users: null,  subs: 93,  restack: true },
-      { name: "Recommendations",       views: null,   users: null,  subs: 63 },
-      { name: "Substack app",          views: 13429,  users: 4349,  subs: 47 },
-      { name: "Direct",                views: 7881,   users: 2973,  subs: 8 },
+      { name: "Notes",                 views: null,   users: null,  subs: 559, restack: true },
+      { name: "Direct to app",         views: 8282,   users: 3797,  subs: 163 },
+      { name: "substack.com (other)",  views: null,   users: null,  subs: 120, restack: true },   // = Sources "Other" (169) minus "Substack app" (49)
+      { name: "Profile discovery",     views: null,   users: null,  subs: 96,  restack: true },
+      { name: "Recommendations",       views: null,   users: null,  subs: 68 },
+      { name: "Substack app",          views: 13934,  users: 4552,  subs: 49 },
+      { name: "Direct",                views: 8133,   users: 3067,  subs: 9 },
       { name: "Substack trackbacks",   views: null,   users: null,  subs: 7 },
       { name: "Substack onboarding",   views: null,   users: null,  subs: 5 },
       { name: "Substack live video",   views: null,   users: null,  subs: 5 },
       { name: "Substack chat",         views: null,   users: null,  subs: 2 },
       { name: "google.com",            views: 41,     users: 33,    subs: 2 },
-      { name: "instagram.com",         views: 41,     users: 38,    subs: 1 },
-      { name: "Email",                 views: 107,    users: 84,    subs: 1 }
+      { name: "instagram.com",         views: 45,     users: 42,    subs: 1 },
+      { name: "Email",                 views: 116,    users: 90,    subs: 1 }
     ]
   },
 
@@ -133,29 +135,29 @@ window.BOARD_DATA = {
     inactive: [],                          // no days off so far this quarter. Add ["YYYY-MM-DD", "YYYY-MM-DD"] pairs when you take any.
     /* NOTE: Oct 1 is counted in BOTH the locked Q3 figure (which ran to Oct 1) and here (Q4 = the calendar quarter).
        That is 3 subscribers. Kept on purpose: Q3 is locked, and Q4 should start on the quarter's first day. */
-    newSubs: 81,                           // WHERE: Sources > custom Oct 1 -> Oct 9 > New subscribers: TOTAL (channel rows add to 84; Substack credits 3 people twice)
+    newSubs: 121,                          // WHERE: Sources > custom Oct 1 -> Oct 17 > New subscribers: TOTAL (channel rows add to 124; Substack credits 3 people twice)
 
-    /* Substack-network subscribers, split (Sources > New subscribers, Oct 1 -> Oct 9).
-       Substack now shows "Profile discovery" as its own row. Profile page = Profile discovery (7) + "Other" (13) minus Substack app (7) = 13,
+    /* Substack-network subscribers, split (Sources > New subscribers, Oct 1 -> Oct 17).
+       Substack now shows "Profile discovery" as its own row. Profile page = Profile discovery (10) + "Other" (19) minus Substack app (9) = 20,
        the same definition Q3 used (Q3's "Other" contained profile discovery). */
     network: {
-      visitors: 277,                       // Sources > Unique visitors tab > "Substack" total
-      subsFromSources: 72,                 // Sources > New subscribers tab > "Substack" row. The page checks that the split below adds up to this.
-      notes: 42,
-      profilePage: 13,                     // = Profile discovery (7) + Sources "Other" (13) - Traffic "substack app" free signups (7)
-      recommendations: 7,
-      substackApp: 7,
+      visitors: 461,                       // Sources > Unique visitors tab > "Substack" total
+      subsFromSources: 110,                // Sources > New subscribers tab > "Substack" row. The page checks that the split below adds up to this.
+      notes: 63,
+      profilePage: 20,                     // = Profile discovery (10) + Sources "Other" (19) - Traffic "substack app" free signups (9)
+      recommendations: 15,
+      substackApp: 9,
       liveStream: 0,
       trackbacksOnboarding: 3              // trackbacks (1) + onboarding (2)
     },
-    directToApp: { visitors: 233, subs: 11 },
-    direct:      { visitors: 70,  subs: 1 },
-    external:    { visitors: 6,   subs: 0 }    // email clicks (2) + instagram (2) + google (1) + linktree (1); own website: 0
+    directToApp: { visitors: 365, subs: 12 },
+    direct:      { visitors: 111, subs: 2 },
+    external:    { visitors: 15,  subs: 0 }    // email clicks (7) + instagram (6) + google (1) + linktree (1); own website: 0
   },
 
   /* WHERE: Substack > Audience > Recommendations: "Substacks recommending you" */
-  recommenders: 56,
-  recsPerPublicationHigh: 1.13,   // MANUAL: upper end of the "subscribers each" range = since-launch subscribers from recommendations (63) / recommenders (56)
+  recommenders: 58,
+  recsPerPublicationHigh: 1.17,   // MANUAL: upper end of the "subscribers each" range = since-launch subscribers from recommendations (68) / recommenders (58)
 
   /* ---------------------------------------------------------------------
      7. NOTES — per-Note stats (open each Note's stats page; new subs from Sources > Notes expanded)
@@ -166,7 +168,12 @@ window.BOARD_DATA = {
      Included: every Note YOU published in Q4 that Sources credits with a subscriber (except one reply with 7 impressions),
      plus a Note by ANOTHER account about you that Sources credits with 5 subscribers. Its stats page is private to its author,
      so impressions are unknown: write impressions: null and the page shows n/a (and leaves it out of the table's overall rate).
-     Left out: restacks of two posts ("There Are A Thousand Of Us." 4, NOT RISING Issue 3), which are posts, not Notes. */
+     Left out: restacks of two posts ("There Are A Thousand Of Us." 4, NOT RISING Issue 3), which are posts, not Notes.
+     NOT REFRESHED on the Oct 18 pull: this table is still the Oct 1->9 snapshot. By Oct 17 the Notes channel had grown to
+     63 subs total (see current.network.notes above) via many more Notes, including some with 2-3 subs each (a Community
+     Tuesday note naming Dan Korus, two more Fast Four Fridays, a Culture Thursday astrology note, and a congratulations
+     Note from another account on crossing 1,000 subscribers). Rebuilding this table to the same per-Note depth would mean
+     opening ~10-15 individual Notes' own stats pages one at a time -- ask Kathi before doing that on a future refresh. */
   notes: [
     { name: "\"There's another way\" · Oct 2",        restacks: 21, likes: 63, replies: 5,  impressions: 663, subs: 7 },
     { name: "Fast Four Friday · Oct 2",              restacks: 19, likes: 40, replies: 11, impressions: 478, subs: 1 },
@@ -247,7 +254,7 @@ window.BOARD_DATA = {
        Window Jun 22 -> Oct 5 = 106 days, minus Sep 7-11 off = 101 active days. Sources total = 462. */
     previousStage: { name: "Branch", from: 610, to: 987, start: "2026-06-22", end: "2026-10-05", startSubs: 611, endSubs: 989, newSubs: 462, activeDays: 101 },
     /* currentStage: newSubs = Sources total from start -> as-of date. Update every refresh. */
-    currentStage:  { name: "Canopy", from: 987, to: 1597, start: "2026-10-06", newSubs: 39, inactive: [] },   // Sources total Oct 6 -> Oct 9
+    currentStage:  { name: "Canopy", from: 987, to: 1597, start: "2026-10-06", newSubs: 79, inactive: [] },   // Sources total Oct 6 -> Oct 17
     fragmentDays: 14                            // a stage with fewer active days than this is a "fragment": shown, never alarmed (Clerk's Rule)
   },
 
