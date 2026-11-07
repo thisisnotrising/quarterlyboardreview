@@ -7,7 +7,7 @@
      2. fill every  data-copy="..."   with a sentence from data.js (swapping {{tokens}} for numbers)
      3. build the tables from lists of rows
      4. draw the two SVG charts (trajectory, S-curve) using the colours in style.css
-     5. wire up the buttons (open/close sections) and run the self-checks
+     5. wire up the buttons (open/close sections) and log the self-checks to the browser console
    ========================================================================== */
 
 (function () {
@@ -187,16 +187,10 @@
     group.scrollIntoView({ block: "start" });
   }));
 
-  /* ---------- 5. self-checks: shown in the console, and on the page with ?debug=1 ---------- */
+  /* ---------- 5. self-checks: written to the browser console only (never shown on the page) ----------
+     To read them: open the report, press F12 (or right-click > Inspect), and click the Console tab.
+     (Removed Nov 7 2026: the on-page DATA CHECKS / MONTHLY GROWTH box that ?debug=1 used to show.) */
   M.checks.forEach(c => (c.level === "warn" ? console.warn : console.log)("[board check] " + c.msg));
-  if (/[?&]debug=1/.test(location.search)) {
-    const box = document.getElementById("debug");
-    box.style.cssText = "display:block;max-width:920px;margin:24px auto;padding:16px 20px;border:1px solid #D8D8D4;font:13px/1.6 'Space Mono',monospace;color:#444";
-    box.innerHTML = "<b style='color:#111'>DATA CHECKS</b><br>" + M.checks.map(c => (c.level === "warn" ? "⚠ " : "✓ ") + c.msg).join("<br>") +
-      "<br><br><b style='color:#111'>MONTHLY GROWTH</b><br>basis: " + M.monthly.basis + " (" + M.monthly.months + " months) · opening " + M.monthly.startSubs +
-      " · channel rows sum " + M.monthly.channelSum + "<br>net " + M.monthly.net + "% · gross " + M.monthly.gross + "% · gap " + M.monthly.gap +
-      " pts · other basis (" + M.monthly.altBasis + ") would show net " + M.monthly.altNet + "%";
-  }
 
   window.BOARD_MODEL = M;   // handy for poking at in the browser console: type BOARD_MODEL
 })();
