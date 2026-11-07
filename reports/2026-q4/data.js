@@ -22,8 +22,8 @@ window.BOARD_DATA = {
   meta: {
     reportTitle: "Board Report",   // shown in the browser tab
     quarterLabel: "Q4 2026",                     // also used by the archive page
-    asOf: "2026-10-22",   // must equal the LAST date in "series" below (the page checks this). Oct 22 = pulled Oct 22 (Kathi: "as of Oct 22, 1,072 subscribers"), so today is a partial day.
-    version: "v2.4",      // v2.0 = first Q4 build (new System Health rule, see section 9) · v2.1 = Q4 community quotes · v2.2 = quote swap · v2.3 = Oct 18 data refresh · v2.4 = Oct 22 data refresh
+    asOf: "2026-11-07",   // must equal the LAST date in "series" below (the page checks this). Pulled Nov 7 at about 2:40pm, so today is a partial day.
+    version: "v2.6",      // v2.0 = first Q4 build (new System Health rule, see section 9) · v2.1 = Q4 community quotes · v2.2 = quote swap · v2.3 = Oct 18 data refresh · v2.4 = Oct 22 data refresh · v2.5 = Oct 25 refresh (prepared, never uploaded) · v2.6 = Nov 7 data refresh + recommendation blurbs + milestone target set by stage pace (option C)
     publication: "Hi, Human",
     site: "thisisnotrising.org",
     motto: "Human in control. Not human in the loop."
@@ -46,7 +46,13 @@ window.BOARD_DATA = {
     ["2026-10-03", 973], ["2026-10-04", 978], ["2026-10-05", 989], ["2026-10-07", 1013], ["2026-10-08", 1024], ["2026-10-09", 1033],
     ["2026-10-10", 1034], ["2026-10-11", 1039], ["2026-10-12", 1044], ["2026-10-13", 1048], ["2026-10-14", 1050],
     ["2026-10-15", 1053], ["2026-10-16", 1061], ["2026-10-17", 1065], ["2026-10-18", 1067], ["2026-10-19", 1067],
-    ["2026-10-20", 1069], ["2026-10-21", 1071], ["2026-10-22", 1072]
+    ["2026-10-20", 1069], ["2026-10-21", 1071],
+    ["2026-10-22", 1073],   // v2.4 read 1,072 mid-day; the day closed at 1,073 (corrected Nov 7, Clerk's Rule: a partial-day read is replaced by the closed day)
+    /* Nov 7 pull: daily closing counts from the Overview chart, Oct 23 -> Nov 7 (Nov 7 is a partial day). */
+    ["2026-10-23", 1079], ["2026-10-24", 1080], ["2026-10-25", 1083], ["2026-10-26", 1083], ["2026-10-27", 1087],
+    ["2026-10-28", 1088], ["2026-10-29", 1090], ["2026-10-30", 1092], ["2026-10-31", 1092], ["2026-11-01", 1092],
+    ["2026-11-02", 1096], ["2026-11-03", 1096], ["2026-11-04", 1098], ["2026-11-05", 1097], ["2026-11-06", 1101],
+    ["2026-11-07", 1102]
   ],
 
   /* ---------------------------------------------------------------------
@@ -87,27 +93,28 @@ window.BOARD_DATA = {
      Put the biggest row first: it gets the highlight.
      "restack: true" marks the rows that count as "Notes + profile page" in the callout.
      --------------------------------------------------------------------- */
-  /* Pulled Oct 22, range Jan 25 -> Oct 22. Rows add up to Substack's own total (1,095).
+  /* Pulled Nov 7, range Jan 25 -> Nov 7. Rows add up to Substack's own total (1,142 = 959 / 83.98%).
+     (Previous pull, Oct 22: 1,095.) Views/users and the Substack app's 51 free subs = Stats > Traffic, same range.
      SUBSTACK RENAMED A CHANNEL SINCE Q3: "Other" is now split into "Profile discovery" + "Other".
      Q3's "substack.com" row was Other (incl. profile) minus Substack app. Here that same bucket is two rows:
-     Profile discovery (96) and substack.com other = Other (171) minus Substack app (49) = 122.
+     Profile discovery (102) and substack.com other = Other (176) minus Substack app (51) = 125.
      All three restack rows (Notes, Profile discovery, substack.com other) = the same definition as Q3's "Notes + profile page". */
   sinceLaunch: {
     rows: [
-      { name: "Notes",                 views: null,   users: null,  subs: 563, restack: true },
-      { name: "Direct to app",         views: 8322,   users: 3818,  subs: 164 },
-      { name: "substack.com (other)",  views: null,   users: null,  subs: 122, restack: true },   // = Sources "Other" (171) minus "Substack app" (49)
-      { name: "Profile discovery",     views: null,   users: null,  subs: 96,  restack: true },
-      { name: "Recommendations",       views: null,   users: null,  subs: 69 },
-      { name: "Substack app",          views: 14087,  users: 4607,  subs: 49 },
-      { name: "Direct",                views: 8169,   users: 3084,  subs: 9 },
+      { name: "Notes",                 views: null,   users: null,  subs: 582, restack: true },
+      { name: "Direct to app",         views: 9048,   users: 4090,  subs: 170 },
+      { name: "substack.com (other)",  views: null,   users: null,  subs: 125, restack: true },   // = Sources "Other" (176) minus "Substack app" (51)
+      { name: "Profile discovery",     views: null,   users: null,  subs: 102, restack: true },
+      { name: "Recommendations",       views: null,   users: null,  subs: 79 },
+      { name: "Substack app",          views: 14990,  users: 4905,  subs: 51 },
+      { name: "Direct",                views: 8746,   users: 3249,  subs: 9 },
       { name: "Substack trackbacks",   views: null,   users: null,  subs: 7 },
       { name: "Substack onboarding",   views: null,   users: null,  subs: 5 },
       { name: "Substack live video",   views: null,   users: null,  subs: 5 },
-      { name: "Substack chat",         views: null,   users: null,  subs: 2 },
-      { name: "google.com",            views: 41,     users: 33,    subs: 2 },
-      { name: "instagram.com",         views: 45,     users: 42,    subs: 1 },
-      { name: "Email",                 views: 116,    users: 90,    subs: 1 }
+      { name: "Substack chat",         views: null,   users: null,  subs: 3 },
+      { name: "google.com",            views: 44,     users: 36,    subs: 2 },
+      { name: "instagram.com",         views: 50,     users: 46,    subs: 1 },
+      { name: "Email",                 views: 124,    users: 97,    subs: 1 }
     ]
   },
 
@@ -136,29 +143,30 @@ window.BOARD_DATA = {
     inactive: [],                          // no days off so far this quarter. Add ["YYYY-MM-DD", "YYYY-MM-DD"] pairs when you take any.
     /* NOTE: Oct 1 is counted in BOTH the locked Q3 figure (which ran to Oct 1) and here (Q4 = the calendar quarter).
        That is 3 subscribers. Kept on purpose: Q3 is locked, and Q4 should start on the quarter's first day. */
-    newSubs: 131,                          // WHERE: Sources > custom Oct 1 -> Oct 22 > New subscribers: TOTAL (channel rows add to 134; Substack credits 3 people twice)
+    newSubs: 180,                          // WHERE: Sources > custom Oct 1 -> Nov 7 > New subscribers: TOTAL = 162 / 90% = 180 (check: 19 / 10.56% = 180). Channel rows add to 183; Substack credits 3 people twice
 
-    /* Substack-network subscribers, split (Sources > New subscribers, Oct 1 -> Oct 22).
-       Substack now shows "Profile discovery" as its own row. Profile page = Profile discovery (10) + "Other" (22) minus Substack app (10) = 22,
+    /* Substack-network subscribers, split (Sources > New subscribers, Oct 1 -> Nov 7).
+       Substack now shows "Profile discovery" as its own row. Profile page = Profile discovery (16) + "Other" (26) minus Substack app (11) = 31,
        the same definition Q3 used (Q3's "Other" contained profile discovery). */
     network: {
-      visitors: 518,                       // Sources > Unique visitors tab > "Substack" total
-      subsFromSources: 119,                // Sources > New subscribers tab > "Substack" row. The page checks that the split below adds up to this.
-      notes: 68,
-      profilePage: 22,                     // = Profile discovery (10) + Sources "Other" (22) - Traffic "substack app" free signups (10)
-      recommendations: 16,
-      substackApp: 10,
+      visitors: 799,                       // Sources > Unique visitors tab > "Substack" total
+      subsFromSources: 162,                // Sources > New subscribers tab > "Substack" row. The page checks that the split below adds up to this.
+      notes: 90,
+      profilePage: 31,                     // = Profile discovery (16) + Sources "Other" (26) - Traffic "substack app" free signups (11)
+      recommendations: 26,
+      substackApp: 11,
       liveStream: 0,
-      trackbacksOnboarding: 3              // trackbacks (1) + onboarding (2)
+      trackbacksOnboarding: 4              // trackbacks (1) + onboarding (2) + chat (1). Substack added a "Chat" source; folded in here until Kathi decides on its own row
     },
-    directToApp: { visitors: 387, subs: 13 },
-    direct:      { visitors: 119, subs: 2 },
-    external:    { visitors: 16,  subs: 0 }    // email clicks (7) + instagram (6) + google (2) + linktree (1); own website: 0
+    directToApp: { visitors: 646, subs: 19 },
+    direct:      { visitors: 209, subs: 2 },
+    external:    { visitors: 34,  subs: 0 }    // email clicks (14) + instagram (11) + google (4) + nebularising.media (2) + thisisnotrising.org (2) + linktree (1)
   },
 
   /* WHERE: Substack > Audience > Recommendations: "Substacks recommending you" */
-  recommenders: 58,                // re-checked Oct 22: still 58
-  recsPerPublicationHigh: 1.19,   // MANUAL: upper end of the "subscribers each" range = since-launch subscribers from recommendations (69) / recommenders (58)
+  recommenders: 65,                // read Nov 7 (was 58 on Oct 22). The 15 added since Sep 22 are listed in the Nov 7 chat.
+  recsPerPublicationHigh: 1.22,   // MANUAL: upper end of the "subscribers each" range = since-launch subscribers from recommendations (79, Growth sources) / recommenders (65) = 1.215
+                                  // (the Recommendations page itself says 85 "came from recommendations"; the report uses Growth sources, per Clerk's Rules)
 
   /* ---------------------------------------------------------------------
      7. NOTES — per-Note stats (open each Note's stats page; new subs from Sources > Notes expanded)
@@ -170,7 +178,7 @@ window.BOARD_DATA = {
      plus a Note by ANOTHER account about you that Sources credits with 5 subscribers. Its stats page is private to its author,
      so impressions are unknown: write impressions: null and the page shows n/a (and leaves it out of the table's overall rate).
      Left out: restacks of two posts ("There Are A Thousand Of Us." 4, NOT RISING Issue 3), which are posts, not Notes.
-     NOT REFRESHED on the Oct 18 or Oct 22 pulls: this table is still the Oct 1->9 snapshot. By Oct 17 the Notes channel had grown to
+     NOT REFRESHED on the Oct 18, Oct 22 or Nov 7 pulls: this table is still the Oct 1->9 snapshot (the Notes channel is at 90 subs this quarter as of Nov 7). By Oct 17 the Notes channel had grown to
      63 subs total (see current.network.notes above) via many more Notes, including some with 2-3 subs each (a Community
      Tuesday note naming Dan Korus, two more Fast Four Fridays, a Culture Thursday astrology note, and a congratulations
      Note from another account on crossing 1,000 subscribers). Rebuilding this table to the same per-Note depth would mean
@@ -247,7 +255,11 @@ window.BOARD_DATA = {
        the milestone from today's count at the healthy pace (r = 0.65%/day, K above). On-track range = target ± 7 days.
        Status compares it with the date we'd arrive at this quarter's pace (new subs per active day). Same bands as the dashboard:
        >14 days early = Far ahead · >7 early = Slightly ahead · within 7 = On track · up to 21 late = Slightly behind · later = Behind. */
-    nextMilestone: { subs: 1597, targetDate: "nature", trackDays: 7 },
+    /* NOV 7 2026 DECISION (option C, Kathi): the target is no longer Nature's Date. It is now "stagePace": the day we'd reach the
+       milestone at the previous stage's locked pace per active day, counted from the end of that stage. Same rule as System Health.
+       Nature's Date assumed compounding (a rate that rises every day), which System Health retired in October.
+       ("nature" still works if you ever want the old instrument back.) Same bands as above. */
+    nextMilestone: { subs: 1597, targetDate: "stagePace", trackDays: 7 },
 
     /* STAGE PACE — the System Health instrument.
        previousStage is LOCKED (completed). Crossing dates come from the Overview chart; new subs from Sources (custom range = stage window).
@@ -255,7 +267,7 @@ window.BOARD_DATA = {
        Window Jun 22 -> Oct 5 = 106 days, minus Sep 7-11 off = 101 active days. Sources total = 462. */
     previousStage: { name: "Branch", from: 610, to: 987, start: "2026-06-22", end: "2026-10-05", startSubs: 611, endSubs: 989, newSubs: 462, activeDays: 101 },
     /* currentStage: newSubs = Sources total from start -> as-of date. Update every refresh. */
-    currentStage:  { name: "Canopy", from: 987, to: 1597, start: "2026-10-06", newSubs: 89, inactive: [] },   // Sources total Oct 6 -> Oct 22
+    currentStage:  { name: "Canopy", from: 987, to: 1597, start: "2026-10-06", newSubs: 138, inactive: [] },   // Sources total Oct 6 -> Nov 7 = 130 / 94.2% = 138
     fragmentDays: 14                            // a stage with fewer active days than this is a "fragment": shown, never alarmed (Clerk's Rule)
   },
 
@@ -329,13 +341,38 @@ window.BOARD_DATA = {
     healthBodyBelow: "The {{health.stage}} stage is bringing in {{health.pace}} new subscribers per active day, {{health.variance}} against the {{health.prevStage}} stage ({{health.prevPace}}/day). Below normal range: tend the soil before expanding.",
     healthBodyFar: "The {{health.stage}} stage is bringing in {{health.pace}} new subscribers per active day, {{health.variance}} against the {{health.prevStage}} stage ({{health.prevPace}}/day). Well below normal range: the system needs attention.",
     healthBodyFragment: "The {{health.stage}} stage is {{health.days}} days old and bringing in {{health.pace}} new subscribers per active day, {{health.variance}} against the {{health.prevStage}} stage ({{health.prevPace}}/day). Too early to call: a stage needs {{health.minDays}} active days before its pace counts.",
-    healthMethodology: "<p><b>Pace, not compounding (changed in Q4 2026).</b> Until Q3, System Health compared our daily compound growth rate with an S-curve benchmark. Measured stage by stage, our growth rate fell from 1.15% to 0.45% a day while the S-curve's crowding term barely moved, so the curve could not explain the slowdown.</p><p>So from Q4, System Health compares new subscribers per active day in the current Fibonacci stage with the stage before it. Same colours as the tables: green = no more than {{bands.green}}% below, yellow = {{bands.green}}–{{bands.yellow}}% below, red = worse. A stage under {{health.minDays}} active days old is shown but never alarmed. The S-curve is kept for one job: timing the expansion.</p>",
-    milestoneBody: "On pace to arrive {{milestone.projectedLabel}}{{milestone.targetPhrase}}. We set checkpoints on the Fibonacci sequence — {{milestone.list}} — because each is about 1.6× the last, so every milestone takes a comparable effort rather than getting easier as we grow.",
+    healthMethodology: "<p><b>Pace, not compounding (changed in Q4 2026).</b> Until Q3, System Health compared our daily compound growth rate with an S-curve benchmark. Measured stage by stage, our growth rate fell from 1.15% to 0.45% a day while the S-curve's crowding term barely moved, so the curve could not explain the slowdown.</p><p>So from Q4, System Health compares new subscribers per active day in the current Fibonacci stage with the stage before it. Same colours as the tables: green = no more than {{bands.green}}% below, yellow = {{bands.green}}–{{bands.yellow}}% below, red = worse. A stage under {{health.minDays}} active days old is shown but never alarmed. The S-curve is kept for one job: timing the expansion.</p><p><b>Milestone target, the same rule (from Nov 2026).</b> The next Fibonacci milestone's target date is when we would reach it at the {{health.prevStage}} stage's pace ({{health.prevPace}} new subscribers per active day), counted from the day that stage ended. On track = arriving within 7 days of it.</p>",
+    milestoneBody: "On pace to arrive {{milestone.projectedLabel}}{{milestone.targetPhrase}}. We set checkpoints on the Fibonacci sequence — {{milestone.list}} — because each is about 1.6× the last, so every milestone marks a real step up in reach.",
     phase2Body: "Projected on the S-curve's benchmark rate (fast end) and the growth rate measured across the last completed stage (slow end), not a flat daily count. Phase 2 is when Desk Chiefs join — see <a href=\"https://claude.ai/artifact/8WVxXTnM9Q69n8gaMogvfb\" target=\"_blank\" rel=\"noopener\">Hi, Desk Chief</a>.",
 
     recommendersHeadline: "{{recommenders}} publications recommend Hi, Human on Substack.",
-    quotesSummary: "What the Community Is Saying"
+    quotesSummary: "What the Community Is Saying",
+    quotesRestackLabel: "From restacks of our Notes · Oct 1 – 10"      // label over the original Q4 quotes, shown under the themed blurbs
   },
+
+  /* Community quotes, grouped by what recommenders keep coming back to (added v2.6, chosen by Kathi Nov 7).
+     WHERE: Substack > Audience > Recommendations > "Substacks that recommend you" — the blurb under each publication.
+     Only recommendations dated Sep 1 -> Nov 7, 2026. Word for word; "…" marks where a longer blurb was trimmed.
+     Speak the Unspoken's blurb opens with a misspelled name ("Cathy"), so the quote starts after it. */
+  quoteGroups: [
+    { title: "Humans over the algorithm", quotes: [
+      { text: "The Chief Absurdist Officer found me or I found her and Substack will never be the same. Amplifying humans, not the algorithm.", who: "There’s Nothing Wrong With You (And There Never Was)™", size: "lg" },
+      { text: "Literal human beacons for other human vessels to beat algorithms, nay, jam them up with absurdity and promised shenanigans, too.", who: "Wolf Bites", size: "md", center: true }
+    ]},
+    { title: "Generosity toward other writers", quotes: [
+      { text: "She’s making an effort to find talented writers, give them a voice, and help their work reach people who might never have discovered them otherwise… We need more people willing to lift others up!", who: "April’s Substack", size: "md" },
+      { text: "…notices the voices the algorithm overlooks and hands them the microphone. The Chief Absurdist is sharp, generous and committed to making Substack feel like a community.", who: "Speak the Unspoken", size: "md", center: true }
+    ]},
+    { title: "Her own writing", quotes: [
+      { text: "I've never felt more seen by a publication… Hi, Human makes me FEEL, whether it's through her own stories or through the stories of others that she highlights.", who: "Mike Underell, Closing the Gap", size: "lg" },
+      { text: "For those days when you want some hope, humanity, and great writing. Hi, Human is exactly what the world needs right now.", who: "The SPARK with Kim Doyal", size: "md", center: true }
+    ]},
+    { title: "Absurdity paired with humanity", quotes: [
+      { text: "…quite possibly the most human of all the humans I've encountered on Substack… Come for the absurdity, stay for the humanity. ❤️", who: "Love and Other Disasters", size: "lg" },
+      { text: "A joyful, absurd discovery engine for creative humans. Come find your people.", who: "Uncompliant", size: "md", center: true },
+      { text: "So good, I'm going to name all of my helicopters after her.", who: "Leon Jenner, Thrillers in Progress", size: "sm" }
+    ]}
+  ],
 
   /* Community quotes. size: "sm" | "md" | "lg".  center: true = centered row.
      Q4 (pulled Oct 10): word-for-word excerpts from restacks-with-comment of NOT RISING Notes and posts, Oct 1 -> Oct 10.

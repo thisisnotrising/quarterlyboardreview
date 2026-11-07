@@ -327,7 +327,34 @@
     /* Next Fibonacci milestone: how many days at this quarter's pace so far, vs the target date (if one is set) */
     const ms = cap.nextMilestone;
     let earlyLabel, msCls, targetLabel = "", targetPhrase = "";
-    if (ms.targetDate === "nature" && N < ms.subs) {
+    if (ms.targetDate === "stagePace" && N < ms.subs) {
+      /* STAGE-PACE TARGET (option C, Nov 7 2026 — Kathi). Same philosophy as System Health: judge pace against the
+         last COMPLETED Fibonacci stage, not against compounding.
+           target  = the day the current stage would reach the milestone at the previous stage's locked pace per active day,
+                     counted from the end of the previous stage (+ any days off logged in currentStage.inactive)
+                     (1597 - 989) / 4.57 = 133 days  ->  Oct 5 + 133 = Feb 15. LOCKED: it only moves if days off are logged.
+           arrival = days to cover the gap at this quarter's pace per ACTIVE day:  (1597 - 1102) / 4.74 = 105 days -> Feb 20
+         Status = arrival minus target, in days (negative = early), with the same bands as before. */
+      const targetDays = Math.round((ms.subs - prevSt.endSubs) / prevStagePace) + stageInactive;
+      const target = addDays(prevSt.end, targetDays);
+      const activePace = cur.newSubs / curActiveDays;
+      const paceDays = Math.round((ms.subs - N) / activePace);
+      const arrival = addDays(asOf, paceDays);
+      const diff = Math.round((arrival - target) / 86400000);                // -14 = two weeks early
+      const tol = ms.trackDays || 7;
+      const status = diff < -2 * tol ? ["Far ahead", "good"] : diff < -tol ? ["Slightly ahead", "good"]
+                   : diff <= tol ? ["On track", "good"] : diff <= 3 * tol ? ["Slightly behind", "amber"] : ["Behind", "bad"];
+      earlyLabel = status[0]; msCls = status[1];
+      targetLabel = shortDate(target);
+      targetPhrase = " against " + ((/^[AEIOU]/i.test(targetLabel) ? "an " : "a ") + targetLabel) + " target (on track: " +
+        shortDate(addDays(prevSt.end, targetDays - tol)) + " – " + shortDate(addDays(prevSt.end, targetDays + tol)) + ")";
+      M.milestone = { subs: comma(ms.subs), earlyLabel, projectedLabel: shortDate(arrival), targetLabel, targetPhrase,
+                      list: cap.milestones.map(comma).join(", "), cls: msCls, diff };
+      ok("milestone " + ms.subs + " (stage-pace target): " + prevSt.name + " pace " + dp(prevStagePace, 2) + "/day from " + prevSt.endSubs +
+         " -> target " + targetLabel + " (" + targetDays + " days after " + prevSt.end + "), arrival " + shortDate(arrival) +
+         " at " + dp(activePace, 2) + "/day, " + diff + " days -> " + earlyLabel);
+    }
+    else if (ms.targetDate === "nature" && N < ms.subs) {
       /* NATURE'S DATE (the growth dashboard's instrument). On the S-curve N(t) = K / (1 + e^(-r t)), time can be read off a count:
            t(n) = ln( n / (K - n) ) / r
          so the days from today's count N to the milestone n are  t(n) - t(N).
@@ -355,7 +382,7 @@
     }
     const daysToGo = Math.round((ms.subs - N) / calendarPace);                     // (1597 - 1033) / 9.0 = 63 days
     const projected = addDays(asOf, daysToGo);
-    if (ms.targetDate === "nature" && N < ms.subs) { /* already worked out above */ }
+    if ((ms.targetDate === "nature" || ms.targetDate === "stagePace") && N < ms.subs) { /* already worked out above */ }
     else if (N >= ms.subs) { earlyLabel = "Reached"; msCls = "good"; }
     else if (!ms.targetDate) {
       earlyLabel = "~" + shortDate(projected); msCls = calendarPace > 0 ? "good" : "bad";   // no target yet: show the projected date
@@ -370,7 +397,7 @@
       targetLabel = shortDate(toDate(ms.targetDate));
       targetPhrase = " against " + ((/^[AEIOU]/i.test(targetLabel) ? "an " : "a ") + targetLabel) + " target";
     }
-    if (!(ms.targetDate === "nature" && N < ms.subs)) M.milestone = {
+    if (!((ms.targetDate === "nature" || ms.targetDate === "stagePace") && N < ms.subs)) M.milestone = {
       subs: comma(ms.subs), earlyLabel, projectedLabel: shortDate(projected), targetLabel, targetPhrase,
       list: cap.milestones.map(comma).join(", "), cls: msCls
     };
