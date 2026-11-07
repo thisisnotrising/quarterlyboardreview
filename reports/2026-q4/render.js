@@ -63,10 +63,17 @@
     const parts = panel.querySelectorAll("[data-copy], [data-copy-list]");
     if (parts.length && [...parts].every(p => p.textContent.trim() === "")) panel.style.display = "none";
   });
-  document.querySelector("[data-quotes]").innerHTML = D.quotes.map(q => {
+  /* Community quotes. Themed groups (data.js "quoteGroups") come first, each under a small label;
+     the plain "quotes" list follows under its own label. Either list can be left out or empty. */
+  const rave = q => {
     const cls = { sm: "rave-sm", md: "rave", lg: "rave-lg" }[q.size] || "rave";
     return '<div class="rave-row' + (q.center ? " center" : "") + '"><div class="' + cls + '">"' + q.text + '"</div><div class="rave-attr">— ' + q.who + "</div></div>";
-  }).join("");
+  };
+  const groups = (D.quoteGroups || []).filter(g => g.quotes && g.quotes.length);
+  const restack = D.quotes || [];
+  document.querySelector("[data-quotes]").innerHTML =
+    groups.map(g => '<div class="rave-group"><div class="rave-group-label">' + g.title + "</div>" + g.quotes.map(rave).join("") + "</div>").join("") +
+    (restack.length ? '<div class="rave-group">' + (groups.length && D.copy.quotesRestackLabel ? '<div class="rave-group-label">' + D.copy.quotesRestackLabel + "</div>" : "") + restack.map(rave).join("") + "</div>" : "");
 
   /* ---------- 3. tables ---------- */
   const td = (v, extra) => '<td class="num">' + v + "</td>";
