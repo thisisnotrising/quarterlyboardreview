@@ -301,9 +301,28 @@
       const from = a < curSt.start ? curSt.start : a, to = b > asOf ? asOf : b;
       return to >= from ? daysBetween(from, to) + 1 : 0;
     }));
-    const stageDays = daysBetween(curSt.start, asOf) + 1 - stageInactive;     // Oct 6 -> Oct 8 = 3 active days
+    /* OFF-SEASON (added Nov 18 2026, Kathi). Stackhunting can be paused on purpose (data.js -> offSeason).
+       While it is paused, System Health judges the stage on Stackhunting days only: the stage's new subscribers
+       from its start to the day before the pause, over those days. (Canopy: 116 / 26 days, Oct 6 -> Oct 31 = 4.46 a day.)
+       Organic growth during the pause is reported on the milestone card instead, never mixed into the pace. */
+    const OS = D.offSeason;
+    const offSeasonOn = !!(OS && asOf >= OS.start && asOf < OS.resume);
+    if (offSeasonOn) {
+      const organicDays = daysBetween(OS.start, asOf) + 1;                       // Nov 1 -> Nov 18 = 18
+      M.offSeason = {
+        startLabel: shortDate(toDate(OS.start)), resumeLabel: shortDate(toDate(OS.resume)),
+        organicPace: dp(OS.organicNewSubs / organicDays, 1),                      // 61 / 18 = 3.4
+        enginePace: dp(OS.engineMonth.newSubs / OS.engineMonth.days, 1),        // 158 / 31 = 5.1
+        engineMonth: OS.engineMonth.label, stageEngineEnd: shortDate(addDays(OS.start, -1)), stageStartLabel: shortDate(toDate(curSt.start)),
+        mode: OS.milestoneMode
+      };
+      ok("off-season " + OS.start + " -> " + OS.resume + ": organic " + M.offSeason.organicPace + "/day vs " + OS.engineMonth.label + " " + M.offSeason.enginePace + "/day; mode " + OS.milestoneMode);
+    }
+    const stageDays = offSeasonOn
+      ? daysBetween(curSt.start, OS.start) - stageInactive                    // Oct 6 -> Oct 31 = 26 Stackhunting days
+      : daysBetween(curSt.start, asOf) + 1 - stageInactive;                   // Oct 6 -> Oct 8 = 3 active days
     const prevStagePace = prevSt.newSubs / prevSt.activeDays;
-    const stagePace = curSt.newSubs / stageDays;
+    const stagePace = (offSeasonOn ? OS.stageNewSubsBefore : curSt.newSubs) / stageDays;
     const stageBand = band(stagePace, prevStagePace);
     const fragment = stageDays < cap.fragmentDays;
     const verdict = fragment ? "fragment" : stageBand.level;                   // "fragment" | "green" | "yellow" | "red"
@@ -314,6 +333,7 @@
       cls: stageBand.num,                                                        // indicator colour always follows the numbers (brand rule: never grey)
       copyKey: { fragment: "healthBodyFragment", green: "healthBodyHealthy", yellow: "healthBodyBelow", red: "healthBodyFar" }[verdict]
     };
+    if (offSeasonOn && D.copy.healthBodyOffSeason) M.health.copyKey = "healthBodyOffSeason";   // one short off-season sentence; the label keeps its colour
     /* Self-check: the locked stage's own numbers should be consistent with the Overview counts. */
     const prevSpan = daysBetween(prevSt.start, prevSt.end) + 1;
     ok("previous stage (" + prevSt.name + "): " + prevSt.newSubs + " new subs over " + prevSt.activeDays + " active days of " + prevSpan + " = " + dp(prevStagePace, 2) + "/day (locked)");
@@ -327,7 +347,16 @@
     /* Next Fibonacci milestone: how many days at this quarter's pace so far, vs the target date (if one is set) */
     const ms = cap.nextMilestone;
     let earlyLabel, msCls, targetLabel = "", targetPhrase = "";
-    if (ms.targetDate === "stagePace" && N < ms.subs) {
+    if (offSeasonOn && ms.targetDate === "stagePace" && N < ms.subs && OS.milestoneMode === "pause") {
+      /* OPTION A — PAUSE THE CLOCK. No verdict while Stackhunting is paused: the label reads "Off-season" in brand grey,
+         and the card explains the pause and shows organic vs Stackhunting pace. On the resume date the target is reset
+         from that day's count (set capacity.nextMilestone.restartFrom then; see data.js). */
+      M.milestone = { subs: comma(ms.subs), earlyLabel: "Off-season", projectedLabel: "", targetLabel: "", targetPhrase: "",
+                      list: cap.milestones.map(comma).join(", "), cls: "neutral" };
+      D.copy.milestoneBody = D.copy.milestoneBodyOffSeasonPause;
+      ok("milestone " + ms.subs + ": off-season, clock paused (option A)");
+    }
+    else if (ms.targetDate === "stagePace" && N < ms.subs) {
       /* STAGE-PACE TARGET (option C, Nov 7 2026 — Kathi). Same philosophy as System Health: judge pace against the
          last COMPLETED Fibonacci stage, not against compounding.
            target  = the day the current stage would reach the milestone at the previous stage's locked pace per active day,
@@ -335,10 +364,27 @@
                      (1597 - 989) / 4.57 = 133 days  ->  Oct 5 + 133 = Feb 15. LOCKED: it only moves if days off are logged.
            arrival = days to cover the gap at this quarter's pace per ACTIVE day:  (1597 - 1102) / 4.74 = 105 days -> Feb 20
          Status = arrival minus target, in days (negative = early), with the same bands as before. */
-      const targetDays = Math.round((ms.subs - prevSt.endSubs) / prevStagePace) + stageInactive;
+      /* OFF-SEASON, option "offClock" (Kathi's convention, Nov 18 2026): paused days come OFF the clock exactly like days off,
+         so the target moves later by the length of the pause (Nov 1 -> Jan 4 = 64 days: Feb 15 -> Apr 20).
+         Subscribers who arrive during the pause are kept: Stackhunting gathers no leads then, so they are a bonus. */
+      const pauseDays = (offSeasonOn && OS.milestoneMode === "offClock") ? daysBetween(OS.start, OS.resume) : 0;
+      const baseTargetDays = Math.round((ms.subs - prevSt.endSubs) / prevStagePace) + stageInactive;
+      const targetDays = baseTargetDays + pauseDays;
+      if (pauseDays) M.offSeason.baseTargetLabel = shortDate(addDays(prevSt.end, baseTargetDays));
       const target = addDays(prevSt.end, targetDays);
-      const activePace = cur.newSubs / curActiveDays;
-      const paceDays = Math.round((ms.subs - N) / activePace);
+      let activePace = cur.newSubs / curActiveDays;
+      let paceDays = Math.round((ms.subs - N) / activePace);
+      if (offSeasonOn && (OS.milestoneMode === "project" || OS.milestoneMode === "offClock")) {
+        /* OPTION B — KEEP THE CLOCK RUNNING, MODEL THE PAUSE. Arrival = organic pace until the resume date,
+           then the stage's own Stackhunting pace. (1127 + 3.39 x 47 = 1,286 on Jan 4; 311 more at 4.46 a day = 70 days -> Mar 15) */
+        const organicPace = OS.organicNewSubs / (daysBetween(OS.start, asOf) + 1);
+        const toResume = daysBetween(asOf, OS.resume);
+        const atResume = N + organicPace * toResume;
+        paceDays = atResume >= ms.subs ? Math.round((ms.subs - N) / organicPace)
+                                       : toResume + Math.round((ms.subs - atResume) / stagePace);
+        activePace = (ms.subs - N) / paceDays;
+        D.copy.milestoneBody = OS.milestoneMode === "offClock" ? D.copy.milestoneBodyOffSeasonOffClock : D.copy.milestoneBodyOffSeasonProject;
+      }
       const arrival = addDays(asOf, paceDays);
       const diff = Math.round((arrival - target) / 86400000);                // -14 = two weeks early
       const tol = ms.trackDays || 7;
@@ -382,7 +428,7 @@
     }
     const daysToGo = Math.round((ms.subs - N) / calendarPace);                     // (1597 - 1033) / 9.0 = 63 days
     const projected = addDays(asOf, daysToGo);
-    if ((ms.targetDate === "nature" || ms.targetDate === "stagePace") && N < ms.subs) { /* already worked out above */ }
+    if ((ms.targetDate === "nature" || ms.targetDate === "stagePace") && N < ms.subs) { /* already worked out above (incl. off-season) */ }
     else if (N >= ms.subs) { earlyLabel = "Reached"; msCls = "good"; }
     else if (!ms.targetDate) {
       earlyLabel = "~" + shortDate(projected); msCls = calendarPace > 0 ? "good" : "bad";   // no target yet: show the projected date
