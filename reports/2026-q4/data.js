@@ -22,8 +22,8 @@ window.BOARD_DATA = {
   meta: {
     reportTitle: "Board Report",   // shown in the browser tab
     quarterLabel: "Q4 2026",                     // also used by the archive page
-    asOf: "2026-11-07",   // must equal the LAST date in "series" below (the page checks this). Pulled Nov 7 at about 2:40pm, so today is a partial day.
-    version: "v2.6",      // v2.0 = first Q4 build (new System Health rule, see section 9) · v2.1 = Q4 community quotes · v2.2 = quote swap · v2.3 = Oct 18 data refresh · v2.4 = Oct 22 data refresh · v2.5 = Oct 25 refresh (prepared, never uploaded) · v2.6 = Nov 7 data refresh + recommendation blurbs + milestone target set by stage pace (option C)
+    asOf: "2026-11-18",   // must equal the LAST date in "series" below (the page checks this). Pulled Nov 18 at about 3:15pm, so today is a partial day.
+    version: "v2.7",      // v2.0 = first Q4 build (new System Health rule, see section 9) · v2.1 = Q4 community quotes · v2.2 = quote swap · v2.3 = Oct 18 data refresh · v2.4 = Oct 22 data refresh · v2.5 = Oct 25 refresh (prepared, never uploaded) · v2.6 = Nov 7 data refresh + recommendation blurbs + milestone target set by stage pace (option C) · v2.7 = Nov 18 data refresh + off-season (Stackhunting paused Nov 1 – Jan 4)
     publication: "Hi, Human",
     site: "thisisnotrising.org",
     motto: "Human in control. Not human in the loop."
@@ -52,7 +52,11 @@ window.BOARD_DATA = {
     ["2026-10-23", 1079], ["2026-10-24", 1080], ["2026-10-25", 1083], ["2026-10-26", 1083], ["2026-10-27", 1087],
     ["2026-10-28", 1088], ["2026-10-29", 1090], ["2026-10-30", 1092], ["2026-10-31", 1092], ["2026-11-01", 1092],
     ["2026-11-02", 1096], ["2026-11-03", 1096], ["2026-11-04", 1098], ["2026-11-05", 1097], ["2026-11-06", 1101],
-    ["2026-11-07", 1102]
+    ["2026-11-07", 1103],   // v2.6 read 1,102 mid-day; the day closed at 1,103 (corrected Nov 18)
+    /* Nov 18 pull: daily closing counts, Nov 8 -> Nov 18 (Nov 18 is a partial day). */
+    ["2026-11-08", 1102], ["2026-11-09", 1106], ["2026-11-10", 1109], ["2026-11-11", 1108], ["2026-11-12", 1109],
+    ["2026-11-13", 1111], ["2026-11-14", 1113], ["2026-11-15", 1115], ["2026-11-16", 1122], ["2026-11-17", 1124],
+    ["2026-11-18", 1127]
   ],
 
   /* ---------------------------------------------------------------------
@@ -79,6 +83,8 @@ window.BOARD_DATA = {
     note: "Practitioner heuristic for small newsletters, not a primary study. Treat as a rough yardstick."
   },
 
+  /* NOV 18 2026 DECISION (Kathi): headline "Average new subscribers" and the quarter cards stay on CALENDAR days, off-season
+     included, "because that's how everyone else measures their growth". Only System Health and the milestone use Stackhunting days. */
   /* ---------------------------------------------------------------------
      4. (removed) "Average new subscribers / day" is now worked out in calc.js from
         current.newSubs (section 6 below) divided by the calendar days from the quarter's
@@ -93,28 +99,31 @@ window.BOARD_DATA = {
      Put the biggest row first: it gets the highlight.
      "restack: true" marks the rows that count as "Notes + profile page" in the callout.
      --------------------------------------------------------------------- */
-  /* Pulled Nov 7, range Jan 25 -> Nov 7. Rows add up to Substack's own total (1,142 = 959 / 83.98%).
-     (Previous pull, Oct 22: 1,095.) Views/users and the Substack app's 51 free subs = Stats > Traffic, same range.
+  /* Pulled Nov 18, range Jan 25 -> Nov 18. Rows add up to Substack's own total (1,183 = 996 / 84.19%).
+     (Previous pulls: Nov 7 1,142 · Oct 22 1,095.) Views/users and the Substack app's 52 free subs = Stats > Traffic, same range.
+     NEW SOURCES since Nov 7: "Leaderboards" (Substack network, 1) and LinkedIn (social, 1) each got their own row.
      SUBSTACK RENAMED A CHANNEL SINCE Q3: "Other" is now split into "Profile discovery" + "Other".
      Q3's "substack.com" row was Other (incl. profile) minus Substack app. Here that same bucket is two rows:
-     Profile discovery (102) and substack.com other = Other (176) minus Substack app (51) = 125.
+     Profile discovery (105) and substack.com other = Other (185) minus Substack app (52) = 133.
      All three restack rows (Notes, Profile discovery, substack.com other) = the same definition as Q3's "Notes + profile page". */
   sinceLaunch: {
     rows: [
-      { name: "Notes",                 views: null,   users: null,  subs: 582, restack: true },
-      { name: "Direct to app",         views: 9048,   users: 4090,  subs: 170 },
-      { name: "substack.com (other)",  views: null,   users: null,  subs: 125, restack: true },   // = Sources "Other" (176) minus "Substack app" (51)
-      { name: "Profile discovery",     views: null,   users: null,  subs: 102, restack: true },
-      { name: "Recommendations",       views: null,   users: null,  subs: 79 },
-      { name: "Substack app",          views: 14990,  users: 4905,  subs: 51 },
-      { name: "Direct",                views: 8746,   users: 3249,  subs: 9 },
-      { name: "Substack trackbacks",   views: null,   users: null,  subs: 7 },
+      { name: "Notes",                 views: null,   users: null,  subs: 597, restack: true },
+      { name: "Direct to app",         views: 9553,   users: 4298,  subs: 171 },
+      { name: "substack.com (other)",  views: null,   users: null,  subs: 133, restack: true },   // = Sources "Other" (185) minus "Substack app" (52)
+      { name: "Profile discovery",     views: null,   users: null,  subs: 105, restack: true },
+      { name: "Recommendations",       views: null,   users: null,  subs: 87 },
+      { name: "Substack app",          views: 15792,  users: 5169,  subs: 52 },
+      { name: "Direct",                views: 9179,   users: 3388,  subs: 11 },
+      { name: "Substack trackbacks",   views: null,   users: null,  subs: 8 },
       { name: "Substack onboarding",   views: null,   users: null,  subs: 5 },
       { name: "Substack live video",   views: null,   users: null,  subs: 5 },
       { name: "Substack chat",         views: null,   users: null,  subs: 3 },
-      { name: "google.com",            views: 44,     users: 36,    subs: 2 },
-      { name: "instagram.com",         views: 50,     users: 46,    subs: 1 },
-      { name: "Email",                 views: 124,    users: 97,    subs: 1 }
+      { name: "google.com",            views: 46,     users: 38,    subs: 2 },
+      { name: "Substack leaderboards", views: null,   users: null,  subs: 1 },
+      { name: "linkedin.com",          views: 57,     users: 47,    subs: 1 },
+      { name: "instagram.com",         views: 64,     users: 59,    subs: 1 },
+      { name: "Email",                 views: 137,    users: 107,   subs: 1 }
     ]
   },
 
@@ -143,30 +152,40 @@ window.BOARD_DATA = {
     inactive: [],                          // no days off so far this quarter. Add ["YYYY-MM-DD", "YYYY-MM-DD"] pairs when you take any.
     /* NOTE: Oct 1 is counted in BOTH the locked Q3 figure (which ran to Oct 1) and here (Q4 = the calendar quarter).
        That is 3 subscribers. Kept on purpose: Q3 is locked, and Q4 should start on the quarter's first day. */
-    newSubs: 180,                          // WHERE: Sources > custom Oct 1 -> Nov 7 > New subscribers: TOTAL = 162 / 90% = 180 (check: 19 / 10.56% = 180). Channel rows add to 183; Substack credits 3 people twice
+    newSubs: 222,                          // WHERE: Sources > custom Oct 1 -> Nov 18 > New subscribers: TOTAL = 200 / 90.09% = 222 (check: 20 / 9.01% = 222). Channel rows add to 225; Substack credits 3 people twice
 
-    /* Substack-network subscribers, split (Sources > New subscribers, Oct 1 -> Nov 7).
-       Substack now shows "Profile discovery" as its own row. Profile page = Profile discovery (16) + "Other" (26) minus Substack app (11) = 31,
+    /* Substack-network subscribers, split (Sources > New subscribers, Oct 1 -> Nov 18).
+       Substack now shows "Profile discovery" as its own row. Profile page = Profile discovery (19) + "Other" (36) minus Substack app (12) = 43,
        the same definition Q3 used (Q3's "Other" contained profile discovery). */
     network: {
-      visitors: 799,                       // Sources > Unique visitors tab > "Substack" total
-      subsFromSources: 162,                // Sources > New subscribers tab > "Substack" row. The page checks that the split below adds up to this.
-      notes: 90,
-      profilePage: 31,                     // = Profile discovery (16) + Sources "Other" (26) - Traffic "substack app" free signups (11)
-      recommendations: 26,
-      substackApp: 11,
+      visitors: 1019,                      // Sources > Unique visitors tab > "Substack" total
+      subsFromSources: 200,                // Sources > New subscribers tab > "Substack" row. The page checks that the split below adds up to this.
+      notes: 104,
+      profilePage: 43,                     // = Profile discovery (19) + Sources "Other" (36) - Traffic "substack app" free signups (12)
+      recommendations: 35,
+      substackApp: 12,
       liveStream: 0,
-      trackbacksOnboarding: 4              // trackbacks (1) + onboarding (2) + chat (1). Substack added a "Chat" source; folded in here until Kathi decides on its own row
+      trackbacksOnboarding: 6              // trackbacks (2) + onboarding (2) + chat (1) + leaderboards (1). Chat and the new "Leaderboards" source are folded in here
     },
-    directToApp: { visitors: 646, subs: 19 },
-    direct:      { visitors: 209, subs: 2 },
-    external:    { visitors: 34,  subs: 0 }    // email clicks (14) + instagram (11) + google (4) + nebularising.media (2) + thisisnotrising.org (2) + linktree (1)
+    directToApp: { visitors: 815, subs: 20 },
+    direct:      { visitors: 283, subs: 4 },
+    external:    { visitors: 81,  subs: 1 }    // email clicks (24) + instagram (23) + linkedin (13, 1 sub) + nebularising.media (5) + thisisnotrising.org (5) + google (5) + facebook (4) + linktree (2)
+  },
+
+  offSeason: {
+    start: "2026-11-01",
+    resume: "2027-01-04",
+    milestoneMode: "offClock",               // CHOSEN Nov 18 (Kathi): "offClock" = paused days off the clock, organic arrivals kept as a bonus.
+                                             // (Alternatives built and rejected: "pause" = no verdict until resume · "project" = keep Feb 15 target)
+    organicNewSubs: 61,                      // Sources total Nov 1 -> Nov 18 = 56 / 91.8% = 61
+    engineMonth: { label: "October", newSubs: 158, days: 31 },   // Sources total Oct 1 -> Oct 31 = 143 / 90.51% = 158 (last full month of Stackhunting)
+    stageNewSubsBefore: 116                  // Canopy's Stackhunting days: Sources total Oct 6 -> Oct 31 = 111 / 95.69% = 116
   },
 
   /* WHERE: Substack > Audience > Recommendations: "Substacks recommending you" */
-  recommenders: 65,                // read Nov 7 (was 58 on Oct 22). The 15 added since Sep 22 are listed in the Nov 7 chat.
-  recsPerPublicationHigh: 1.22,   // MANUAL: upper end of the "subscribers each" range = since-launch subscribers from recommendations (79, Growth sources) / recommenders (65) = 1.215
-                                  // (the Recommendations page itself says 85 "came from recommendations"; the report uses Growth sources, per Clerk's Rules)
+  recommenders: 70,                // read Nov 18 (65 on Nov 7, 58 on Oct 22)
+  recsPerPublicationHigh: 1.24,   // MANUAL: upper end of the "subscribers each" range = since-launch subscribers from recommendations (87, Growth sources) / recommenders (70) = 1.243
+                                  // (the Recommendations page itself says 96 "came from recommendations"; the report uses Growth sources, per Clerk's Rules)
 
   /* ---------------------------------------------------------------------
      7. NOTES — per-Note stats (open each Note's stats page; new subs from Sources > Notes expanded)
@@ -207,6 +226,8 @@ window.BOARD_DATA = {
       { name: "Constantinos",       baseline: 99,  gain: 8,  counted: true },   // pre-feature baseline (99, flat through Sep 6) -> 107 on Sep 16
       { name: "Andrew Barban",      baseline: 177, gain: 9,  counted: true },   // teaser baseline (Aug 9) -> 186 on Aug 26
       { name: "Jennifer Houle",     baseline: 630, gain: 15, counted: true },   // gross lift in the feature window (net is now -5)
+      { name: "Dan Korus",          baseline: 349, gain: 37, counted: true },   // Issue 19: launch day Nov 8 (349) -> Nov 18 (386), raw 10-day gain. Kathi chose RAW (Nov 18);
+                                                                                // includes his own Top 10 Voices feature (~Nov 16). Control-adjusted would be +32 (+9.2%).
       { name: "Rebe",               baseline: null, gain: null, counted: false, why: "baseline unrecoverable" }
     ],
     controlMultiple: "~10×",         // MANUAL: featured vs same-size control (Joel L vs Des Kennedy, first 24-72h)
@@ -235,9 +256,12 @@ window.BOARD_DATA = {
    // against the full roster, so we publish the floor (700+), not the midpoint (~800).
    // Replace both with counted figures once the Friday notes are tallied.
    // ---------------------------------------------------------------------
+   /* CLOSED OUT Nov 18 2026 for the season (Stackhunting paused Oct 31): Jan 25 -> Oct 31 = 40 Fridays; allowing the same skipped
+      weeks as before, ~38 notes x ~35 names = ~1,330 slots -> published floor 1,300+. Writers scaled by the same repeat rate as
+      the Oct 9 figure (700 of 1,200) -> ~775 -> published floor 750+. Still an ESTIMATE until the Friday notes are tallied. */
    amplification: {
-      essays:  "1,200+",   // restacked posts across all Fast Four Friday Notes, since launch
-      writers: "700+"      // unique writers behind them, repeat appearances removed
+      essays:  "1,300+",   // restacked posts across all Fast Four Friday Notes, Jan 25 -> Oct 31
+      writers: "750+"      // unique writers behind them, repeat appearances removed
    },
 
   /* ---------------------------------------------------------------------
@@ -261,13 +285,25 @@ window.BOARD_DATA = {
        ("nature" still works if you ever want the old instrument back.) Same bands as above. */
     nextMilestone: { subs: 1597, targetDate: "stagePace", trackDays: 7 },
 
+    /* OFF-SEASON — Stackhunting paused on purpose (Kathi, Nov 18 2026): stopped at the end of October, no restacking of other writers
+       in November or December, Stackhunting Season resumes Jan 4. While asOf is inside [start, resume):
+         - System Health is judged on Stackhunting days only (stage start -> day before "start").
+         - The milestone card follows milestoneMode:
+             "offClock" (CHOSEN) = the 64 paused days come off the clock like days off (target Feb 15 -> Apr 20); subscribers who
+                                   arrive meanwhile are kept as a bonus, because Stackhunting gathers no leads during the pause.
+                                   Arrival = organic pace until resume, then the stage's Stackhunting pace.
+             "pause"   = no verdict; the card reads "Off-season" in brand grey.
+             "project" = keeps the Feb 15 target as if Stackhunting had continued.
+       AFTER JAN 4: revisit this block at the first January refresh (the pause stays off the clock; pace returns to Stackhunting days).
+       Update organicNewSubs every refresh (Sources > custom start -> today > total = Substack row / its %). */
+
     /* STAGE PACE — the System Health instrument.
        previousStage is LOCKED (completed). Crossing dates come from the Overview chart; new subs from Sources (custom range = stage window).
        Branch: crossed 610 on Jun 21 (Jun 20 = 607, Jun 21 = 611) and 987 on Oct 5 (Oct 4 = 978, Oct 5 = 989).
        Window Jun 22 -> Oct 5 = 106 days, minus Sep 7-11 off = 101 active days. Sources total = 462. */
     previousStage: { name: "Branch", from: 610, to: 987, start: "2026-06-22", end: "2026-10-05", startSubs: 611, endSubs: 989, newSubs: 462, activeDays: 101 },
     /* currentStage: newSubs = Sources total from start -> as-of date. Update every refresh. */
-    currentStage:  { name: "Canopy", from: 987, to: 1597, start: "2026-10-06", newSubs: 138, inactive: [] },   // Sources total Oct 6 -> Nov 7 = 130 / 94.2% = 138
+    currentStage:  { name: "Canopy", from: 987, to: 1597, start: "2026-10-06", newSubs: 180, inactive: [] },   // Sources total Oct 6 -> Nov 18 = 168 / 93.33% = 180
     fragmentDays: 14                            // a stage with fewer active days than this is a "fragment": shown, never alarmed (Clerk's Rule)
   },
 
@@ -311,7 +347,7 @@ window.BOARD_DATA = {
     conversionLede: "This quarter's {{current.newSubs}} new subscribers, by channel. Conversion = subscribers ÷ visitors. Share = portion of the quarter's new subscribers.",
     /* Oct 10 (Kathi): no trend commentary in Q4 while trends are still forming. An EMPTY callout ("") hides its panel. */
     conversionCallout: "", conversionCalloutWas: "<strong>Reading and restacking — Notes plus the profile page — drove {{current.readingRestack.subs}} of the quarter's subscribers, {{current.readingRestack.sharePct}}% of the total.</strong> It's also the most efficient channel: the Substack network converts visitors at {{current.network.conv}}%, off-platform traffic at {{current.offPlatform.convRound}}%.",
-    conversionMethodology: "\"Substack network\" is the only bucket Substack lets us see traffic for in aggregate — it can't be split further into Notes vs. recommendations at the visitor level, only at the point someone subscribes. The individual Note examples below get closer to isolating restacks specifically. Shares total slightly over 100% — Substack credits a few subscribers to two sources.",
+    conversionMethodology: "\"Substack network\" is the only bucket Substack lets us see traffic for in aggregate — it can't be split further into Notes vs. recommendations at the visitor level, only at the point someone subscribes. Shares total slightly over 100% — Substack credits a few subscribers to two sources.",
     spendBlockNetworkBody: "Of every 100 people who reached Hi, Human through Substack — restacks, the profile page, the app — about {{current.network.convRound}} subscribed. This is where all the effort goes, and it costs nothing but time and attention to run.",
     spendBlockOffBody: "Direct links, email, social media (LinkedIn, Facebook, Instagram) and search together sent {{current.offPlatform.visitors}} visitors and produced {{current.offPlatform.subsPhrase}}, organically. We haven't needed to spend on these channels to grow.",
 
@@ -330,7 +366,7 @@ window.BOARD_DATA = {
     shipsLede: "When a Stackhunter lifts others up, they get lifted back.",
     stackhunterBoostBody2: "Three months in, they've gained {{impact.sh3Pct}}.",
     missionReachBody: "Combined subscribers our curators can amplify a writer into — the discovery range we offer the people we feature. Five curators and three editorial directors.",
-     amplificationLede: "The reach of the restack engine itself, since launch.",
+     amplificationLede: "The reach of the restack engine itself, Jan 25 – Oct 31.",
      amplificationEssaysBody: "Essays restacked across nine months of daily Notes, compiled every Friday into one Fast Four list and sent by DM to each writer.",
      amplificationWritersBody: "The writers behind those essays, counted once each with repeat appearances removed.",
 
@@ -341,9 +377,15 @@ window.BOARD_DATA = {
     healthBodyBelow: "The {{health.stage}} stage is bringing in {{health.pace}} new subscribers per active day, {{health.variance}} against the {{health.prevStage}} stage ({{health.prevPace}}/day). Below normal range: tend the soil before expanding.",
     healthBodyFar: "The {{health.stage}} stage is bringing in {{health.pace}} new subscribers per active day, {{health.variance}} against the {{health.prevStage}} stage ({{health.prevPace}}/day). Well below normal range: the system needs attention.",
     healthBodyFragment: "The {{health.stage}} stage is {{health.days}} days old and bringing in {{health.pace}} new subscribers per active day, {{health.variance}} against the {{health.prevStage}} stage ({{health.prevPace}}/day). Too early to call: a stage needs {{health.minDays}} active days before its pace counts.",
-    healthMethodology: "<p><b>Pace, not compounding (changed in Q4 2026).</b> Until Q3, System Health compared our daily compound growth rate with an S-curve benchmark. Measured stage by stage, our growth rate fell from 1.15% to 0.45% a day while the S-curve's crowding term barely moved, so the curve could not explain the slowdown.</p><p>So from Q4, System Health compares new subscribers per active day in the current Fibonacci stage with the stage before it. Same colours as the tables: green = no more than {{bands.green}}% below, yellow = {{bands.green}}–{{bands.yellow}}% below, red = worse. A stage under {{health.minDays}} active days old is shown but never alarmed. The S-curve is kept for one job: timing the expansion.</p><p><b>Milestone target, the same rule (from Nov 2026).</b> The next Fibonacci milestone's target date is when we would reach it at the {{health.prevStage}} stage's pace ({{health.prevPace}} new subscribers per active day), counted from the day that stage ended. On track = arriving within 7 days of it.</p>",
+    healthMethodology: "<p><b>Pace, not compounding (changed in Q4 2026).</b> Until Q3, System Health compared our daily compound growth rate with an S-curve benchmark. Measured stage by stage, our growth rate fell from 1.15% to 0.45% a day while the S-curve's crowding term barely moved, so the curve could not explain the slowdown.</p><p>So from Q4, System Health compares new subscribers per active day in the current Fibonacci stage with the stage before it. Same colours as the tables: green = no more than {{bands.green}}% below, yellow = {{bands.green}}–{{bands.yellow}}% below, red = worse. A stage under {{health.minDays}} active days old is shown but never alarmed. The S-curve is kept for one job: timing the expansion.</p><p><b>Milestone target, the same rule (from Nov 2026).</b> The next Fibonacci milestone's target date is when we would reach it at the {{health.prevStage}} stage's pace ({{health.prevPace}} new subscribers per active day), counted from the day that stage ended. On track = arriving within 7 days of it. Checkpoints follow the Fibonacci sequence ({{milestone.list}}): each is about 1.6× the last, so every milestone marks a real step up in reach.</p><p><b>Off-season (Nov 2026 – Jan 2027).</b> Stackhunting is paused on purpose from Nov 1 to Jan 4. Paused days come off the clock like any days off; subscribers who arrive meanwhile are kept as a bonus, since no leads are being gathered.</p>",
     milestoneBody: "On pace to arrive {{milestone.projectedLabel}}{{milestone.targetPhrase}}. We set checkpoints on the Fibonacci sequence — {{milestone.list}} — because each is about 1.6× the last, so every milestone marks a real step up in reach.",
-    phase2Body: "Projected on the S-curve's benchmark rate (fast end) and the growth rate measured across the last completed stage (slow end), not a flat daily count. Phase 2 is when Desk Chiefs join — see <a href=\"https://claude.ai/artifact/8WVxXTnM9Q69n8gaMogvfb\" target=\"_blank\" rel=\"noopener\">Hi, Desk Chief</a>.",
+    phase2Body: "Projected on the S-curve's benchmark rate (fast end) and the growth rate measured across the last completed stage (slow end), not a flat daily count. Phase 2 is when Desk Chiefs join — see <a href=\"https://claude.ai/artifact/8WVxXTnM9Q69n8gaMogvfb\" target=\"_blank\" rel=\"noopener\">Hi, Desk Chief</a>. Counted at Stackhunting pace; the holiday off-season (Nov 1 – Jan 4) comes on top.",
+
+    /* ---- OFF-SEASON WORDING (Nov 18 2026). Written for a cold reader: each says what Stackhunting is, that it is paused on purpose, and until when. ---- */
+    healthBodyOffSeason: "{{health.pace}} new subscribers a day on Stackhunting days, {{health.variance}} vs the last stage. The team is on a 2-month holiday vacation from Stackhunting (restacking other writers) until {{offSeason.resumeLabel}}. 🎄",
+    milestoneBodyOffSeasonPause: "<b>Off-season, {{offSeason.startLabel}} – {{offSeason.resumeLabel}}.</b> Stackhunting, our daily practice of finding and restacking other writers, is paused on purpose for the holidays and resumes {{offSeason.resumeLabel}}. Growth in between is organic: {{offSeason.organicPace}} new subscribers a day, against {{offSeason.enginePace}} a day in {{offSeason.engineMonth}} with Stackhunting. The milestone clock is paused too; its target date is reset from the count on {{offSeason.resumeLabel}}. We set checkpoints on the Fibonacci sequence — {{milestone.list}} — because each is about 1.6× the last, so every milestone marks a real step up in reach.",
+    milestoneBodyOffSeasonOffClock: "On pace for {{milestone.projectedLabel}}, target {{milestone.targetLabel}}. Vacation days don't count; organic growth meanwhile: {{offSeason.organicPace}} a day.",
+    milestoneBodyOffSeasonProject: "<b>Off-season, {{offSeason.startLabel}} – {{offSeason.resumeLabel}}.</b> Stackhunting, our daily practice of finding and restacking other writers, is paused on purpose for the holidays and resumes {{offSeason.resumeLabel}}. Projected to arrive {{milestone.projectedLabel}}{{milestone.targetPhrase}}, counting organic growth until {{offSeason.resumeLabel}} ({{offSeason.organicPace}} a day, against {{offSeason.enginePace}} in {{offSeason.engineMonth}} with Stackhunting), then the {{health.stage}} stage's Stackhunting pace ({{health.pace}} a day). We set checkpoints on the Fibonacci sequence — {{milestone.list}} — because each is about 1.6× the last, so every milestone marks a real step up in reach.",
 
     recommendersHeadline: "{{recommenders}} publications recommend Hi, Human on Substack.",
     quotesSummary: "What the Community Is Saying",
